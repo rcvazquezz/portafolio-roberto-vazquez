@@ -29,7 +29,7 @@ $canales = [
     [
         'icono' => 'phone',
         'label' => 'Teléfono',
-        'valor' => '+34 625 018 707',
+        'valor' => '+34 625 01 87 07',
         'url'   => 'tel:+34625018707',
         'cta'   => 'Llamar →',
     ],
