@@ -14,21 +14,33 @@
  *   institucion: string,
  *   ubicacion: string,
  *   periodo: string,
- *   materias: string[]
+ *   descripcion: ?string,
+ *   categorias: array{nombre: string, items: string[]}[],
+ *   gancho: ?string
  * }[]
  */
 $formacion = [
     [
-        'titulo'      => 'Técnico Superior Universitario en Análisis de Sistemas',
+        'titulo'      => 'Técnico Superior Universitario en Análisis de Sistemas | Mención Desarrollo Web',
         'institucion' => 'IUTEPI — Instituto Universitario de Tecnología para la Informática',
         'ubicacion'   => 'Guanare, Portuguesa',
         'periodo'     => '2023 – 2026',
-        'materias'    => [
-            'Ciclo de vida del software',
-            'Bases de datos relacionales',
-            'Lógica de programación',
-            'Sistemas de gestión institucional',
+        'descripcion' => 'Formación orientada a la ingeniería de software, arquitectura de sistemas y despliegue de aplicaciones web escalables.',
+        'categorias'  => [
+            [
+                'nombre' => 'Arquitectura & Software',
+                'items'  => ['Ciclo de vida del software', 'Análisis de Sistemas', 'Ingeniería de Requisitos'],
+            ],
+            [
+                'nombre' => 'Data & Lógica',
+                'items'  => ['Bases de Datos Relacionales', 'Lógica de Programación', 'Algoritmia'],
+            ],
+            [
+                'nombre' => 'Despliegue',
+                'items'  => ['Sistemas de Gestión Institucional', 'Integración de Servicios'],
+            ],
         ],
+        'gancho'      => 'Enfoque técnico: Del levantamiento de requerimientos a la puesta en producción.',
     ],
 
     /* ── AÑADE AQUÍ MÁS FORMACIÓN ────────────────────────────────
@@ -82,33 +94,58 @@ $certificaciones = [
         >
 
           <!-- Título + periodo -->
-          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+          <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-3">
             <h3
               class="font-display font-bold text-noir"
               style="font-size: 1rem; letter-spacing: -0.02em; line-height: 1.35;"
             >
               <?= htmlspecialchars($edu['titulo']) ?>
             </h3>
-            <span class="badge-violet flex-shrink-0 self-start">
+            <!-- badge-dark (graphite + violet) contrasta sobre el fondo blanco de la card -->
+            <span class="badge-dark flex-shrink-0 self-start">
               <?= htmlspecialchars($edu['periodo']) ?>
             </span>
           </div>
 
           <!-- Institución y ubicación -->
-          <p class="text-muted text-sm font-medium mb-5">
+          <p class="text-muted text-sm font-medium mb-3">
             <?= htmlspecialchars($edu['institucion']) ?>
             <span class="text-ui-border mx-2" aria-hidden="true">·</span>
             <?= htmlspecialchars($edu['ubicacion']) ?>
           </p>
 
-          <!-- Materias relevantes -->
-          <?php if (!empty($edu['materias'])) : ?>
-            <div class="flex flex-wrap gap-2" role="list" aria-label="Materias relevantes">
-              <?php foreach ($edu['materias'] as $materia) : ?>
-                <span class="badge-neutral" role="listitem">
-                  <?= htmlspecialchars($materia) ?>
-                </span>
+          <!-- Descripción de valor -->
+          <?php if (!empty($edu['descripcion'])) : ?>
+            <p class="text-muted text-sm leading-relaxed mb-5">
+              <?= htmlspecialchars($edu['descripcion']) ?>
+            </p>
+          <?php endif; ?>
+
+          <!-- Áreas de conocimiento agrupadas por categoría -->
+          <?php if (!empty($edu['categorias'])) : ?>
+            <div class="space-y-3 mb-2" aria-label="Áreas de conocimiento">
+              <?php foreach ($edu['categorias'] as $categoria) : ?>
+                <div>
+                  <p class="text-xs font-semibold tracking-widest uppercase text-muted mb-2">
+                    <?= htmlspecialchars($categoria['nombre']) ?>
+                  </p>
+                  <div class="flex flex-wrap gap-2">
+                    <?php foreach ($categoria['items'] as $item) : ?>
+                      <span class="badge-neutral"><?= htmlspecialchars($item) ?></span>
+                    <?php endforeach; ?>
+                  </div>
+                </div>
               <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
+
+          <!-- Gancho técnico al pie de la card -->
+          <?php if (!empty($edu['gancho'])) : ?>
+            <div class="mt-5 pt-4 border-t border-ui-border">
+              <p class="text-xs text-muted">
+                <span class="text-violet font-semibold" aria-hidden="true">→</span>
+                <?= htmlspecialchars($edu['gancho']) ?>
+              </p>
             </div>
           <?php endif; ?>
 
