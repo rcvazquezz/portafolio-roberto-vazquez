@@ -48,18 +48,6 @@
 
     a { color: var(--violet); text-decoration: none; }
 
-    /* Evita que Chrome inserte saltos de página dentro del CV */
-    .page-content {
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
-
-    /* El layout grid nunca debe empezar en una página nueva */
-    .layout {
-      break-before: avoid;
-      page-break-before: avoid;
-    }
-
     @media screen {
       body {
         width: 210mm;
@@ -117,7 +105,7 @@
     .layout {
       display: grid;
       grid-template-columns: 1.65fr 1fr;
-      gap: 0 10mm;
+      gap: 0 11mm;
       align-items: start;
     }
 
@@ -125,7 +113,7 @@
     /* ════════════════════════════════════════
        SECCIONES
     ════════════════════════════════════════ */
-    .section { margin-bottom: 8mm; }
+    .section { margin-bottom: 10mm; }
 
     .section-title {
       font-family: 'Syne', sans-serif;
@@ -181,7 +169,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 6pt;
+      gap: 8pt;
     }
 
     .bullets li {
@@ -189,7 +177,7 @@
       gap: 7pt;
       font-size: 10pt;
       color: var(--dark);
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .arr {
@@ -202,7 +190,7 @@
     /* ════════════════════════════════════════
        PROYECTOS
     ════════════════════════════════════════ */
-    .projects { display: flex; flex-direction: column; gap: 7pt; }
+    .projects { display: flex; flex-direction: column; gap: 9pt; }
 
     .project { display: flex; gap: 7pt; }
 
@@ -360,8 +348,6 @@
 </head>
 <body>
 
-  <div class="page-content">
-
   <!-- HEADER ──────────────────────────────────────────────── -->
   <header>
     <p class="cv-name">Roberto Carlos <span>Vázquez</span> Antelo</p>
@@ -517,9 +503,7 @@
 
     </div>
 
-  </div><!-- fin layout -->
-
-  </div><!-- fin page-content -->
+  </div>
 
 </body>
 </html>
