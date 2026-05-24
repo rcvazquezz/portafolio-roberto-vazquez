@@ -107,6 +107,15 @@ $stack_hero = ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS', 'REST APIs', 'Git']
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
           </svg>
         </a>
+        <a
+          href="/data/cv-roberto-vazquez.pdf"
+          download="CV_Roberto_Vazquez.pdf"
+          class="btn-outline group"
+          aria-label="Descargar CV en PDF"
+        >
+          <i data-lucide="download" class="w-4 h-4 transition-transform duration-200 group-hover:translate-y-0.5" aria-hidden="true"></i>
+          Descargar CV
+        </a>
         <a href="mailto:rcvazquezantelo2006@gmail.com" class="btn-outline">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
