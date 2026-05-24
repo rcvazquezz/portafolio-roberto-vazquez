@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV — Roberto Carlos Vázquez Antelo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════════
+       CONFIGURACIÓN DE IMPRESIÓN A4
+       Margen 11mm arriba/abajo, 13mm izquierda/derecha
+       Área útil: 184mm × 275mm
+    ═══════════════════════════════════════════════ */
+    @page {
+      size: A4 portrait;
+      margin: 11mm 13mm;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --violet:  #7C65F6;
+      --violet-bg: #F0EEFF;
+      --noir:    #0C0C0F;
+      --ink:     #111118;
+      --dark:    #2A2A38;
+      --muted:   #6B6B7A;
+      --border:  #E4E4E9;
+      --cream:   #F2F1ED;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 8pt;
+      line-height: 1.5;
+      color: var(--ink);
+      background: #fff;
+      /* Fuerza impresión de colores de fondo (violet badges, etc.) */
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    a {
+      color: var(--violet);
+      text-decoration: none;
+    }
+
+    /* ── Vista en pantalla: centrado y con padding visual ── */
+    @media screen {
+      body {
+        max-width: 184mm;
+        margin: 12mm auto;
+      }
+    }
+
+
+    /* ════════════════════════════════════════════
+       HEADER
+    ════════════════════════════════════════════ */
+    header {
+      padding-bottom: 4.5mm;
+      border-bottom: 1.5pt solid var(--noir);
+      margin-bottom: 5mm;
+    }
+
+    .cv-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 21pt;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--noir);
+      line-height: 1;
+    }
+
+    .cv-name span { color: var(--violet); }
+
+    .cv-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 9pt;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: -0.01em;
+      margin-top: 2.5pt;
+      margin-bottom: 5pt;
+    }
+
+    .contact-line {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2pt 8pt;
+      font-size: 7.5pt;
+      color: var(--muted);
+    }
+
+    .contact-sep {
+      color: var(--border);
+      font-size: 9pt;
+      line-height: 1;
+    }
+
+
+    /* ════════════════════════════════════════════
+       LAYOUT DE DOS COLUMNAS
+       Izquierda (Experiencia + Proyectos): 63%
+       Derecha  (Formación + Skills):       37%
+    ════════════════════════════════════════════ */
+    .layout {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 0 7mm;
+      align-items: start;
+    }
+
+
+    /* ════════════════════════════════════════════
+       SECCIONES — título con línea violeta
+    ════════════════════════════════════════════ */
+    .section { margin-bottom: 5mm; }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 6pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--violet);
+      border-bottom: 0.75pt solid var(--violet);
+      padding-bottom: 2pt;
+      margin-bottom: 4pt;
+    }
+
+
+    /* ════════════════════════════════════════════
+       EXPERIENCIA
+    ════════════════════════════════════════════ */
+    .exp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 4pt;
+      margin-bottom: 1.5pt;
+    }
+
+    .exp-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: var(--noir);
+      letter-spacing: -0.02em;
+    }
+
+    .exp-period {
+      font-size: 6.5pt;
+      font-weight: 600;
+      color: #fff;
+      background: var(--violet);
+      padding: 1pt 5.5pt;
+      border-radius: 20pt;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .exp-company {
+      font-size: 7.5pt;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 3.5pt;
+    }
+
+    .bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 3pt;
+    }
+
+    .bullets li {
+      display: flex;
+      gap: 4pt;
+      font-size: 7.5pt;
+      color: var(--dark);
+      line-height: 1.45;
+    }
+
+    .arr {
+      color: var(--violet);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+
+    /* ════════════════════════════════════════════
+       PROYECTOS
+    ════════════════════════════════════════════ */
+    .projects { display: flex; flex-direction: column; gap: 4pt; }
+
+    .project {
+      display: flex;
+      gap: 4pt;
+    }
+
+    .project-dot {
+      color: var(--violet);
+      font-weight: 700;
+      flex-shrink: 0;
+      font-size: 8pt;
+      margin-top: 0.5pt;
+    }
+
+    .project-name {
+      font-size: 8pt;
+      font-weight: 600;
+      color: var(--noir);
+    }
+
+    .project-link {
+      font-size: 6.5pt;
+      color: var(--violet);
+      font-weight: 500;
+      margin-left: 4pt;
+      letter-spacing: 0.01em;
+    }
+
+    .project-desc {
+      font-size: 7pt;
+      color: var(--muted);
+      line-height: 1.4;
+      margin-top: 1pt;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2pt;
+      margin-top: 2.5pt;
+    }
+
+    .tag {
+      font-size: 6pt;
+      font-weight: 600;
+      color: var(--violet);
+      background: var(--violet-bg);
+      padding: 1pt 4pt;
+      border-radius: 20pt;
+    }
+
+
+    /* ════════════════════════════════════════════
+       FORMACIÓN
+    ════════════════════════════════════════════ */
+    .edu-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: var(--noir);
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 2pt;
+    }
+
+    .edu-meta {
+      font-size: 7pt;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 3pt;
+    }
+
+    .edu-period {
+      font-size: 6.5pt;
+      font-weight: 600;
+      color: #fff;
+      background: var(--noir);
+      padding: 1pt 5.5pt;
+      border-radius: 20pt;
+      display: inline-block;
+      margin-bottom: 3pt;
+    }
+
+    .edu-desc {
+      font-size: 7pt;
+      color: var(--dark);
+      line-height: 1.45;
+      margin-bottom: 3pt;
+    }
+
+    .edu-hook {
+      font-size: 6.5pt;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .edu-hook span {
+      color: var(--violet);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+
+    /* ════════════════════════════════════════════
+       STACK TECNOLÓGICO
+    ════════════════════════════════════════════ */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5pt;
+    }
+
+    .skill {
+      font-size: 6.5pt;
+      font-weight: 500;
+      color: var(--ink);
+      background: var(--cream);
+      border: 0.5pt solid var(--border);
+      padding: 1.5pt 5pt;
+      border-radius: 20pt;
+    }
+
+
+    /* ════════════════════════════════════════════
+       IDIOMAS
+    ════════════════════════════════════════════ */
+    .lang-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 7.5pt;
+      margin-bottom: 2.5pt;
+    }
+
+    .lang-name  { font-weight: 600; color: var(--noir); }
+    .lang-level { color: var(--muted); }
+
+
+    /* ════════════════════════════════════════════
+       DISPONIBILIDAD
+    ════════════════════════════════════════════ */
+    .avail {
+      background: var(--violet-bg);
+      border-left: 2pt solid var(--violet);
+      padding: 4pt 6pt;
+      border-radius: 0 3pt 3pt 0;
+    }
+
+    .avail-title {
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: var(--violet);
+      margin-bottom: 2pt;
+    }
+
+    .avail-text {
+      font-size: 7pt;
+      color: var(--dark);
+      line-height: 1.45;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════════════════════════════════
+       HEADER — Nombre, rol y contacto
+  ════════════════════════════════════════════════════════════ -->
+  <header>
+    <p class="cv-name">Roberto Carlos <span>Vázquez</span> Antelo</p>
+    <p class="cv-role">Desarrollador Full Stack &nbsp;·&nbsp; Analista de Sistemas</p>
+    <div class="contact-line">
+      <a href="mailto:rcvazquezantelo@gmail.com">rcvazquezantelo@gmail.com</a>
+      <span class="contact-sep">|</span>
+      <span>+34 625 018 707</span>
+      <span class="contact-sep">|</span>
+      <span>Caldebarcos, A Coruña, Galicia</span>
+      <span class="contact-sep">|</span>
+      <a href="https://github.com/rcvazquezz">github.com/rcvazquezz</a>
+      <span class="contact-sep">|</span>
+      <a href="https://devlink.nygaccesorios.com">devlink.nygaccesorios.com</a>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════
+       LAYOUT PRINCIPAL — dos columnas
+  ════════════════════════════════════════════════════════════ -->
+  <div class="layout">
+
+    <!-- ── COLUMNA IZQUIERDA ──────────────────────────────── -->
+    <div>
+
+      <!-- EXPERIENCIA -->
+      <section class="section">
+        <h2 class="section-title">Experiencia</h2>
+
+        <div class="exp-header">
+          <span class="exp-role">Analista y Desarrollador de Sistemas · Soporte Técnico</span>
+          <span class="exp-period">Dic 2025 – May 2026</span>
+        </div>
+        <p class="exp-company">Consejo Nacional Electoral &nbsp;·&nbsp; Guanare, Portuguesa</p>
+
+        <ul class="bullets">
+          <li>
+            <span class="arr">→</span>
+            <span>Diseñé y desarrollé una aplicación web Full Stack (PHP, MySQL, Tailwind) para la automatización de flujos de trabajo institucionales, reduciendo significativamente los tiempos de procesamiento administrativo y mejorando la precisión en el manejo de expedientes.</span>
+          </li>
+          <li>
+            <span class="arr">→</span>
+            <span>Lideré auditorías técnicas de sistemas críticos y validación de infraestructura de hardware. Implementé protocolos de mejora continua que garantizaron la disponibilidad operativa y la integridad de los datos en entornos de alta exigencia.</span>
+          </li>
+          <li>
+            <span class="arr">→</span>
+            <span>Arquitecto de bases de datos relacionales, optimizando consultas y aplicando políticas de seguridad e integridad referencial, logrando mayor eficiencia en la recuperación y protección de información sensible.</span>
+          </li>
+          <li>
+            <span class="arr">→</span>
+            <span>Gestioné el soporte técnico integral (Nivel 1 y 2) para más de [N] equipos, estableciendo procesos de resolución de incidencias que minimizaron los tiempos de inactividad operativa.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- PROYECTOS DESTACADOS -->
+      <section class="section">
+        <h2 class="section-title">Proyectos Destacados</h2>
+
+        <div class="projects">
+
+          <div class="project">
+            <span class="project-dot">▸</span>
+            <div>
+              <p class="project-name">
+                DevLink — Marketplace de Desarrolladores
+                <a class="project-link" href="https://devlink.nygaccesorios.com">↗ En producción</a>
+              </p>
+              <p class="project-desc">Plataforma web que conecta desarrolladores con clientes. Diseñada con foco en escalabilidad y experiencia de usuario.</p>
+              <div class="project-tags">
+                <span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">MySQL</span><span class="tag">Tailwind CSS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <span class="project-dot">▸</span>
+            <div>
+              <p class="project-name">
+                Puyo Code — Agencia de Desarrollo
+                <a class="project-link" href="https://github.com/rcvazquezz/puyo-code">↗ GitHub</a>
+              </p>
+              <p class="project-desc">Plataforma web para mi agencia, enfocada en soluciones digitales a medida, optimización de rendimiento y presencia online.</p>
+              <div class="project-tags">
+                <span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">MySQL</span><span class="tag">Tailwind CSS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <span class="project-dot">▸</span>
+            <div>
+              <p class="project-name">
+                Sistema de Gestión de Trámites — CNE
+                <a class="project-link" href="https://github.com/rcvazquezz/sistema_cne">↗ GitHub</a>
+              </p>
+              <p class="project-desc">Aplicación web integral para la automatización de flujos operativos internos y trazabilidad de trámites institucionales.</p>
+              <div class="project-tags">
+                <span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Tailwind CSS</span><span class="tag">JavaScript</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ── COLUMNA DERECHA ────────────────────────────────── -->
+    <div>
+
+      <!-- FORMACIÓN -->
+      <section class="section">
+        <h2 class="section-title">Formación</h2>
+        <p class="edu-title">Técnico Superior Universitario en Análisis de Sistemas | Mención Desarrollo Web</p>
+        <p class="edu-meta">IUTEPI — Instituto Universitario de Tecnología para la Informática &nbsp;·&nbsp; Guanare, Portuguesa</p>
+        <span class="edu-period">2023 – 2026</span>
+        <p class="edu-desc">Formación orientada a la ingeniería de software, arquitectura de sistemas y despliegue de aplicaciones web escalables.</p>
+        <p class="edu-hook"><span>→</span> Del levantamiento de requerimientos a la puesta en producción.</p>
+      </section>
+
+      <!-- STACK TECNOLÓGICO -->
+      <section class="section">
+        <h2 class="section-title">Stack Tecnológico</h2>
+        <div class="skills">
+          <span class="skill">PHP</span>
+          <span class="skill">JavaScript</span>
+          <span class="skill">MySQL</span>
+          <span class="skill">HTML5</span>
+          <span class="skill">CSS3</span>
+          <span class="skill">Tailwind CSS</span>
+          <span class="skill">REST APIs</span>
+          <span class="skill">Git</span>
+          <span class="skill">GitHub</span>
+          <span class="skill">Análisis de Sistemas</span>
+          <span class="skill">BD Relacionales</span>
+        </div>
+      </section>
+
+      <!-- IDIOMAS -->
+      <section class="section">
+        <h2 class="section-title">Idiomas</h2>
+        <div class="lang-row">
+          <span class="lang-name">Español</span>
+          <span class="lang-level">Nativo</span>
+        </div>
+        <div class="lang-row">
+          <span class="lang-name">Inglés</span>
+          <span class="lang-level">Básico</span>
+        </div>
+      </section>
+
+      <!-- DISPONIBILIDAD -->
+      <section class="section">
+        <h2 class="section-title">Disponibilidad</h2>
+        <div class="avail">
+          <p class="avail-title">✓ Disponible ahora</p>
+          <p class="avail-text">Incorporación inmediata. Presencial o remoto. Abierto a reubicación en cualquier localización.</p>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
