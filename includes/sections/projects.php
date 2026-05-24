@@ -27,6 +27,17 @@ $proyectos = [
     ],
 
     [
+        'nombre'      => 'Puyo Code',
+        'descripcion' => 'Plataforma web para mi agencia de desarrollo, enfocada en la creación de soluciones digitales a medida, optimización de rendimiento y estrategias de presencia online.',
+        'tags'        => ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS'],
+        'estado'      => 'En producción',
+        'url'         => null,
+        'github'      => 'https://github.com/rcvazquezz/puyo-code',
+        'github_label' => 'Ver repositorio en GitHub',
+        'insignia'    => 'Agencia de Desarrollo',
+    ],
+
+    [
         'nombre'      => 'Sistema de Gestión de Trámites',
         'descripcion' => 'Aplicación web integral para la automatización de flujos operativos internos, optimizando la gestión y trazabilidad de trámites institucionales.',
         'tags'        => ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
