@@ -25,10 +25,10 @@ $experiencias = [
         'ubicacion' => 'Guanare, Portuguesa',
         'periodo'   => 'Dic 2025 – May 2026',
         'bullets'   => [
-            'Desarrollé una aplicación web full stack (PHP, MySQL, Tailwind CSS) para automatizar procesos internos institucionales, reduciendo tiempos operativos.',
-            'Realicé auditorías de sistemas críticos y validación de infraestructura hardware del organismo.',
-            'Administré bases de datos relacionales con foco en integridad referencial y seguridad de datos.',
-            'Gestioné soporte técnico de primer y segundo nivel para el parque informático institucional.',
+            'Diseñé y desarrollé una aplicación web Full Stack (PHP, MySQL, Tailwind) para la automatización de flujos de trabajo institucionales. Esta solución redujo significativamente los tiempos de procesamiento administrativo y mejoró la precisión en el manejo de expedientes.',
+            'Lideré auditorías técnicas de sistemas críticos y validación de infraestructura de hardware. Implementé protocolos de mejora continua que garantizaron la disponibilidad operativa y la integridad de los datos en entornos de alta exigencia.',
+            'Arquitecto de bases de datos relacionales, optimizando consultas y aplicando políticas de seguridad e integridad referencial, logrando una mayor eficiencia en la recuperación y protección de información sensible.',
+            'Gestioné el soporte técnico integral (Nivel 1 y 2) para más de [N] equipos, estableciendo procesos de resolución de incidencias que minimizaron los tiempos de inactividad operativa.',
         ],
     ],
 
