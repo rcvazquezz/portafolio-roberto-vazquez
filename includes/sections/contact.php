@@ -22,8 +22,8 @@ $canales = [
     [
         'icono' => 'email',
         'label' => 'Email',
-        'valor' => 'rcvazquezantelo@gmail.com',
-        'url'   => 'mailto:rcvazquezantelo@gmail.com',
+        'valor' => 'rcvazquezantelo2006@gmail.com',
+        'url'   => 'mailto:rcvazquezantelo2006@gmail.com',
         'cta'   => 'Enviar email →',
     ],
     [

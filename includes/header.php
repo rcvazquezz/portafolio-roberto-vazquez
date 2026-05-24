@@ -112,7 +112,7 @@ $nav_items = [
 
       <!-- ── CTA de escritorio ─────────────────────────────────── -->
       <div class="hidden md:flex items-center">
-        <a href="mailto:rcvazquezantelo@gmail.com" class="btn-outline text-xs py-2 px-4">
+        <a href="mailto:rcvazquezantelo2006@gmail.com" class="btn-outline text-xs py-2 px-4">
           Contáctame
         </a>
       </div>
@@ -169,7 +169,7 @@ $nav_items = [
         </li>
       <?php endforeach; ?>
       <li class="pt-3 mt-2 border-t border-ui-border" role="none">
-        <a href="mailto:rcvazquezantelo@gmail.com" class="btn-primary w-full justify-center">
+        <a href="mailto:rcvazquezantelo2006@gmail.com" class="btn-primary w-full justify-center">
           Contáctame
         </a>
       </li>
