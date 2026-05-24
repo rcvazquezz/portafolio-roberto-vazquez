@@ -1,0 +1,395 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════
+   1. CSS CUSTOM PROPERTIES — Design Tokens
+   Enfoque idéntico a Shadcn/UI: centralizar todos los valores de
+   diseño en variables CSS para que cualquier ajuste sea un cambio
+   de un solo lugar. Los valores deben coincidir con tailwind.config.js
+═══════════════════════════════════════════════════════════════════ */
+@layer base {
+  :root {
+    /* ── Paleta Noir & Violet ── */
+    --color-noir:       #0C0C0F;
+    --color-graphite:   #1A1A24;
+    --color-cream:      #F2F1ED;
+    --color-ink:        #111118;
+    --color-violet:     #7C65F6;
+    --color-violet-lt:  #EDE9FE;
+    --color-violet-mut: #A78BFA;
+    --color-violet-dk:  #5B45D4;
+    --color-surface:    #FFFFFF;
+    --color-border:     #E4E3DF;
+    --color-muted:      #6B6B78;
+    --color-muted-bg:   #F7F6F2;
+
+    /* ── Tipografía ── */
+    --font-display: 'Syne', sans-serif;
+    --font-body:    'Inter', sans-serif;
+
+    /* ── Radios ── */
+    --radius-card:   12px;
+    --radius-button: 8px;
+    --radius-badge:  6px;
+
+    /* ── Transiciones artesanales (una por tipo de interacción) ── */
+    --t-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);   /* hover de color */
+    --t-base:   250ms cubic-bezier(0.4, 0, 0.2, 1);   /* elevación de card */
+    --t-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);   /* reveal de scroll */
+    --t-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1); /* botones (rebote) */
+
+    /* ── Sombras: Card Elevated ── */
+    --shadow-card:       0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 8px 24px rgba(0,0,0,0.10), 0 16px 48px rgba(0,0,0,0.08);
+    --shadow-violet:     0 4px 16px rgba(124, 101, 246, 0.25);
+    --shadow-violet-lg:  0 8px 32px rgba(124, 101, 246, 0.35);
+  }
+
+  /* ── Reset global ──────────────────────────────────────────────── */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-cream text-ink font-body;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* ── Selección de texto con acento de marca ── */
+  ::selection {
+    background-color: var(--color-violet-lt);
+    color: var(--color-violet);
+  }
+
+  /* ── Scrollbar personalizada ── */
+  ::-webkit-scrollbar        { width: 5px; }
+  ::-webkit-scrollbar-track  { background: var(--color-cream); }
+  ::-webkit-scrollbar-thumb  { background: var(--color-border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-muted); }
+
+  /* ── Headings: Syne por defecto ── */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply text-noir;
+    line-height: 1.15;
+  }
+
+  /* ── Links: transición rápida de color ── */
+  a {
+    transition: color var(--t-fast);
+  }
+
+  /* ── Focus visible accesible ── */
+  :focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 3px;
+    border-radius: var(--radius-badge);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   2. COMPONENTES ARTESANALES — @layer components
+   Cada clase define su propia transición CSS personalizada.
+   Inspirado en la filosofía de Shadcn/UI pero hand-crafted para PHP.
+   Regla: ningún componente comparte la misma curva de animación si
+   su propósito interactivo es diferente.
+═══════════════════════════════════════════════════════════════════ */
+@layer components {
+
+  /* ──────────────────────────────────────────────────────────────
+     LAYOUT HELPERS
+  ────────────────────────────────────────────────────────────── */
+
+  /* Contenedor de página con padding responsivo */
+  .section-container {
+    @apply max-w-content mx-auto px-6 md:px-8 lg:px-12;
+  }
+
+  /* Padding vertical de sección */
+  .section-wrapper {
+    @apply py-24 md:py-32;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     ENCABEZADOS DE SECCIÓN
+  ────────────────────────────────────────────────────────────── */
+
+  /* Etiqueta pequeña sobre el título (ej: "Trayectoria") */
+  .section-label {
+    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-violet mb-4;
+  }
+  .section-label::before {
+    content: '';
+    @apply block w-6 h-px bg-violet;
+  }
+
+  /* Título principal de sección */
+  .section-heading {
+    @apply font-display font-bold text-noir;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  /* Subtítulo descriptivo de sección */
+  .section-subheading {
+    @apply text-muted font-body mt-4 max-w-xl;
+    font-size: 1.0625rem;
+    line-height: 1.75;
+  }
+
+  /* Línea decorativa bajo el título */
+  .section-divider {
+    @apply w-12 h-0.5 bg-violet mt-4 mb-0;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     CARD — Elevated (Propuesta A)
+     Transición: transform + box-shadow simultaneos (var(--t-base))
+  ────────────────────────────────────────────────────────────── */
+  .card {
+    @apply bg-surface rounded-card border border-ui-border;
+    box-shadow: var(--shadow-card);
+    transition: transform var(--t-base), box-shadow var(--t-base);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Card de proyecto: flex column con gap interno */
+  .project-card {
+    @apply card p-6 flex flex-col gap-4;
+  }
+  .project-card .card-tag-bar {
+    @apply flex flex-wrap gap-2;
+  }
+
+  /* Card de Toolkit: dashed border con hover de color */
+  .toolkit-card {
+    @apply rounded-card border-2 border-dashed border-ui-border bg-muted-bg;
+    @apply p-8 flex flex-col items-center justify-center text-center gap-3;
+    min-height: 220px;
+    /* Transición diferente: solo color, no elevación (es un placeholder) */
+    transition: border-color var(--t-base), background-color var(--t-base);
+  }
+  .toolkit-card:hover {
+    @apply border-violet bg-violet-light;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     BADGES
+  ────────────────────────────────────────────────────────────── */
+
+  .badge {
+    @apply inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-badge;
+    transition: background-color var(--t-fast), color var(--t-fast);
+  }
+  .badge-violet  { @apply badge bg-violet-light text-violet; }
+  .badge-dark    { @apply badge bg-graphite text-violet-muted; }
+  .badge-neutral { @apply badge bg-muted-bg text-muted; }
+
+  /* Badge de disponibilidad con dot pulsante */
+  .availability-badge {
+    @apply inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full;
+    background-color: rgba(124, 101, 246, 0.08);
+    color: var(--color-violet);
+    border: 1px solid rgba(124, 101, 246, 0.2);
+  }
+  .availability-badge .dot {
+    @apply w-2 h-2 rounded-full bg-violet;
+    animation: pulse-dot 2s ease infinite;
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     BOTONES ARTESANALES
+     Cada botón tiene su propia curva de transición:
+       - btn-primary: spring (rebote) para transform, fast para color
+       - btn-outline: smooth para border/color, spring para transform
+       - btn-ghost:   fast para todo (navegación, no protagonista)
+  ────────────────────────────────────────────────────────────── */
+
+  /* Botón primario: violeta sólido con sombra de acento */
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-button;
+    @apply font-semibold text-sm text-white font-body;
+    background-color: var(--color-violet);
+    box-shadow: var(--shadow-violet);
+    transition:
+      background-color var(--t-fast),
+      transform var(--t-spring),
+      box-shadow var(--t-fast);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-violet-dk);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-violet-lg);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  /* Botón outline: borde sutil que se tiñe de violeta al hover */
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-button;
+    @apply font-semibold text-sm text-noir font-body;
+    border: 1.5px solid var(--color-border);
+    background-color: transparent;
+    transition:
+      border-color var(--t-fast),
+      color var(--t-fast),
+      background-color var(--t-fast),
+      transform var(--t-spring);
+  }
+  .btn-outline:hover {
+    border-color: var(--color-violet);
+    color: var(--color-violet);
+    background-color: var(--color-violet-lt);
+    transform: translateY(-2px);
+  }
+  .btn-outline:active { transform: translateY(0); }
+
+  /* Botón ghost: para links de nav y acciones secundarias */
+  .btn-ghost {
+    @apply inline-flex items-center gap-1 text-sm font-medium text-muted;
+    @apply rounded-button px-3 py-2;
+    transition: color var(--t-fast), background-color var(--t-fast);
+  }
+  .btn-ghost:hover    { @apply text-ink bg-muted-bg; }
+  .btn-ghost.active   { @apply text-violet; }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     NAV LINK — Con indicador de línea deslizante
+     La línea crece con width (no clip-path) para compatibilidad max.
+  ────────────────────────────────────────────────────────────── */
+  .nav-link {
+    @apply relative text-sm font-medium text-muted;
+    padding-bottom: 2px;
+    transition: color var(--t-fast);
+  }
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px bg-violet;
+    width: 0;
+    transition: width var(--t-base);
+  }
+  .nav-link:hover,
+  .nav-link.active  { @apply text-ink; }
+  .nav-link:hover::after,
+  .nav-link.active::after { width: 100%; }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     TIMELINE — Para sección de Experiencia
+  ────────────────────────────────────────────────────────────── */
+  .timeline-item {
+    @apply relative pl-8;
+  }
+  /* Punto del timeline */
+  .timeline-item::before {
+    content: '';
+    @apply absolute left-0 top-2 w-3 h-3 rounded-full border-2 border-violet bg-cream;
+    transition: background-color var(--t-fast);
+  }
+  /* Línea vertical conectora */
+  .timeline-item::after {
+    content: '';
+    @apply absolute left-1.5 top-5 w-px bg-ui-border;
+    bottom: -3rem;
+  }
+  .timeline-item:last-child::after { display: none; }
+  .timeline-item:hover::before     { @apply bg-violet; }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     SKILL TAG — Badge de tecnología con hover de escala (spring)
+  ────────────────────────────────────────────────────────────── */
+  .skill-tag {
+    @apply badge-violet font-mono text-xs tracking-wide cursor-default;
+    transition:
+      background-color var(--t-fast),
+      color var(--t-fast),
+      transform var(--t-spring);
+  }
+  .skill-tag:hover {
+    @apply bg-violet text-white;
+    transform: scale(1.06);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     LINK EXTERNO — Con ícono que se desliza al hover
+  ────────────────────────────────────────────────────────────── */
+  .link-external {
+    @apply inline-flex items-center gap-1 text-violet text-sm font-semibold;
+    transition: gap var(--t-base), opacity var(--t-fast);
+  }
+  .link-external:hover {
+    gap: 0.5rem;
+    opacity: 0.8;
+  }
+
+  /* ── Clase de nav al hacer scroll ── */
+  .nav-scrolled {
+    @apply backdrop-blur-md;
+    background-color: rgba(242, 241, 237, 0.92);
+    border-bottom: 1px solid var(--color-border);
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   3. UTILIDADES PERSONALIZADAS — @layer utilities
+═══════════════════════════════════════════════════════════════════ */
+@layer utilities {
+
+  /* Retrasos escalonados para animaciones de entrada en grupos */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+  .animation-delay-700 { animation-delay: 700ms; }
+
+  /* Texto con gradiente violeta (nombre en hero) */
+  .text-gradient {
+    background: linear-gradient(135deg, #7C65F6 0%, #A78BFA 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Fondo con blob de gradiente violeta (hero) */
+  .bg-hero-gradient {
+    background:
+      radial-gradient(ellipse 80% 50% at 60% -10%, rgba(124, 101, 246, 0.10) 0%, transparent 65%),
+      var(--color-cream);
+  }
+
+  /* Estado inicial del IntersectionObserver — invisible + desplazado */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--t-slow), transform var(--t-slow);
+  }
+
+  /* Estado final — visible y en posición (añadido por app.js) */
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

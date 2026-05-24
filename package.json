@@ -1,0 +1,16 @@
+{
+  "name": "portafolio-roberto-vazquez",
+  "version": "1.0.0",
+  "description": "Portafolio personal de Roberto Vázquez",
+  "main": "index.php",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch",
+    "build": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css --minify"
+  },
+  "keywords": [],
+  "author": "Roberto Vázquez",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.x.x"
+  }
+}
