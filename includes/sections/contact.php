@@ -22,9 +22,9 @@ $canales = [
     [
         'icono' => 'email',
         'label' => 'Email',
-        'valor' => 'rcvazquezantelo2006@gmail.com',
+        'valor' => 'rcvazquezantelo2006',   // usuario visible; dominio implícito en el mailto
         'url'   => 'mailto:rcvazquezantelo2006@gmail.com',
-        'cta'   => 'Enviar email →',
+        'cta'   => 'Abrir cliente de correo →',
     ],
     [
         'icono' => 'phone',
@@ -123,7 +123,7 @@ function icono_contacto(string $tipo): string {
             <p class="text-xs font-semibold tracking-widest uppercase text-muted mb-1">
               <?= htmlspecialchars($canal['label']) ?>
             </p>
-            <p class="text-white text-sm font-medium break-all">
+            <p class="text-white text-sm font-medium truncate" title="<?= htmlspecialchars($canal['valor']) ?>">
               <?= htmlspecialchars($canal['valor']) ?>
             </p>
           </div>
