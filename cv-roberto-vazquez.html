@@ -48,6 +48,18 @@
 
     a { color: var(--violet); text-decoration: none; }
 
+    /* Evita que Chrome inserte saltos de página dentro del CV */
+    .page-content {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    /* El layout grid nunca debe empezar en una página nueva */
+    .layout {
+      break-before: avoid;
+      page-break-before: avoid;
+    }
+
     @media screen {
       body {
         width: 210mm;
@@ -348,6 +360,8 @@
 </head>
 <body>
 
+  <div class="page-content">
+
   <!-- HEADER ──────────────────────────────────────────────── -->
   <header>
     <p class="cv-name">Roberto Carlos <span>Vázquez</span> Antelo</p>
@@ -503,7 +517,9 @@
 
     </div>
 
-  </div>
+  </div><!-- fin layout -->
+
+  </div><!-- fin page-content -->
 
 </body>
 </html>
