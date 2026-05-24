@@ -35,7 +35,7 @@
         <ul class="flex items-center gap-6" role="list">
           <li>
             <a
-              href="https://github.com/"
+              href="https://github.com/rcvazquezz"
               target="_blank"
               rel="noopener noreferrer"
               class="text-muted text-sm transition-colors duration-150 hover:text-white"
@@ -55,7 +55,7 @@
           </li>
           <li>
             <a
-              href="mailto:rcvazquezantelo@gmail.com"
+              href="mailto:rcvazquezantelo2006@gmail.com"
               class="text-muted text-sm transition-colors duration-150 hover:text-white"
             >
               Email
