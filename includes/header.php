@@ -19,15 +19,7 @@ $config = [
                    . 'Desarrollador Full Stack con experiencia en PHP, MySQL y JavaScript.',
     'url'         => 'https://devlink.nygaccesorios.com/',
     'color_tema'  => '#0C0C0F',
-
-    /**
-     * ─── GOOGLE ANALYTICS ────────────────────────────────────
-     * ID de propiedad Google Analytics 4.
-     * Formato: G-XXXXXXXXXX (obtenido de Google Analytics Console)
-     * Para usar en producción, reemplazar con ID real:
-     *   'google_analytics_id' => 'G-XXXXXXXXXX',
-     */
-    'google_analytics_id' => 'G-PLACEHOLDER',
+    'google_analytics_id' => 'G-PLACEHOLDER', /* Google Analytics 4 ID */
 ];
 
 /* ── Ítems del menú: etiqueta visible => ancla de sección ───── */
@@ -119,32 +111,8 @@ $nav_items = [
         <?php endforeach; ?>
       </ul>
 
-      <!-- ── CTAs de escritorio ────────────────────────────────── -->
-      <div class="hidden md:flex items-center gap-2">
-        <!-- Toggle Dark Mode: botón con icono dinámico (sol/luna) -->
-        <button
-          @click="toggleDarkMode()"
-          :aria-label="darkMode ? 'Activar modo claro' : 'Activar modo oscuro'"
-          class="btn-ghost group"
-          type="button"
-        >
-          <!-- Icono sol: visible en light mode -->
-          <i
-            x-show="!darkMode"
-            data-lucide="sun"
-            class="w-4 h-4 transition-transform duration-200 group-hover:rotate-12"
-            aria-hidden="true"
-          ></i>
-          <!-- Icono luna: visible en dark mode -->
-          <i
-            x-show="darkMode"
-            data-lucide="moon"
-            class="w-4 h-4 transition-transform duration-200 group-hover:scale-110"
-            aria-hidden="true"
-          ></i>
-        </button>
-
-        <!-- Descargar CV: CTA principal -->
+      <!-- ── CTA de escritorio ─────────────────────────────────── -->
+      <div class="hidden md:flex items-center">
         <a href="/public/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-outline text-xs py-2 px-4">
           <i data-lucide="download" class="w-3 h-3" aria-hidden="true"></i>
           Descargar CV

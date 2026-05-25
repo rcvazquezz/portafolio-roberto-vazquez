@@ -4,98 +4,46 @@
 
 /* ═══════════════════════════════════════════════════════════════════
    1. CSS CUSTOM PROPERTIES — Design Tokens
-
    Enfoque idéntico a Shadcn/UI: centralizar todos los valores de
    diseño en variables CSS para que cualquier ajuste sea un cambio
    de un solo lugar. Los valores deben coincidir con tailwind.config.js
-
-   Soporta temas claro (light) y oscuro (dark) mediante atributo
-   data-theme en <html>. Fallback: prefers-color-scheme del SO.
 ═══════════════════════════════════════════════════════════════════ */
 @layer base {
-  /* ──────────────────────────────────────────────────────────────
-     TEMA CLARO (default / light mode)
-     Paleta: Cream (fondo) + Noir (text) + Violet (acento)
-  ────────────────────────────────────────────────────────────── */
-  :root,
-  [data-theme="light"] {
-    /* Paleta de colores: Noir & Violet */
-    --color-noir:       #0C0C0F;      /* Negro principal (títulos, hero) */
-    --color-graphite:   #1A1A24;      /* Superficies oscuras secundarias */
-    --color-cream:      #F2F1ED;      /* Fondo principal (cálido, natural) */
-    --color-ink:        #111118;      /* Texto principal (alto contraste) */
-    --color-violet:     #7C65F6;      /* Acento primario (CTA, hover) */
-    --color-violet-lt:  #EDE9FE;      /* Fondo badges, hover suave */
-    --color-violet-mut: #A78BFA;      /* Acento secundario */
-    --color-violet-dk:  #5B45D4;      /* Hover botones primarios */
-    --color-surface:    #FFFFFF;      /* Fondo cards (superficies elevadas) */
-    --color-border:     #E4E3DF;      /* Bordes sutiles (1px separadores) */
-    --color-muted:      #6B6B78;      /* Texto secundario (labels, hints) */
-    --color-muted-bg:   #F7F6F2;      /* Fondo alterno (hover, toggles) */
+  :root {
+    /* ── Paleta Noir & Violet ── */
+    --color-noir:       #0C0C0F;
+    --color-graphite:   #1A1A24;
+    --color-cream:      #F2F1ED;
+    --color-ink:        #111118;
+    --color-violet:     #7C65F6;
+    --color-violet-lt:  #EDE9FE;
+    --color-violet-mut: #A78BFA;
+    --color-violet-dk:  #5B45D4;
+    --color-surface:    #FFFFFF;
+    --color-border:     #E4E3DF;
+    --color-muted:      #6B6B78;
+    --color-muted-bg:   #F7F6F2;
 
-    /* Tipografía: fuentes asignadas en includes/header.php */
+    /* ── Tipografía ── */
     --font-display: 'Syne', sans-serif;
     --font-body:    'Inter', sans-serif;
 
-    /* Radios de bordeado: consistencia visual */
-    --radius-card:   12px;            /* Bordes cards principales */
-    --radius-button: 8px;             /* Bordes botones */
-    --radius-badge:  6px;             /* Bordes badges pequeños */
-
-    /* Transiciones artesanales: una curva por tipo de interacción
-       Evita inconsistencia de "sensación" entre componentes */
-    --t-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);   /* Cambios rápidos: color hover */
-    --t-base:   250ms cubic-bezier(0.4, 0, 0.2, 1);   /* Estándar: elevación cards */
-    --t-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);   /* Lentas: reveal en scroll */
-    --t-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1); /* Rebote: click botones */
-
-    /* Sombras: estrategia "Card Elevated" de Material Design */
-    --shadow-card:       0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
-    --shadow-card-hover: 0 8px 24px rgba(0,0,0,0.10), 0 16px 48px rgba(0,0,0,0.08);
-    --shadow-violet:     0 4px 16px rgba(124, 101, 246, 0.25);
-    --shadow-violet-lg:  0 8px 32px rgba(124, 101, 246, 0.35);
-  }
-
-  /* ──────────────────────────────────────────────────────────────
-     TEMA OSCURO (dark mode)
-     Paleta invertida: Noir (fondo) + Cream (text) + Violet (acento)
-     Cambios suaves con transición CSS (no parpadeo)
-  ────────────────────────────────────────────────────────────── */
-  [data-theme="dark"] {
-    /* Colores invertidos: backgrounds oscuros, textos claros */
-    --color-noir:       #F2F1ED;      /* Fue fondo → ahora texto principal */
-    --color-graphite:   #E4E3DF;      /* Fue border → ahora superficie clara */
-    --color-cream:      #0C0C0F;      /* Fue texto → ahora fondo principal */
-    --color-ink:        #F2F1ED;      /* Fue texto → ahora texto (claro) */
-    --color-violet:     #A78BFA;      /* Acento: versión más clara en dark */
-    --color-violet-lt:  #2D1B69;      /* Fondo badges oscuro */
-    --color-violet-mut: #7C65F6;      /* Acento secundario (vuelve original) */
-    --color-violet-dk:  #6B55E0;      /* Hover botones: más brillante */
-    --color-surface:    #1A1A24;      /* Cards sobre fondo oscuro */
-    --color-border:     #2D2D3D;      /* Bordes sutiles en dark */
-    --color-muted:      #A0A0A8;      /* Texto secundario (más claro) */
-    --color-muted-bg:   #2A2A35;      /* Fondo alterno */
-
-    /* Tipografía: mantiene las mismas fuentes */
-    --font-display: 'Syne', sans-serif;
-    --font-body:    'Inter', sans-serif;
-
-    /* Radios: no cambian en dark mode */
+    /* ── Radios ── */
     --radius-card:   12px;
     --radius-button: 8px;
     --radius-badge:  6px;
 
-    /* Transiciones: mantienen las mismas curvas */
-    --t-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --t-base:   250ms cubic-bezier(0.4, 0, 0.2, 1);
-    --t-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);
-    --t-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* ── Transiciones artesanales (una por tipo de interacción) ── */
+    --t-fast:   150ms cubic-bezier(0.4, 0, 0.2, 1);   /* hover de color */
+    --t-base:   250ms cubic-bezier(0.4, 0, 0.2, 1);   /* elevación de card */
+    --t-slow:   400ms cubic-bezier(0.4, 0, 0.2, 1);   /* reveal de scroll */
+    --t-spring: 350ms cubic-bezier(0.34, 1.56, 0.64, 1); /* botones (rebote) */
 
-    /* Sombras: más sutiles en dark (fondo ya oscuro) */
-    --shadow-card:       0 2px 8px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.2);
-    --shadow-card-hover: 0 8px 24px rgba(0,0,0,0.4), 0 16px 48px rgba(0,0,0,0.3);
-    --shadow-violet:     0 4px 16px rgba(167, 139, 250, 0.3);
-    --shadow-violet-lg:  0 8px 32px rgba(167, 139, 250, 0.4);
+    /* ── Sombras: Card Elevated ── */
+    --shadow-card:       0 2px 8px rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.04);
+    --shadow-card-hover: 0 8px 24px rgba(0,0,0,0.10), 0 16px 48px rgba(0,0,0,0.08);
+    --shadow-violet:     0 4px 16px rgba(124, 101, 246, 0.25);
+    --shadow-violet-lg:  0 8px 32px rgba(124, 101, 246, 0.35);
   }
 
   /* ── Reset global ──────────────────────────────────────────────── */
@@ -108,8 +56,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
-    /* Transición suave al cambiar tema (data-theme) - evita "flash" */
-    transition: background-color var(--t-fast), color var(--t-fast);
   }
 
   body {

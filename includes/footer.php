@@ -82,40 +82,15 @@
      SCRIPTS
 
      Orden de carga (importa):
-       1. Theme Restoration — inline, síncrono.
-                              Restaura tema guardado ANTES de que se
-                              renderice el DOM, evitando "flash" de
-                              tema incorrecto (FOUC - Flash of Unstyled Content).
-       2. Google Analytics   — async, después del tema.
-                              Tracking de pageviews y eventos de usuario.
-       3. Lucide Icons       — síncrono, al final del body.
-                              Reemplaza <i data-lucide> con SVGs.
-       4. Alpine.js          — defer, registra el runtime reactivo.
-       5. app.js             — defer, registra componentes + observers.
+       1. Lucide Icons  — síncrono, al final del body.
+                          El DOM ya está parseado en este punto,
+                          por lo que createIcons() encuentra todos
+                          los elementos data-lucide y los reemplaza
+                          por SVGs antes de que el usuario los vea.
+       2. Alpine.js     — defer, registra el runtime reactivo.
+       3. app.js        — defer, registra componentes Alpine +
+                          IntersectionObserver para animaciones.
 ════════════════════════════════════════════════════════════════ -->
-
-<!-- ──────────────────────────────────────────────────────────────
-     RESTAURACIÓN DE TEMA (Previene FOUC)
-
-     Script inline síncrono que se ejecuta ANTES de renderizar body.
-     Lee localStorage y aplica data-theme sin parpadeo.
-
-     Nota: app.js volverá a restaurar en init() cuando Alpine cargue,
-           pero esto es redundante por seguridad. Mejor tener dos
-           llamadas redundantes que un "flash" de tema incorrecto.
-────────────────────────────────────────────────────────────────── -->
-<script>
-  (function restoreThemePreference() {
-    // Obtener tema guardado del usuario o fallback al SO
-    const saved = localStorage.getItem('theme-preference');
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = saved ? saved === 'dark' : prefersDark;
-
-    // Aplicar tema al <html> ANTES de que Alpine renderice
-    // Esto evita que el usuario vea un "flash" del tema equivocado
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  })();
-</script>
 
 <!-- Lucide Icons UMD — síncrono para evitar FOIC (Flash of Icon Content) -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>

@@ -29,24 +29,11 @@ document.addEventListener('alpine:init', () => {
     activeSection: 'inicio',
 
     /**
-     * ─── DARK MODE ───────────────────────────────────────────────
-     * true si tema oscuro está activo; false si está en modo claro.
-     * Se persiste en localStorage bajo clave 'theme-preference'.
-     */
-    darkMode: false,
-
-    /**
      * Alpine llama a init() automáticamente al montar el componente (x-init).
-     * Aquí:
-     *   1. Restauramos el tema guardado (si existe) de localStorage
-     *   2. Adjuntamos listener de scroll (passive mode para no bloquear)
-     *   3. Detectamos sección activa inicial
+     * Aquí adjuntamos el listener de scroll con { passive: true } para no
+     * bloquear el hilo principal durante el scroll.
      */
     init() {
-      // ── Restaurar preferencia de tema guardada ──
-      this.restoreThemePreference();
-
-      // ── Listener de scroll para nav-scrolled + sección activa ──
       window.addEventListener('scroll', () => {
         this.scrolled = window.scrollY > 20;
         this.updateActiveSection();
@@ -54,56 +41,6 @@ document.addEventListener('alpine:init', () => {
 
       // Estado inicial correcto sin esperar al primer scroll
       this.updateActiveSection();
-    },
-
-    /**
-     * Restaura la preferencia de tema (light/dark) desde localStorage.
-     * Fallback: respeta prefers-color-scheme del SO si no hay preferencia guardada.
-     *
-     * Notas:
-     *   - Se llama en init() antes de que Alpine renderice
-     *   - Evita "flash" de tema incorrecto porque footer.php ya lo hizo
-     *   - localStorage key: 'theme-preference' (valores: 'light' | 'dark')
-     */
-    restoreThemePreference() {
-      const saved = localStorage.getItem('theme-preference');
-
-      if (saved) {
-        // ✓ Usuario tiene preferencia guardada
-        this.darkMode = saved === 'dark';
-        this.applyTheme(this.darkMode);
-      } else {
-        // Fallback: respetar SO (prefers-color-scheme: dark)
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        this.darkMode = prefersDark;
-        // No aplicar aquí (ya se hizo en footer.php pre-Alpine)
-      }
-    },
-
-    /**
-     * Alterna entre tema claro y oscuro, persistiendo en localStorage.
-     * Flujo:
-     *   1. Invierte this.darkMode (boolean toggle)
-     *   2. Llama applyTheme() para actualizar DOM
-     *   3. Guarda en localStorage para persistencia entre sesiones
-     */
-    toggleDarkMode() {
-      this.darkMode = !this.darkMode;
-      this.applyTheme(this.darkMode);
-      localStorage.setItem('theme-preference', this.darkMode ? 'dark' : 'light');
-    },
-
-    /**
-     * Aplica el tema actual al elemento <html> mediante atributo data-theme.
-     * Triggers: cambio en CSS (via [data-theme] selector) sin parpadeo.
-     *
-     * @param {boolean} isDark - true para dark mode, false para light mode
-     */
-    applyTheme(isDark) {
-      document.documentElement.setAttribute(
-        'data-theme',
-        isDark ? 'dark' : 'light'
-      );
     },
 
     /**
