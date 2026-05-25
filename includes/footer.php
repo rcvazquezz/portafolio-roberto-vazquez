@@ -74,6 +74,11 @@
 </footer>
 
 <!-- ════════════════════════════════════════════════════════════
+     COMPONENTES GLOBALES
+════════════════════════════════════════════════════════════════ -->
+<?php require_once APP_ROOT . '/includes/components/contact-toast.php'; ?>
+
+<!-- ════════════════════════════════════════════════════════════
      SCRIPTS
 
      Orden de carga (importa):
