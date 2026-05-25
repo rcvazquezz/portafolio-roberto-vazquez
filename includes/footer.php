@@ -82,15 +82,40 @@
      SCRIPTS
 
      Orden de carga (importa):
-       1. Lucide Icons  — síncrono, al final del body.
-                          El DOM ya está parseado en este punto,
-                          por lo que createIcons() encuentra todos
-                          los elementos data-lucide y los reemplaza
-                          por SVGs antes de que el usuario los vea.
-       2. Alpine.js     — defer, registra el runtime reactivo.
-       3. app.js        — defer, registra componentes Alpine +
-                          IntersectionObserver para animaciones.
+       1. Theme Restoration — inline, síncrono.
+                              Restaura tema guardado ANTES de que se
+                              renderice el DOM, evitando "flash" de
+                              tema incorrecto (FOUC - Flash of Unstyled Content).
+       2. Google Analytics   — async, después del tema.
+                              Tracking de pageviews y eventos de usuario.
+       3. Lucide Icons       — síncrono, al final del body.
+                              Reemplaza <i data-lucide> con SVGs.
+       4. Alpine.js          — defer, registra el runtime reactivo.
+       5. app.js             — defer, registra componentes + observers.
 ════════════════════════════════════════════════════════════════ -->
+
+<!-- ──────────────────────────────────────────────────────────────
+     RESTAURACIÓN DE TEMA (Previene FOUC)
+
+     Script inline síncrono que se ejecuta ANTES de renderizar body.
+     Lee localStorage y aplica data-theme sin parpadeo.
+
+     Nota: app.js volverá a restaurar en init() cuando Alpine cargue,
+           pero esto es redundante por seguridad. Mejor tener dos
+           llamadas redundantes que un "flash" de tema incorrecto.
+────────────────────────────────────────────────────────────────── -->
+<script>
+  (function restoreThemePreference() {
+    // Obtener tema guardado del usuario o fallback al SO
+    const saved = localStorage.getItem('theme-preference');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = saved ? saved === 'dark' : prefersDark;
+
+    // Aplicar tema al <html> ANTES de que Alpine renderice
+    // Esto evita que el usuario vea un "flash" del tema equivocado
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  })();
+</script>
 
 <!-- Lucide Icons UMD — síncrono para evitar FOIC (Flash of Icon Content) -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -101,6 +126,37 @@
     lucide.createIcons();
   }
 </script>
+
+<!-- ──────────────────────────────────────────────────────────────
+     GOOGLE ANALYTICS 4 (gtag.js)
+
+     Tracking automático de:
+       • Pageviews: cada carga de página
+       • Scroll depth: hasta qué punto scrolleó el usuario
+       • Eventos personalizados: clicks en CTAs, descargas, etc.
+
+     Configuración:
+       • ID desde includes/header.php $config['google_analytics_id']
+       • Privacidad: NO rastrea datos personales
+       • Compatible: todos los navegadores modernos
+
+     Documentación: https://developers.google.com/analytics/devguides/collection/gtagjs
+────────────────────────────────────────────────────────────────── -->
+<?php if (!empty($config['google_analytics_id']) && $config['google_analytics_id'] !== 'G-PLACEHOLDER'): ?>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=<?= htmlspecialchars($config['google_analytics_id']) ?>"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Configuración de Google Analytics 4
+    gtag('config', '<?= htmlspecialchars($config['google_analytics_id']) ?>', {
+      'anonymize_ip': true,  // No guardar IP completa (privacidad)
+      'allow_google_signals': false,  // Respetar DNT (Do Not Track)
+      'allow_ad_personalization_signals': false,  // Sin personalización ads
+    });
+  </script>
+<?php endif; ?>
 
 <!-- Alpine.js v3 — interactividad reactiva sin framework -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
