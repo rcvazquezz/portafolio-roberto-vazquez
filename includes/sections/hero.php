@@ -108,7 +108,7 @@ $stack_hero = ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS', 'REST APIs', 'Git']
           </svg>
         </a>
         <a
-          href="/data/cv-roberto-vazquez.pdf"
+          href="/public/cv-roberto-vazquez.pdf"
           download="CV_Roberto_Vazquez.pdf"
           class="btn-outline group"
           aria-label="Descargar CV en PDF"

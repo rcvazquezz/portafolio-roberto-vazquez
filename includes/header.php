@@ -112,8 +112,9 @@ $nav_items = [
 
       <!-- ── CTA de escritorio ─────────────────────────────────── -->
       <div class="hidden md:flex items-center">
-        <a href="mailto:rcvazquezantelo2006@gmail.com" class="btn-outline text-xs py-2 px-4">
-          Contáctame
+        <a href="/public/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-outline text-xs py-2 px-4">
+          <i data-lucide="download" class="w-3 h-3" aria-hidden="true"></i>
+          Descargar CV
         </a>
       </div>
 
@@ -169,8 +170,9 @@ $nav_items = [
         </li>
       <?php endforeach; ?>
       <li class="pt-3 mt-2 border-t border-ui-border" role="none">
-        <a href="mailto:rcvazquezantelo2006@gmail.com" class="btn-primary w-full justify-center">
-          Contáctame
+        <a href="/public/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-primary w-full justify-center">
+          <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i>
+          Descargar CV
         </a>
       </li>
     </ul>
