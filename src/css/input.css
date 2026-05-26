@@ -352,41 +352,181 @@
 
 
   /* ──────────────────────────────────────────────────────────────
-     FORMULARIO DE CONTACTO
-     Estilos para inputs, textareas y elementos de feedback.
-     Validación visual intuitiva + accesibilidad.
+     FORMULARIO DE CONTACTO — Componente profesional
+
+     Estilos para:
+       - Contenedor (.form-container): fondo oscuro, bordes sutiles
+       - Campos (.form-group, .form-label, .form-input): validación visual
+       - Feedback (.form-feedback): mensajes de error/éxito
+       - Botón (.form-submit-btn): estados (hover, focus, disabled, loading)
+
+     ARQUITECTURA:
+       - Validación client-side con mensajes granulares
+       - Estados visuales claros (focus, disabled, error)
+       - Accesibilidad: aria-*, role, WCAG AA
+       - Escalable: fácil agregar campos nuevos
   ────────────────────────────────────────────────────────────── */
 
-  /* Contenedor de campo (agrupa label + input + error) */
-  .form-group {
-    @apply flex flex-col gap-2;
+  /**
+   * .form-container — Contenedor del formulario
+   *
+   * Reemplaza .card para formularios en secciones oscuras (bg-noir).
+   * Proporciona contraste visual y armonía con la paleta de colores.
+   *
+   * Propiedades:
+   *   - bg-graphite: fondo oscuro (#1A1A24) armonizado
+   *   - border-violet/20: borde sutil para definición
+   *   - shadow-card: elevar visualmente del fondo
+   *   - p-8: padding coherente
+   *
+   * Ejemplo:
+   *   <form class="form-container max-w-2xl mx-auto">
+   *     <!-- campos del formulario -->
+   *   </form>
+   */
+  .form-container {
+    @apply bg-graphite rounded-card border border-violet/20 p-8;
+    box-shadow: var(--shadow-card);
   }
 
-  /* Etiqueta del campo */
+  /**
+   * .form-group — Agrupa label + input + error message
+   *
+   * Proporciona estructura y espaciado consistente para cada campo.
+   * El último elemento (error) es opcional pero recomendado.
+   *
+   * Propiedades:
+   *   - flex flex-col: apila verticalmente
+   *   - gap-2: espaciado entre label, input, error
+   *
+   * Ejemplo:
+   *   <div class="form-group">
+   *     <label for="email">Email</label>
+   *     <input id="email" type="email" class="form-input" />
+   *     <span class="form-feedback" x-show="errors.email">...</span>
+   *   </div>
+   */
+  .form-group {
+    @apply flex flex-col gap-2 mb-6;
+  }
+
+  /**
+   * .form-label — Etiqueta de campo (label)
+   *
+   * Propiedades:
+   *   - text-ink: texto oscuro para máximo contraste
+   *   - font-medium: peso moderado, legible
+   *   - text-sm: tamaño compacto (14px)
+   *
+   * Notas:
+   *   - No tiene margin: usar espaciado del .form-group
+   *   - Compatible con asterisco requerido (*) en span.text-violet
+   */
   .form-label {
     @apply block font-medium text-sm text-ink;
   }
 
-  /* Input de texto y textarea — estilos base */
+  /**
+   * .form-input — Estilos para <input> y <textarea>
+   *
+   * ESTADOS:
+   *   1. Default: fondo claro sobre graphite, borde gris
+   *   2. Hover: borde violet sutil (sin focus)
+   *   3. Focus: borde violeta + ring violeta (glow)
+   *   4. Error: borde rojo (controlado por validación Alpine)
+   *   5. Disabled: opacidad reducida
+   *
+   * Propiedades:
+   *   - bg-muted-bg: fondo claro (#F7F6F2) para legibilidad
+   *   - text-ink: texto oscuro (#111118)
+   *   - border-2 border-ui-border: borde visible (#E4E3DF)
+   *   - rounded-button: radio 8px, coherente con botones
+   *
+   * TRANSICIONES:
+   *   - border-color: cambio suave en hover/focus
+   *   - box-shadow: glow del ring en focus
+   *   - Timing: var(--t-base) = 250ms
+   *
+   * ACCESIBILIDAD:
+   *   - focus:outline-none: remover outline nativo
+   *   - focus:ring-2 focus:ring-violet/20: ring personalizado
+   *   - placeholder: text-muted para visibilidad
+   *
+   * Ejemplo:
+   *   <input type="email" class="form-input w-full" placeholder="tu@email.com" />
+   */
   .form-input {
     @apply bg-muted-bg text-ink border-2 border-ui-border rounded-button px-4 py-3;
     @apply font-body text-sm placeholder:text-muted;
     transition: border-color var(--t-base), box-shadow var(--t-base);
-    /* Focus: borde violeta + glow sutil */
     @apply focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20;
   }
 
-  /* Estado hover (sin focus) */
   .form-input:not(:focus):hover {
     @apply border-violet/50;
   }
 
-  /* Mensaje de error — texto rojo */
+  /**
+   * .form-feedback — Mensajes de validación
+   *
+   * Muestra errores de validación con x-show/x-text en Alpine.js
+   *
+   * ESTILOS POR TIPO:
+   *   - Error: text-red-500 (controlado por validación)
+   *   - Info: text-muted (contadores, ayuda)
+   *   - Success: text-green-600 (feedback enviado)
+   *
+   * Propiedades:
+   *   - text-sm: compacto
+   *   - font-medium: legible
+   *
+   * Ejemplo:
+   *   <span class="form-feedback text-red-500" x-show="errors.email" x-text="errors.email"></span>
+   */
   .form-feedback {
     @apply text-sm font-medium;
   }
 
-  /* Botón de envío del formulario */
+  /**
+   * .form-submit-btn — Botón de envío
+   *
+   * ESTADOS:
+   *   1. Default: violeta + shadow
+   *   2. Hover: violeta-dk + shadow-lg + elevación (-2px)
+   *   3. Focus: outline violeta + ring
+   *   4. Active: regresa a línea base (translateY 0)
+   *   5. Disabled: opacidad 50%, cursor bloqueado
+   *   6. Loading: opacity 75% (mientras isSubmitting)
+   *
+   * Propiedades:
+   *   - inline-flex items-center justify-center: centra contenido
+   *   - px-8 py-4: padding amplio para visibilidad
+   *   - w-full: ocupa ancho de contenedor
+   *   - font-bold text-base: texto destacado
+   *   - letter-spacing: 0.5px para mejor legibilidad
+   *
+   * TRANSICIONES:
+   *   - background-color: var(--t-fast) = 150ms
+   *   - transform: var(--t-spring) = 350ms (rebote)
+   *   - box-shadow: var(--t-fast) = 150ms
+   *
+   * ACCESIBILIDAD:
+   *   - :disabled + cursor-not-allowed: indica deshabilitado
+   *   - Contraste violeta/blanco: WCAG AA+
+   *   - Text visible: "Enviar mensaje"
+   *
+   * COMPORTAMIENTO ALPINE:
+   *   - :disabled="isSubmitting || !isFormValid"
+   *   - :class="isSubmitting && 'opacity-75'"
+   *   - Spinner SVG con x-show="isSubmitting"
+   *   - Texto dinámico con x-text
+   *
+   * Ejemplo:
+   *   <button type="submit" class="form-submit-btn" :disabled="isSubmitting">
+   *     <svg x-show="isSubmitting">...</svg>
+   *     <span x-text="isSubmitting ? 'Enviando...' : 'Enviar mensaje'">Enviar mensaje</span>
+   *   </button>
+   */
   .form-submit-btn {
     @apply inline-flex items-center justify-center px-8 py-4 rounded-button w-full;
     @apply font-bold text-base text-white font-body;
@@ -410,9 +550,8 @@
     transform: translateY(0);
   }
 
-  /* Estado disabled: opacidad + cursor bloqueado */
   .form-submit-btn:disabled {
-    @apply cursor-not-allowed;
+    @apply cursor-not-allowed opacity-50;
   }
 }
 
