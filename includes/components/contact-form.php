@@ -176,7 +176,7 @@
     type="submit"
     :disabled="isSubmitting || !isFormValid"
     :class="isSubmitting && 'opacity-75 cursor-not-allowed'"
-    class="form-submit-btn w-full font-semibold transition-opacity duration-200"
+    class="form-submit-btn w-full font-semibold transition-opacity duration-200 text-white"
     aria-label="Enviar formulario de contacto"
   >
     <!-- Spinner durante envío -->
