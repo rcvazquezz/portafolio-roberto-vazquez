@@ -262,6 +262,30 @@
   }
   .btn-outline:active { transform: translateY(0); }
 
+  /* Botón para secciones de fondo oscuro (bg-noir / bg-graphite) */
+  .btn-dark {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-button;
+    @apply font-semibold text-sm text-white font-body;
+    border: 1.5px solid rgb(63 63 70); /* zinc-700, visible sobre fondo oscuro */
+    background-color: transparent;
+    transition:
+      border-color var(--t-fast),
+      color var(--t-fast),
+      background-color var(--t-fast),
+      transform var(--t-spring);
+  }
+  .btn-dark:not(:disabled):hover {
+    border-color: var(--color-violet);
+    color: var(--color-violet);
+    background-color: rgba(124, 101, 246, 0.08);
+    transform: translateY(-2px);
+  }
+  .btn-dark:active { transform: translateY(0); }
+  .btn-dark:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
   /* Botón ghost: para links de nav y acciones secundarias */
   .btn-ghost {
     @apply inline-flex items-center gap-1 text-sm font-medium text-muted;
@@ -447,6 +471,15 @@
 
   .form-input:not(:focus):hover {
     @apply border-zinc-600;
+  }
+
+  /* Prevenir que el navegador sobreescriba el fondo oscuro con autofill */
+  .form-input:-webkit-autofill,
+  .form-input:-webkit-autofill:hover,
+  .form-input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px rgb(39 39 42) inset;
+    -webkit-text-fill-color: rgb(255 255 255);
+    caret-color: white;
   }
 
   /**

@@ -4,14 +4,13 @@
  *
  * Contiene:
  *   - Footer con links sociales y copyright
- *   - Alpine.js CDN (defer — debe ir antes de app.js)
- *   - Script app.js local
+ *   - app.js local (defer, ANTES de Alpine)
+ *   - Alpine.js CDN (defer, DESPUÉS de app.js)
  *
- * ORDEN DE SCRIPTS IMPORTA:
- *   1. Alpine.js (defer) → registra el runtime
- *   2. app.js (defer)    → registra componentes con Alpine.data()
- *   Alpine procesa los x-data del DOM DESPUÉS de que ambos scripts
- *   hayan cargado, gracias al evento 'alpine:init'.
+ * ORDEN DE SCRIPTS IMPORTA (Alpine v3):
+ *   1. app.js (defer)    → registra listener alpine:init + Alpine.data()
+ *   2. Alpine.js (defer) → dispara alpine:init → componentes ya registrados
+ *   Si Alpine va primero, dispara alpine:init antes de que app.js escuche.
  */
 ?>
 
@@ -87,9 +86,9 @@
                           por lo que createIcons() encuentra todos
                           los elementos data-lucide y los reemplaza
                           por SVGs antes de que el usuario los vea.
-       2. Alpine.js     — defer, registra el runtime reactivo.
-       3. app.js        — defer, registra componentes Alpine +
-                          IntersectionObserver para animaciones.
+       2. app.js        — defer, registra listener alpine:init +
+                          Alpine.data() + IntersectionObserver.
+       3. Alpine.js     — defer, dispara alpine:init, procesa x-data.
 ════════════════════════════════════════════════════════════════ -->
 
 <!-- Lucide Icons UMD — síncrono para evitar FOIC (Flash of Icon Content) -->
@@ -133,11 +132,13 @@
   </script>
 <?php endif; ?>
 
+<!-- app.js — componentes Alpine + IntersectionObserver
+     DEBE ir antes de Alpine para que alpine:init esté escuchando
+     cuando Alpine dispare el evento al inicializar. -->
+<script defer src="src/js/app.js"></script>
+
 <!-- Alpine.js v3 — interactividad reactiva sin framework -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
-
-<!-- app.js — componentes Alpine + IntersectionObserver -->
-<script defer src="src/js/app.js"></script>
 
 </body>
 </html>

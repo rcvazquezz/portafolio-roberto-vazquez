@@ -72,7 +72,7 @@
   id="contact-form"
   x-data="contactForm()"
   @submit="handleSubmit($event)"
-  action="https://formspree.io/f/rcvazquezantelo2006@gmail.com"
+  action="https://formspree.io/f/mkoepwqb"
   method="POST"
   class="flex flex-col gap-4 p-6 rounded-card border border-graphite max-w-2xl mx-auto transition-all duration-250"
   novalidate
@@ -88,7 +88,7 @@
 
   <!-- ── Campo: Nombre ────────────────────────────────────────── -->
   <div class="form-group">
-    <label for="contact-name" class="form-label">
+    <label for="contact-name" class="form-label text-white">
       Nombre
       <span class="text-violet" aria-label="requerido">*</span>
     </label>
@@ -117,7 +117,7 @@
 
   <!-- ── Campo: Email ─────────────────────────────────────────── -->
   <div class="form-group">
-    <label for="contact-email" class="form-label">
+    <label for="contact-email" class="form-label text-white">
       Email
       <span class="text-violet" aria-label="requerido">*</span>
     </label>
@@ -144,7 +144,7 @@
 
   <!-- ── Campo: Mensaje ───────────────────────────────────────── -->
   <div class="form-group">
-    <label for="contact-message" class="form-label">
+    <label for="contact-message" class="form-label text-white">
       Cuéntame tu proyecto
       <span class="text-violet" aria-label="requerido">*</span>
     </label>
@@ -230,17 +230,33 @@
     </div>
   </div>
 
-  <!-- ── Botón de Envío (estilo btn-outline como 'Descargar CV') ──── -->
+  <!--
+    ── Botón de Envío ────────────────────────────────────────────────────
+    Estilos: 100% clases Tailwind (sin dependencia de btn-* en input.css).
+
+    Para cambiar el estilo del botón en el futuro, edita únicamente las
+    clases del elemento <button> y <span> que están aquí abajo:
+
+      · Color de fondo  → bg-violet (DEFAULT) / hover:bg-violet-dark (ver tailwind.config.js)
+      · Color de texto  → text-white
+      · Tamaño          → px-6 py-3 / text-sm / text-base
+      · Forma           → rounded-lg / rounded-full / rounded-none
+      · Ancho           → w-full / w-auto / max-w-xs
+
+    Estado disabled: opacity-50 cursor-not-allowed (Alpine lo aplica
+    automáticamente vía :disabled cuando isSubmitting || !isFormValid).
+    ──────────────────────────────────────────────────────────────────── -->
   <button
     type="submit"
     :disabled="isSubmitting || !isFormValid"
-    class="btn-outline w-full justify-center inline-flex items-center gap-2"
+    class="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-semibold text-sm text-white bg-violet hover:bg-violet-dark transition-all duration-300"
+    :class="{'opacity-50 cursor-not-allowed': isSubmitting || !isFormValid}"
     aria-label="Enviar formulario de contacto"
   >
-    <!-- Spinner durante envío -->
+    <!-- Spinner: visible solo durante isSubmitting -->
     <svg
       x-show="isSubmitting"
-      class="animate-spin h-4 w-4"
+      class="animate-spin h-4 w-4 flex-shrink-0"
       fill="none"
       viewBox="0 0 24 24"
       aria-hidden="true"
@@ -253,8 +269,8 @@
       ></path>
     </svg>
 
-    <!-- Texto del botón dinámico -->
-    <span x-text="isSubmitting ? 'Enviando...' : 'Enviar mensaje'">Enviar mensaje</span>
+    <!-- Texto siempre visible: Alpine lo alterna entre los dos estados -->
+    <span class="block" x-text="isSubmitting ? 'Enviando...' : 'Enviar mensaje'">Enviar mensaje</span>
   </button>
 
   <!-- ── Texto informativo de privacidad ───────────────────────── -->
