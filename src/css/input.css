@@ -364,13 +364,13 @@
 
   /* Etiqueta del campo */
   .form-label {
-    @apply block font-medium text-sm text-white;
+    @apply block font-medium text-sm text-ink;
   }
 
   /* Input de texto y textarea — estilos base */
   .form-input {
-    @apply bg-graphite text-cream border border-graphite rounded-button px-4 py-3;
-    @apply font-body text-sm placeholder:text-muted/60;
+    @apply bg-muted-bg text-ink border-2 border-ui-border rounded-button px-4 py-3;
+    @apply font-body text-sm placeholder:text-muted;
     transition: border-color var(--t-base), box-shadow var(--t-base);
     /* Focus: borde violeta + glow sutil */
     @apply focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20;
@@ -378,7 +378,7 @@
 
   /* Estado hover (sin focus) */
   .form-input:not(:focus):hover {
-    @apply border-graphite/80;
+    @apply border-violet/50;
   }
 
   /* Mensaje de error — texto rojo */
