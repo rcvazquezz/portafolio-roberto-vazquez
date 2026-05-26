@@ -74,7 +74,7 @@
   @submit="handleSubmit($event)"
   action="https://formspree.io/f/rcvazquezantelo2006@gmail.com"
   method="POST"
-  class="form-container max-w-2xl mx-auto"
+  class="flex flex-col gap-4 p-6 rounded-card border border-graphite max-w-2xl mx-auto transition-all duration-250"
   novalidate
   aria-label="Formulario de contacto"
 >
@@ -87,7 +87,7 @@
        ────────────────────────────────────────────────────────────── -->
 
   <!-- ── Campo: Nombre ────────────────────────────────────────── -->
-  <div class="form-group mb-6">
+  <div class="form-group">
     <label for="contact-name" class="form-label">
       Nombre
       <span class="text-violet" aria-label="requerido">*</span>
@@ -116,7 +116,7 @@
   </div>
 
   <!-- ── Campo: Email ─────────────────────────────────────────── -->
-  <div class="form-group mb-6">
+  <div class="form-group">
     <label for="contact-email" class="form-label">
       Email
       <span class="text-violet" aria-label="requerido">*</span>
@@ -143,7 +143,7 @@
   </div>
 
   <!-- ── Campo: Mensaje ───────────────────────────────────────── -->
-  <div class="form-group mb-8">
+  <div class="form-group">
     <label for="contact-message" class="form-label">
       Cuéntame tu proyecto
       <span class="text-violet" aria-label="requerido">*</span>
@@ -230,33 +230,17 @@
     </div>
   </div>
 
-  <!-- ──────────────────────────────────────────────────────────
-       SECCIÓN 3: BOTÓN Y FOOTER
-       Estados del botón:
-         1. Default: Visible si form es válido (:disabled="!isFormValid")
-         2. Hover: Violeta oscuro + elevación (controlado por CSS)
-         3. Envío: Spinner visible, botón disabled, opacity 75%
-         4. Éxito: Form se limpia, mensaje success visible
-         5. Error: Botón re-habilitado, mensaje error visible
-
-       Accesibilidad:
-         - aria-label: describe acción del botón
-         - type="submit": integración nativa con formulario
-         - :disabled vinculado a validación: UX clara
-       ────────────────────────────────────────────────────────────── -->
-
-  <!-- ── Botón de Envío ───────────────────────────────────────── -->
+  <!-- ── Botón de Envío (estilo btn-outline como 'Descargar CV') ──── -->
   <button
     type="submit"
     :disabled="isSubmitting || !isFormValid"
-    :class="isSubmitting && 'opacity-75 cursor-not-allowed'"
-    class="form-submit-btn w-full font-semibold transition-opacity duration-200 text-white"
+    class="btn-outline w-full justify-center inline-flex items-center gap-2"
     aria-label="Enviar formulario de contacto"
   >
     <!-- Spinner durante envío -->
     <svg
       x-show="isSubmitting"
-      class="animate-spin h-5 w-5 inline mr-2"
+      class="animate-spin h-4 w-4"
       fill="none"
       viewBox="0 0 24 24"
       aria-hidden="true"

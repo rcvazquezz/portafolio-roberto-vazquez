@@ -368,32 +368,10 @@
   ────────────────────────────────────────────────────────────── */
 
   /**
-   * .form-container — Contenedor del formulario
-   *
-   * Reemplaza .card para formularios en secciones oscuras (bg-noir).
-   * Proporciona contraste visual y armonía con la paleta de colores.
-   *
-   * Propiedades:
-   *   - bg-graphite: fondo oscuro (#1A1A24) armonizado
-   *   - border-violet/20: borde sutil para definición
-   *   - shadow-card: elevar visualmente del fondo
-   *   - p-8: padding coherente
-   *
-   * Ejemplo:
-   *   <form class="form-container max-w-2xl mx-auto">
-   *     <!-- campos del formulario -->
-   *   </form>
-   */
-  .form-container {
-    @apply bg-graphite rounded-card border border-violet/20 p-8;
-    box-shadow: var(--shadow-card);
-  }
-
-  /**
    * .form-group — Agrupa label + input + error message
    *
    * Proporciona estructura y espaciado consistente para cada campo.
-   * El último elemento (error) es opcional pero recomendado.
+   * El espaciado vertical se maneja en el contenedor padre (form gap-4).
    *
    * Propiedades:
    *   - flex flex-col: apila verticalmente
@@ -407,7 +385,7 @@
    *   </div>
    */
   .form-group {
-    @apply flex flex-col gap-2 mb-6;
+    @apply flex flex-col gap-2;
   }
 
   /**
@@ -429,41 +407,46 @@
   /**
    * .form-input — Estilos para <input> y <textarea>
    *
+   * Diseño armonizado con paleta dark del portafolio.
+   * Intención: inputs oscuros sobre fondo noir, visibles y elegantes.
+   *
    * ESTADOS:
-   *   1. Default: fondo claro sobre graphite, borde gris
-   *   2. Hover: borde violet sutil (sin focus)
-   *   3. Focus: borde violeta + ring violeta (glow)
-   *   4. Error: borde rojo (controlado por validación Alpine)
+   *   1. Default: bg-zinc-800 (oscuro), borde zinc-700 (sutil)
+   *   2. Hover: borde zinc-600 (más visible)
+   *   3. Focus: borde-violet-500 + ring-2 ring-violet/30 (elegante)
+   *   4. Error: borde-red-500 (controlado por validación)
    *   5. Disabled: opacidad reducida
    *
    * Propiedades:
-   *   - bg-muted-bg: fondo claro (#F7F6F2) para legibilidad
-   *   - text-ink: texto oscuro (#111118)
-   *   - border-2 border-ui-border: borde visible (#E4E3DF)
+   *   - bg-zinc-800: fondo oscuro (#27272A) armonizado
+   *   - text-white: texto claro para máximo contraste
+   *   - border border-zinc-700: borde sutil (#3F3F46)
    *   - rounded-button: radio 8px, coherente con botones
+   *   - placeholder-zinc-500: gris suave (#71717A)
    *
    * TRANSICIONES:
-   *   - border-color: cambio suave en hover/focus
-   *   - box-shadow: glow del ring en focus
+   *   - border-color: cambio suave
+   *   - box-shadow: glow del ring
    *   - Timing: var(--t-base) = 250ms
    *
    * ACCESIBILIDAD:
    *   - focus:outline-none: remover outline nativo
-   *   - focus:ring-2 focus:ring-violet/20: ring personalizado
-   *   - placeholder: text-muted para visibilidad
+   *   - focus:ring-2 focus:ring-violet/30: ring personalizado elegante
+   *   - focus:border-violet-500: borde violeta en focus
+   *   - placeholder: zinc-500 para visibilidad
    *
    * Ejemplo:
    *   <input type="email" class="form-input w-full" placeholder="tu@email.com" />
    */
   .form-input {
-    @apply bg-muted-bg text-ink border-2 border-ui-border rounded-button px-4 py-3;
-    @apply font-body text-sm placeholder:text-muted;
+    @apply bg-zinc-800 text-white border border-zinc-700 rounded-button px-4 py-3;
+    @apply font-body text-sm placeholder-zinc-500;
     transition: border-color var(--t-base), box-shadow var(--t-base);
-    @apply focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20;
+    @apply focus:outline-none focus:border-violet-500 focus:ring-2 focus:ring-violet/30;
   }
 
   .form-input:not(:focus):hover {
-    @apply border-violet/50;
+    @apply border-zinc-600;
   }
 
   /**
@@ -487,72 +470,6 @@
     @apply text-sm font-medium;
   }
 
-  /**
-   * .form-submit-btn — Botón de envío
-   *
-   * ESTADOS:
-   *   1. Default: violeta + shadow
-   *   2. Hover: violeta-dk + shadow-lg + elevación (-2px)
-   *   3. Focus: outline violeta + ring
-   *   4. Active: regresa a línea base (translateY 0)
-   *   5. Disabled: opacidad 50%, cursor bloqueado
-   *   6. Loading: opacity 75% (mientras isSubmitting)
-   *
-   * Propiedades:
-   *   - inline-flex items-center justify-center: centra contenido
-   *   - px-8 py-4: padding amplio para visibilidad
-   *   - w-full: ocupa ancho de contenedor
-   *   - font-bold text-base: texto destacado
-   *   - letter-spacing: 0.5px para mejor legibilidad
-   *
-   * TRANSICIONES:
-   *   - background-color: var(--t-fast) = 150ms
-   *   - transform: var(--t-spring) = 350ms (rebote)
-   *   - box-shadow: var(--t-fast) = 150ms
-   *
-   * ACCESIBILIDAD:
-   *   - :disabled + cursor-not-allowed: indica deshabilitado
-   *   - Contraste violeta/blanco: WCAG AA+
-   *   - Text visible: "Enviar mensaje"
-   *
-   * COMPORTAMIENTO ALPINE:
-   *   - :disabled="isSubmitting || !isFormValid"
-   *   - :class="isSubmitting && 'opacity-75'"
-   *   - Spinner SVG con x-show="isSubmitting"
-   *   - Texto dinámico con x-text
-   *
-   * Ejemplo:
-   *   <button type="submit" class="form-submit-btn" :disabled="isSubmitting">
-   *     <svg x-show="isSubmitting">...</svg>
-   *     <span x-text="isSubmitting ? 'Enviando...' : 'Enviar mensaje'">Enviar mensaje</span>
-   *   </button>
-   */
-  .form-submit-btn {
-    @apply inline-flex items-center justify-center px-8 py-4 rounded-button w-full;
-    @apply font-bold text-base text-white font-body;
-    background-color: var(--color-violet);
-    box-shadow: var(--shadow-violet);
-    transition:
-      background-color var(--t-fast),
-      transform var(--t-spring),
-      box-shadow var(--t-fast),
-      opacity var(--t-fast);
-    letter-spacing: 0.5px;
-  }
-
-  .form-submit-btn:hover:not(:disabled) {
-    background-color: var(--color-violet-dk);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-violet-lg);
-  }
-
-  .form-submit-btn:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  .form-submit-btn:disabled {
-    @apply cursor-not-allowed opacity-50;
-  }
 }
 
 
