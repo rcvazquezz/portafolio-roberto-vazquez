@@ -388,8 +388,8 @@
 
   /* Botón de envío del formulario */
   .form-submit-btn {
-    @apply inline-flex items-center justify-center px-6 py-3 rounded-button;
-    @apply font-semibold text-sm text-white font-body;
+    @apply inline-flex items-center justify-center px-8 py-4 rounded-button w-full;
+    @apply font-bold text-base text-white font-body;
     background-color: var(--color-violet);
     box-shadow: var(--shadow-violet);
     transition:
@@ -397,6 +397,7 @@
       transform var(--t-spring),
       box-shadow var(--t-fast),
       opacity var(--t-fast);
+    letter-spacing: 0.5px;
   }
 
   .form-submit-btn:hover:not(:disabled) {
