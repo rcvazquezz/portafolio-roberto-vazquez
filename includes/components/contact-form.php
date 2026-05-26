@@ -196,7 +196,7 @@
     </svg>
 
     <!-- Texto del botón dinámico -->
-    <span x-text="isSubmitting ? 'Enviando...' : 'Enviar mensaje'"></span>
+    <span x-text="isSubmitting ? 'Enviando...' : 'Enviar mensaje'">Enviar mensaje</span>
   </button>
 
   <!-- ── Texto informativo de privacidad ───────────────────────── -->
