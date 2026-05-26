@@ -349,6 +349,70 @@
     background-color: rgba(242, 241, 237, 0.92);
     border-bottom: 1px solid var(--color-border);
   }
+
+
+  /* ──────────────────────────────────────────────────────────────
+     FORMULARIO DE CONTACTO
+     Estilos para inputs, textareas y elementos de feedback.
+     Validación visual intuitiva + accesibilidad.
+  ────────────────────────────────────────────────────────────── */
+
+  /* Contenedor de campo (agrupa label + input + error) */
+  .form-group {
+    @apply flex flex-col gap-2;
+  }
+
+  /* Etiqueta del campo */
+  .form-label {
+    @apply block font-medium text-sm text-white;
+  }
+
+  /* Input de texto y textarea — estilos base */
+  .form-input {
+    @apply bg-graphite text-cream border border-graphite rounded-button px-4 py-3;
+    @apply font-body text-sm placeholder:text-muted/60;
+    transition: border-color var(--t-base), box-shadow var(--t-base);
+    /* Focus: borde violeta + glow sutil */
+    @apply focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20;
+  }
+
+  /* Estado hover (sin focus) */
+  .form-input:not(:focus):hover {
+    @apply border-graphite/80;
+  }
+
+  /* Mensaje de error — texto rojo */
+  .form-feedback {
+    @apply text-sm font-medium;
+  }
+
+  /* Botón de envío del formulario */
+  .form-submit-btn {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-button;
+    @apply font-semibold text-sm text-white font-body;
+    background-color: var(--color-violet);
+    box-shadow: var(--shadow-violet);
+    transition:
+      background-color var(--t-fast),
+      transform var(--t-spring),
+      box-shadow var(--t-fast),
+      opacity var(--t-fast);
+  }
+
+  .form-submit-btn:hover:not(:disabled) {
+    background-color: var(--color-violet-dk);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-violet-lg);
+  }
+
+  .form-submit-btn:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  /* Estado disabled: opacidad + cursor bloqueado */
+  .form-submit-btn:disabled {
+    @apply cursor-not-allowed;
+  }
 }
 
 

@@ -4,7 +4,9 @@
  * Responsabilidades:
  *   1. Registrar el componente Alpine.js `navController`:
  *      gestiona menú móvil, clase nav-scrolled y sección activa.
- *   2. Inicializar IntersectionObserver para animaciones de entrada
+ *   2. Registrar el componente Alpine.js `contactForm`:
+ *      validación, envío y feedback de formulario de contacto.
+ *   3. Inicializar IntersectionObserver para animaciones de entrada
  *      (.reveal → .visible) al hacer scroll.
  *
  * Dependencia: Alpine.js (cargado vía CDN en footer.php con defer).
@@ -65,6 +67,176 @@ document.addEventListener('alpine:init', () => {
           break;
         }
       }
+    },
+  }));
+
+  /**
+   * Componente Alpine: contactForm
+   * Gestiona el estado reactivo del formulario de contacto.
+   * Incluye validación client-side, prevención de envío múltiple,
+   * y feedback visual (spinner, mensajes de éxito/error).
+   */
+  Alpine.data('contactForm', () => ({
+
+    /** Datos del formulario capturados en tiempo real */
+    formData: {
+      name: '',
+      email: '',
+      message: '',
+    },
+
+    /** Errores de validación por campo */
+    errors: {
+      name: '',
+      email: '',
+      message: '',
+    },
+
+    /** true mientras se envía el formulario (previene envío múltiple) */
+    isSubmitting: false,
+
+    /** Estado del envío: 'idle' | 'success' | 'error' */
+    submitStatus: 'idle',
+
+    /** Mensaje de error detallado para mostrar al usuario */
+    errorMessage: '',
+
+    /**
+     * Computed: true si el formulario es válido (todos los campos requeridos llenos).
+     * Usado para habilitar/deshabilitar botón de envío.
+     */
+    get isFormValid() {
+      return (
+        this.formData.name.length >= 3 &&
+        this.isValidEmail(this.formData.email) &&
+        this.formData.message.length >= 10
+      );
+    },
+
+    /**
+     * Valida un campo individual y actualiza errors[fieldName].
+     * Reglas:
+     *   - name: mín 3 caracteres
+     *   - email: formato válido
+     *   - message: mín 10 caracteres
+     *
+     * @param {string} fieldName - 'name', 'email', o 'message'
+     */
+    validateField(fieldName) {
+      switch (fieldName) {
+        case 'name':
+          if (!this.formData.name.trim()) {
+            this.errors.name = 'El nombre es requerido.';
+          } else if (this.formData.name.length < 3) {
+            this.errors.name = 'El nombre debe tener al menos 3 caracteres.';
+          } else {
+            this.errors.name = '';
+          }
+          break;
+
+        case 'email':
+          if (!this.formData.email.trim()) {
+            this.errors.email = 'El email es requerido.';
+          } else if (!this.isValidEmail(this.formData.email)) {
+            this.errors.email = 'Por favor, ingresa un email válido.';
+          } else {
+            this.errors.email = '';
+          }
+          break;
+
+        case 'message':
+          if (!this.formData.message.trim()) {
+            this.errors.message = 'El mensaje es requerido.';
+          } else if (this.formData.message.length < 10) {
+            this.errors.message = 'El mensaje debe tener al menos 10 caracteres.';
+          } else {
+            this.errors.message = '';
+          }
+          break;
+      }
+    },
+
+    /**
+     * Valida que una cadena sea un email válido usando regex básico.
+     * HTML5 también valida en el navegador (type="email").
+     *
+     * @param {string} email - Email a validar
+     * @returns {boolean} true si el formato es válido
+     */
+    isValidEmail(email) {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return regex.test(email);
+    },
+
+    /**
+     * Maneja el envío del formulario.
+     * Flujo:
+     *   1. Previene comportamiento por defecto
+     *   2. Valida todos los campos
+     *   3. Si hay errores, retorna sin enviar
+     *   4. Desabilita botón y muestra spinner
+     *   5. Envía a Formspree via fetch
+     *   6. Muestra éxito o error según respuesta
+     *   7. Auto-reset tras 3 segundos
+     *
+     * @param {Event} e - Evento submit del formulario
+     */
+    async handleSubmit(e) {
+      e.preventDefault();
+
+      // Validar todos los campos
+      this.validateField('name');
+      this.validateField('email');
+      this.validateField('message');
+
+      if (!this.isFormValid) {
+        this.submitStatus = 'idle';
+        return;
+      }
+
+      this.isSubmitting = true;
+      this.submitStatus = 'idle';
+
+      try {
+        const formElement = e.target;
+        const formDataToSend = new FormData(formElement);
+
+        const response = await fetch(formElement.action, {
+          method: 'POST',
+          body: formDataToSend,
+          headers: {
+            'Accept': 'application/json',
+          },
+        });
+
+        if (response.ok) {
+          this.submitStatus = 'success';
+          this.resetForm();
+
+          setTimeout(() => {
+            this.submitStatus = 'idle';
+          }, 3000);
+        } else {
+          const error = await response.json();
+          this.submitStatus = 'error';
+          this.errorMessage = error.error || 'No pudimos procesar tu mensaje. Intenta nuevamente.';
+        }
+      } catch (error) {
+        this.submitStatus = 'error';
+        this.errorMessage = 'Error de conexión. Verifica tu conexión a internet e intenta nuevamente.';
+        console.error('Contact form error:', error);
+      } finally {
+        this.isSubmitting = false;
+      }
+    },
+
+    /**
+     * Limpia todos los campos del formulario.
+     * Llamado automáticamente tras envío exitoso.
+     */
+    resetForm() {
+      this.formData = { name: '', email: '', message: '' };
+      this.errors = { name: '', email: '', message: '' };
     },
   }));
 });

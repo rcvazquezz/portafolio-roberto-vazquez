@@ -139,4 +139,26 @@ function icono_contacto(string $tipo): string {
     </div>
 
   </div>
+
+  <!-- ── Subsección: Formulario de Contacto ────────────────────── -->
+  <div class="mt-20 reveal" data-delay="400">
+
+    <!-- Encabezado de subsección -->
+    <div class="text-center mb-12">
+      <h3
+        class="font-display font-bold text-white"
+        style="font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.03em;"
+      >
+        O cuéntame tu proyecto
+      </h3>
+      <p class="text-muted mt-3 max-w-lg mx-auto" style="font-size: 0.95rem;">
+        Si prefieres un formulario, rellenalo con los detalles de tu proyecto.
+      </p>
+    </div>
+
+    <!-- Inclusión del componente formulario -->
+    <?php require_once APP_ROOT . '/includes/components/contact-form.php'; ?>
+
+  </div>
+
 </section>
