@@ -1,0 +1,51 @@
+# ══════════════════════════════════════════════════════════════
+# admin/.htaccess — Configuración Apache del Panel CMS
+#
+# Responsabilidades:
+#   1. Deshabilitar listado de directorios
+#   2. Proteger acceso directo a src/ y config/
+#   3. Redirigir todas las peticiones al Front Controller (index.php)
+#   4. Cabeceras de seguridad HTTP
+#
+# IMPORTANTE: Si usas Laragon con un vhost propio (ej. portafolio.test),
+# cambia RewriteBase a /admin/
+# ══════════════════════════════════════════════════════════════
+
+# Deshabilitar listado de directorios (nunca mostrar el árbol de archivos)
+Options -Indexes
+
+# ── Rewrite: protección de fuentes + Front Controller ──────────
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Cambia esta línea según tu configuración de Laragon:
+    #   Carpeta en localhost:  /portafolio-roberto-vazquez/admin/
+    #   Virtual host propio:   /admin/
+    RewriteBase /portafolio-roberto-vazquez/admin/
+
+    # Bloquear acceso HTTP directo a src/ y config/
+    # <DirectoryMatch> no está permitido en .htaccess; se usa [F] aquí
+    RewriteRule ^(src|config)(/.*)?$ - [F,L]
+
+    # Permitir acceso directo a archivos y directorios reales (assets, etc.)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Enviar todo lo demás al Front Controller con la URL como parámetro
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
+# ── Cabeceras de seguridad HTTP ────────────────────────────────
+<IfModule mod_headers.c>
+    # Evita que el navegador "adivine" el tipo MIME de un archivo
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Bloquea que esta página se muestre dentro de un <iframe> externo
+    Header always set X-Frame-Options "DENY"
+
+    # Activa el filtro XSS en navegadores antiguos
+    Header always set X-XSS-Protection "1; mode=block"
+
+    # Descomenta en producción cuando tengas HTTPS activo:
+    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>

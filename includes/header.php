@@ -17,9 +17,9 @@ $config = [
     'rol'         => 'Desarrollador Full Stack',
     'descripcion' => 'Portafolio de Roberto Carlos Vázquez Antelo — '
                    . 'Desarrollador Full Stack con experiencia en PHP, MySQL y JavaScript.',
-    'url'         => 'https://devlink.nygaccesorios.com/',
+    'url'         => 'https://rcvazquez.com/',
     'color_tema'  => '#0C0C0F',
-    'google_analytics_id' => 'G-PLACEHOLDER', /* Google Analytics 4 ID */
+    'google_analytics_id' => 'G-S29LYE3SYS',
 ];
 
 /* ── Ítems del menú: etiqueta visible => ancla de sección ───── */
