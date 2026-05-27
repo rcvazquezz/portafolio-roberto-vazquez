@@ -33,8 +33,11 @@
       </div>
 
       <div>
-        <label for="description" class="block text-xs font-medium text-gray-400 mb-1.5">Descripción</label>
-        <textarea id="description" name="description" rows="3"
+        <label for="description" class="block text-xs font-medium text-gray-400 mb-1.5">
+          Descripción
+          <span class="text-gray-600 font-normal ml-1">— cada línea se muestra como un bullet en el portafolio</span>
+        </label>
+        <textarea id="description" name="description" rows="5"
                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
                          focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none"><?= htmlspecialchars($experience['description']) ?></textarea>
       </div>

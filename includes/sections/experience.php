@@ -2,49 +2,16 @@
 /**
  * includes/sections/experience.php — Sección de Experiencia Laboral
  *
- * Datos extraídos del CV de Roberto Vázquez.
- * Para añadir nueva experiencia: añadir un elemento al array $experiencias.
- * El timeline se genera automáticamente.
- */
-
-/**
- * Array de experiencias laborales.
+ * $experiencias viene de index.php → getExperiences() en portfolio-data.php.
+ * Administra las experiencias desde el panel CMS: /admin/experiences
  *
- * @var array{
- *   rol: string,
- *   empresa: string,
- *   ubicacion: string,
- *   periodo: string,
- *   bullets: string[]
- * }[]
+ * Formato esperado de cada elemento:
+ *   rol       string    Nombre del cargo
+ *   empresa   string    Nombre de la empresa
+ *   ubicacion string    Ciudad, País (vacío si no se registró en la BD)
+ *   periodo   string    Período formateado ('Dic 2025 – Presente')
+ *   bullets   string[]  Logros/responsabilidades (cada línea del campo descripción)
  */
-$experiencias = [
-    [
-        'rol'       => 'Analista y Desarrollador de Sistemas · Soporte Técnico',
-        'empresa'   => 'Consejo Nacional Electoral',
-        'ubicacion' => 'Guanare, Portuguesa',
-        'periodo'   => 'Dic 2025 – May 2026',
-        'bullets'   => [
-            'Diseñé y desarrollé una aplicación web Full Stack (PHP, MySQL, Tailwind) para la automatización de flujos de trabajo institucionales. Esta solución redujo significativamente los tiempos de procesamiento administrativo y mejoró la precisión en el manejo de expedientes.',
-            'Lideré auditorías técnicas de sistemas críticos y validación de infraestructura de hardware. Implementé protocolos de mejora continua que garantizaron la disponibilidad operativa y la integridad de los datos en entornos de alta exigencia.',
-            'Arquitecto de bases de datos relacionales, optimizando consultas y aplicando políticas de seguridad e integridad referencial, logrando una mayor eficiencia en la recuperación y protección de información sensible.',
-            'Gestioné el soporte técnico integral (Nivel 1 y 2) para más de [N] equipos, estableciendo procesos de resolución de incidencias que minimizaron los tiempos de inactividad operativa.',
-        ],
-    ],
-
-    /* ── AÑADE AQUÍ FUTURAS EXPERIENCIAS ────────────────────────
-    [
-        'rol'       => 'Nombre del rol',
-        'empresa'   => 'Nombre de la empresa',
-        'ubicacion' => 'Ciudad, País',
-        'periodo'   => 'Mes Año – Mes Año',
-        'bullets'   => [
-            'Logro o responsabilidad 1.',
-            'Logro o responsabilidad 2.',
-        ],
-    ],
-    ─────────────────────────────────────────────────────────── */
-];
 ?>
 
 <section
@@ -83,11 +50,13 @@ $experiencias = [
             </span>
           </div>
 
-          <!-- Empresa y ubicación -->
+          <!-- Empresa y ubicación (ubicación solo si está disponible) -->
           <p class="text-muted text-sm font-medium mb-5">
             <?= htmlspecialchars($exp['empresa']) ?>
-            <span class="text-ui-border mx-2" aria-hidden="true">·</span>
-            <?= htmlspecialchars($exp['ubicacion']) ?>
+            <?php if (!empty($exp['ubicacion'])): ?>
+              <span class="text-ui-border mx-2" aria-hidden="true">·</span>
+              <?= htmlspecialchars($exp['ubicacion']) ?>
+            <?php endif; ?>
           </p>
 
           <!-- Logros y responsabilidades -->

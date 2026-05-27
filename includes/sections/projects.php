@@ -2,63 +2,19 @@
 /**
  * includes/sections/projects.php — Proyectos Destacados
  *
- * Datos extraídos del CV de Roberto Vázquez.
- * Para añadir proyectos: añadir elementos al array $proyectos.
+ * $proyectos viene de index.php → getPublishedProjects() en portfolio-data.php.
+ * Administra los proyectos desde el panel CMS: /admin/projects
  *
- * Campos del proyecto:
+ * Formato esperado de cada elemento:
  *   nombre        string    Título del proyecto
- *   descripcion   string    Descripción breve (2-3 líneas)
+ *   descripcion   string    Descripción breve
  *   tags          string[]  Tecnologías usadas
  *   estado        string    'En producción' | 'En desarrollo' | 'Finalizado' | 'Archivado'
- *   url           ?string   URL pública del proyecto (null si no tiene)
- *   github        ?string   URL del repositorio GitHub (null si es privado)
- *   github_label  ?string   Texto del enlace GitHub. Por defecto: 'Ver en GitHub'
- *   insignia      ?string   Badge de origen/naturaleza del proyecto (ej: 'Sistema institucional').
- *                           Distingue proyectos propios de integraciones o kits externos.
+ *   url           ?string   URL pública (null si no aplica)
+ *   github        ?string   URL del repositorio (null si es privado)
+ *   github_label  ?string   Etiqueta del enlace GitHub
+ *   insignia      ?string   Badge de origen/contexto del proyecto
  */
-$proyectos = [
-    [
-        'nombre'      => 'DevLink — Marketplace de Desarrolladores',
-        'descripcion' => 'Plataforma web tipo marketplace que conecta desarrolladores con clientes. Diseñada con foco en escalabilidad y experiencia de usuario, con desarrollo asistido por IA para optimizar flujos y acelerar tiempos de entrega.',
-        'tags'        => ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS'],
-        'estado'      => 'En producción',
-        'url'         => 'https://devlink.nygaccesorios.com/',
-        'github'      => null,
-    ],
-
-    [
-        'nombre'      => 'Puyo Code',
-        'descripcion' => 'Plataforma web para mi agencia de desarrollo, enfocada en la creación de soluciones digitales a medida, optimización de rendimiento y estrategias de presencia online.',
-        'tags'        => ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS'],
-        'estado'      => 'En producción',
-        'url'         => null,
-        'github'      => 'https://github.com/rcvazquezz/puyo-code',
-        'github_label' => 'Ver repositorio en GitHub',
-        'insignia'    => 'Agencia de Desarrollo',
-    ],
-
-    [
-        'nombre'      => 'Sistema de Gestión de Trámites',
-        'descripcion' => 'Aplicación web integral para la automatización de flujos operativos internos, optimizando la gestión y trazabilidad de trámites institucionales.',
-        'tags'        => ['PHP', 'MySQL', 'Tailwind CSS', 'JavaScript'],
-        'estado'      => 'Finalizado',
-        'url'         => null,
-        'github'      => 'https://github.com/rcvazquezz/sistema_cne',
-        'github_label' => 'Ver repositorio en GitHub',
-        'insignia'    => 'Sistema institucional',
-    ],
-
-    /* ── AÑADE AQUÍ MÁS PROYECTOS ────────────────────────────────
-    [
-        'nombre'      => 'Nombre del proyecto',
-        'descripcion' => 'Descripción clara y concisa del proyecto.',
-        'tags'        => ['Tecnología 1', 'Tecnología 2'],
-        'estado'      => 'En desarrollo',
-        'url'         => null,
-        'github'      => 'https://github.com/usuario/repo',
-    ],
-    ─────────────────────────────────────────────────────────── */
-];
 
 /* Colores por estado — mapeados a clases Tailwind */
 $estado_clases = [

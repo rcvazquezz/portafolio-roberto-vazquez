@@ -70,8 +70,22 @@
           <select id="status" name="status"
                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
                          focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
-            <option value="published" <?= $project['status'] === 'published' ? 'selected' : '' ?>>Publicado</option>
-            <option value="draft"     <?= $project['status'] === 'draft'     ? 'selected' : '' ?>>Borrador</option>
+            <?php
+            /* Los valores de estado se almacenan como etiquetas de visualización directas.
+               'draft' es el único valor interno; los demás se muestran tal cual en el portafolio. */
+            $statusOptions = [
+                'En producción' => 'En producción',
+                'En desarrollo' => 'En desarrollo',
+                'Finalizado'    => 'Finalizado',
+                'Archivado'     => 'Archivado',
+                'draft'         => 'Borrador (oculto del portafolio)',
+            ];
+            foreach ($statusOptions as $value => $label):
+            ?>
+              <option value="<?= $value ?>" <?= $project['status'] === $value ? 'selected' : '' ?>>
+                <?= $label ?>
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
         <div>

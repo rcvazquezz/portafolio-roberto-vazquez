@@ -2,72 +2,24 @@
 /**
  * includes/sections/education.php — Formación Académica
  *
- * Datos extraídos del CV de Roberto Vázquez.
- * Para añadir formación o certificaciones: editar los arrays correspondientes.
- */
-
-/**
- * Formación académica formal.
+ * $formacion viene de index.php → getEducation() en portfolio-data.php.
+ * Administra la formación desde el panel CMS: /admin/education
  *
- * @var array{
- *   titulo: string,
- *   institucion: string,
- *   ubicacion: string,
- *   periodo: string,
- *   descripcion: ?string,
- *   categorias: array{nombre: string, items: string[]}[],
- *   gancho: ?string
- * }[]
- */
-$formacion = [
-    [
-        'titulo'      => 'Técnico Superior Universitario en Análisis de Sistemas | Mención Desarrollo Web',
-        'institucion' => 'IUTEPI — Instituto Universitario de Tecnología para la Informática',
-        'ubicacion'   => 'Guanare, Portuguesa',
-        'periodo'     => '2023 – 2026',
-        'descripcion' => 'Formación orientada a la ingeniería de software, arquitectura de sistemas y despliegue de aplicaciones web escalables.',
-        'categorias'  => [
-            [
-                'nombre' => 'Arquitectura & Software',
-                'items'  => ['Ciclo de vida del software', 'Análisis de Sistemas', 'Ingeniería de Requisitos'],
-            ],
-            [
-                'nombre' => 'Data & Lógica',
-                'items'  => ['Bases de Datos Relacionales', 'Lógica de Programación', 'Algoritmia'],
-            ],
-            [
-                'nombre' => 'Despliegue',
-                'items'  => ['Sistemas de Gestión Institucional', 'Integración de Servicios'],
-            ],
-        ],
-        'gancho'      => 'Enfoque técnico: Del levantamiento de requerimientos a la puesta en producción.',
-    ],
-
-    /* ── AÑADE AQUÍ MÁS FORMACIÓN ────────────────────────────────
-    [
-        'titulo'      => 'Nombre del título',
-        'institucion' => 'Nombre de la institución',
-        'ubicacion'   => 'Ciudad, País',
-        'periodo'     => 'Año – Año',
-        'materias'    => ['Materia 1', 'Materia 2'],
-    ],
-    ─────────────────────────────────────────────────────────── */
-];
-
-/**
- * Certificaciones y cursos complementarios.
+ * Formato esperado de cada elemento:
+ *   titulo       string    Título completo (degree + ' en ' + field)
+ *   institucion  string    Nombre de la institución
+ *   ubicacion    string    Ciudad (vacío si no se registró en la BD)
+ *   periodo      string    'Año – Año' o 'Año – Presente'
+ *   descripcion  ?string   Descripción opcional
+ *   categorias   array     Grupos de materias ([] si no aplica)
+ *   gancho       ?string   Nota técnica al pie de la card (null si no aplica)
  *
- * @var array{nombre: string, emisor: string, periodo: string}[]
+ * Certificaciones: gestionadas también desde /admin/education en el futuro.
+ * Por ahora se renderiza solo si el array no está vacío.
  */
-$certificaciones = [
-    /* ── AÑADE AQUÍ TUS CERTIFICACIONES ─────────────────────────
-    [
-        'nombre'  => 'Nombre del certificado',
-        'emisor'  => 'Plataforma / Institución',
-        'periodo' => '2024',
-    ],
-    ─────────────────────────────────────────────────────────── */
-];
+
+/* La sección de certificaciones se ocultará si no hay datos */
+$certificaciones = [];
 ?>
 
 <section
@@ -107,11 +59,13 @@ $certificaciones = [
             </span>
           </div>
 
-          <!-- Institución y ubicación -->
+          <!-- Institución y ubicación (ubicación solo si está disponible) -->
           <p class="text-muted text-sm font-medium mb-3">
             <?= htmlspecialchars($edu['institucion']) ?>
-            <span class="text-ui-border mx-2" aria-hidden="true">·</span>
-            <?= htmlspecialchars($edu['ubicacion']) ?>
+            <?php if (!empty($edu['ubicacion'])): ?>
+              <span class="text-ui-border mx-2" aria-hidden="true">·</span>
+              <?= htmlspecialchars($edu['ubicacion']) ?>
+            <?php endif; ?>
           </p>
 
           <!-- Descripción de valor -->

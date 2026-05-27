@@ -33,11 +33,14 @@
       </div>
 
       <div>
-        <label for="description" class="block text-xs font-medium text-gray-400 mb-1.5">Descripción</label>
-        <textarea id="description" name="description" rows="3"
+        <label for="description" class="block text-xs font-medium text-gray-400 mb-1.5">
+          Descripción
+          <span class="text-gray-600 font-normal ml-1">— cada línea se muestra como un bullet en el portafolio</span>
+        </label>
+        <textarea id="description" name="description" rows="5"
                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
                          placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent resize-none"
-                  placeholder="Responsabilidades y logros principales..."></textarea>
+                  placeholder="Desarrollé aplicación Full Stack con PHP y MySQL.&#10;Lideré auditorías técnicas de infraestructura.&#10;Gestioné soporte técnico Nivel 1 y 2."></textarea>
       </div>
 
       <div class="grid grid-cols-2 gap-4">

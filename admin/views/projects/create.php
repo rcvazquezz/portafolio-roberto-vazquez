@@ -70,8 +70,11 @@
           <select id="status" name="status"
                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
                          focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
-            <option value="published">Publicado</option>
-            <option value="draft">Borrador</option>
+            <option value="En producción">En producción</option>
+            <option value="En desarrollo">En desarrollo</option>
+            <option value="Finalizado">Finalizado</option>
+            <option value="Archivado">Archivado</option>
+            <option value="draft">Borrador (oculto del portafolio)</option>
           </select>
         </div>
         <div>

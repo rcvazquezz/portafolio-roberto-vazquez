@@ -15,6 +15,17 @@
  *   7. Contacto     — Canales de comunicación (fondo oscuro)
  */
 define('APP_ROOT', __DIR__);
+
+/*
+ * Capa de datos: carga proyectos, experiencias y educación desde la BD.
+ * Las variables $proyectos, $experiencias y $formacion quedan disponibles
+ * en el scope de todos los includes que siguen (PHP comparte scope en require).
+ */
+require_once APP_ROOT . '/includes/data/portfolio-data.php';
+
+$proyectos    = getPublishedProjects();
+$experiencias = getExperiences();
+$formacion    = getEducation();
 ?>
 
 <?php require_once APP_ROOT . '/includes/header.php'; ?>
