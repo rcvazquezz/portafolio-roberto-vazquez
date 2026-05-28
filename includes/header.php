@@ -28,6 +28,7 @@ $nav_items = [
     'Sobre mí'    => '#sobre-mi',
     'Experiencia' => '#experiencia',
     'Proyectos'   => '#proyectos',
+    'Formación'   => '#educacion',
     'Toolkit'     => '#toolkit',
     'Contacto'    => '#contacto',
 ];
