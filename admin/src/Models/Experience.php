@@ -58,14 +58,15 @@ class Experience
         $isCurrent = (int) !empty($data['is_current']);
 
         $stmt = $this->pdo->prepare(
-            'INSERT INTO experiences (company, role, description, start_date, end_date, is_current, sort_order)
-             VALUES (:company, :role, :description, :start_date, :end_date, :is_current, :sort_order)'
+            'INSERT INTO experiences (company, location, role, description, start_date, end_date, is_current, sort_order)
+             VALUES (:company, :location, :role, :description, :start_date, :end_date, :is_current, :sort_order)'
         );
 
         $stmt->execute([
             ':company'     => trim($data['company']),
+            ':location'    => !empty($data['location']) ? trim($data['location']) : null,
             ':role'        => trim($data['role']),
-            ':description' => trim($data['description']),
+            ':description' => trim($data['description'] ?? ''),
             ':start_date'  => $data['start_date'],
             ':end_date'    => $isCurrent ? null : ($data['end_date'] ?: null),
             ':is_current'  => $isCurrent,
@@ -85,6 +86,7 @@ class Experience
         $stmt = $this->pdo->prepare(
             'UPDATE experiences
              SET company     = :company,
+                 location    = :location,
                  role        = :role,
                  description = :description,
                  start_date  = :start_date,
@@ -96,8 +98,9 @@ class Experience
 
         $stmt->execute([
             ':company'     => trim($data['company']),
+            ':location'    => !empty($data['location']) ? trim($data['location']) : null,
             ':role'        => trim($data['role']),
-            ':description' => trim($data['description']),
+            ':description' => trim($data['description'] ?? ''),
             ':start_date'  => $data['start_date'],
             ':end_date'    => $isCurrent ? null : ($data['end_date'] ?: null),
             ':is_current'  => $isCurrent,

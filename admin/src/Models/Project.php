@@ -32,7 +32,6 @@ class Project
         );
         $rows = $stmt->fetchAll();
 
-        /* Decodificar el JSON de tags en cada fila */
         foreach ($rows as &$row) {
             $row['tags'] = json_decode($row['tags'] ?? '[]', true);
         }
@@ -89,17 +88,18 @@ class Project
     public function create(array $data): int
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO projects (name, description, tags, status, url, github_url, sort_order)
-             VALUES (:name, :description, :tags, :status, :url, :github_url, :sort_order)'
+            'INSERT INTO projects (name, description, tags, status, url, github_url, insignia, sort_order)
+             VALUES (:name, :description, :tags, :status, :url, :github_url, :insignia, :sort_order)'
         );
 
         $stmt->execute([
             ':name'        => trim($data['name']),
             ':description' => trim($data['description']),
             ':tags'        => json_encode($this->normalizeTags($data['tags'] ?? [])),
-            ':status'      => $data['status'] ?? 'published',
-            ':url'         => $data['url']        ? trim($data['url'])        : null,
-            ':github_url'  => $data['github_url'] ? trim($data['github_url']) : null,
+            ':status'      => $data['status'] ?? 'En producción',
+            ':url'         => !empty($data['url'])        ? trim($data['url'])        : null,
+            ':github_url'  => !empty($data['github_url']) ? trim($data['github_url']) : null,
+            ':insignia'    => !empty($data['insignia'])   ? trim($data['insignia'])   : null,
             ':sort_order'  => (int) ($data['sort_order'] ?? 0),
         ]);
 
@@ -122,6 +122,7 @@ class Project
                  status      = :status,
                  url         = :url,
                  github_url  = :github_url,
+                 insignia    = :insignia,
                  sort_order  = :sort_order
              WHERE id = :id'
         );
@@ -130,9 +131,10 @@ class Project
             ':name'        => trim($data['name']),
             ':description' => trim($data['description']),
             ':tags'        => json_encode($this->normalizeTags($data['tags'] ?? [])),
-            ':status'      => $data['status'] ?? 'published',
-            ':url'         => $data['url']        ? trim($data['url'])        : null,
-            ':github_url'  => $data['github_url'] ? trim($data['github_url']) : null,
+            ':status'      => $data['status'] ?? 'En producción',
+            ':url'         => !empty($data['url'])        ? trim($data['url'])        : null,
+            ':github_url'  => !empty($data['github_url']) ? trim($data['github_url']) : null,
+            ':insignia'    => !empty($data['insignia'])   ? trim($data['insignia'])   : null,
             ':sort_order'  => (int) ($data['sort_order'] ?? 0),
             ':id'          => $id,
         ]);

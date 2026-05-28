@@ -32,6 +32,18 @@
         </div>
       </div>
 
+      <!-- Ubicación -->
+      <div>
+        <label for="location" class="block text-xs font-medium text-gray-400 mb-1.5">
+          Ubicación <span class="text-gray-600">(opcional — ciudad, país)</span>
+        </label>
+        <input type="text" id="location" name="location" maxlength="150"
+               value="<?= htmlspecialchars($experience['location'] ?? '') ?>"
+               class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
+                      placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+               placeholder="Guanare, Portuguesa">
+      </div>
+
       <div>
         <label for="description" class="block text-xs font-medium text-gray-400 mb-1.5">
           Descripción

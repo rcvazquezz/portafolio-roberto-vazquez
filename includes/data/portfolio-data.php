@@ -2,18 +2,17 @@
 /**
  * includes/data/portfolio-data.php — Capa de datos del portafolio público
  *
- * Expone tres funciones públicas que leen de la BD y devuelven arrays en el
- * formato exacto que espera cada sección del portafolio:
+ * Expone tres funciones que leen de la BD y devuelven arrays en el formato
+ * exacto que espera cada sección del portafolio:
  *
- *   getPublishedProjects() → para includes/sections/projects.php
- *   getExperiences()       → para includes/sections/experience.php
- *   getEducation()         → para includes/sections/education.php
+ *   getPublishedProjects() → includes/sections/projects.php
+ *   getExperiences()       → includes/sections/experience.php
+ *   getEducation()         → includes/sections/education.php
  *
- * Si la BD no está disponible, cada función devuelve [] de forma silenciosa:
- * la página sigue cargando pero las secciones aparecen vacías.
+ * Si la BD no está disponible, cada función devuelve [] sin romper la página.
  *
- * Las funciones de mapeo (map*Row) son privadas al archivo; solo se usan
- * internamente como callbacks de array_map para mantener la lógica limpia.
+ * Funciones con prefijo _ son internas (helpers de mapeo), no deben llamarse
+ * desde fuera de este archivo.
  */
 
 require_once APP_ROOT . '/includes/data/db.php';
@@ -21,9 +20,9 @@ require_once APP_ROOT . '/includes/data/db.php';
 
 /* ══════════════════════════════════════════════════════════════════════
    PROYECTOS
-   La BD guarda status como etiqueta de visualización directa:
-     'En producción' | 'En desarrollo' | 'Finalizado' | 'Archivado' | 'draft'
-   Solo 'draft' se excluye del portafolio (borrador no publicado).
+   status almacena la etiqueta de visualización directamente:
+     'En producción' | 'En desarrollo' | 'Finalizado' | 'Archivado'
+   'draft' es el único valor que excluye el proyecto del portafolio.
 ══════════════════════════════════════════════════════════════════════ */
 
 /**
@@ -37,7 +36,7 @@ function getPublishedProjects(): array
     if ($pdo === null) return [];
 
     $stmt = $pdo->prepare(
-        "SELECT name, description, tags, status, url, github_url
+        "SELECT name, description, tags, status, url, github_url, insignia
          FROM   projects
          WHERE  status != 'draft'
          ORDER  BY sort_order ASC, id ASC"
@@ -50,7 +49,16 @@ function getPublishedProjects(): array
 /**
  * Mapea una fila de `projects` al formato que espera projects.php.
  *
- * @internal Solo para uso de getPublishedProjects() vía array_map.
+ * Campos de la BD → campos del portafolio:
+ *   name        → nombre
+ *   description → descripcion
+ *   tags (JSON) → tags (array PHP)
+ *   status      → estado  (ya es la etiqueta española)
+ *   url         → url
+ *   github_url  → github
+ *   insignia    → insignia (badge de contexto, opcional)
+ *
+ * @internal Usado solo por getPublishedProjects() como callback de array_map.
  */
 function _mapProjectRow(array $row): array
 {
@@ -58,20 +66,19 @@ function _mapProjectRow(array $row): array
         'nombre'       => $row['name'],
         'descripcion'  => $row['description'],
         'tags'         => json_decode($row['tags'] ?? '[]', true) ?: [],
-        /* status ya es la etiqueta española ('En producción', etc.) */
         'estado'       => $row['status'],
         'url'          => $row['url']        ?: null,
         'github'       => $row['github_url'] ?: null,
         'github_label' => 'Ver en GitHub',
-        'insignia'     => null,
+        'insignia'     => $row['insignia']   ?: null,
     ];
 }
 
 
 /* ══════════════════════════════════════════════════════════════════════
    EXPERIENCIA
-   La BD guarda description como texto libre multilínea.
-   Cada línea se convierte en un bullet del timeline.
+   description se guarda como texto multilínea en la BD;
+   cada línea no vacía se convierte en un bullet del timeline.
 ══════════════════════════════════════════════════════════════════════ */
 
 /**
@@ -85,7 +92,7 @@ function getExperiences(): array
     if ($pdo === null) return [];
 
     $stmt = $pdo->query(
-        'SELECT company, role, description, start_date, end_date, is_current
+        'SELECT company, location, role, description, start_date, end_date, is_current
          FROM   experiences
          ORDER  BY sort_order ASC, id ASC'
     );
@@ -96,17 +103,21 @@ function getExperiences(): array
 /**
  * Mapea una fila de `experiences` al formato que espera experience.php.
  *
- * Cada línea no vacía de `description` se convierte en un bullet.
- * El período se formatea a partir de las fechas guardadas en la BD.
+ * Campos de la BD → campos del portafolio:
+ *   company     → empresa
+ *   location    → ubicacion
+ *   role        → rol
+ *   description → bullets[] (una línea = un bullet)
+ *   start_date + end_date + is_current → periodo (formateado)
  *
- * @internal Solo para uso de getExperiences() vía array_map.
+ * @internal Usado solo por getExperiences() como callback de array_map.
  */
 function _mapExperienceRow(array $row): array
 {
     /*
-     * Convertir texto multilínea en array de bullets.
-     * El admin debe ingresar cada logro/responsabilidad en una línea separada.
-     * Las líneas vacías (espacios en blanco) se filtran.
+     * Convertir el campo description (texto multilínea) en array de bullets.
+     * El admin ingresa cada logro/responsabilidad en una línea separada.
+     * Se filtran líneas vacías y se aplica trim para limpiar espacios sobrantes.
      */
     $bullets = array_values(
         array_filter(
@@ -118,12 +129,7 @@ function _mapExperienceRow(array $row): array
     return [
         'rol'       => $row['role'],
         'empresa'   => $row['company'],
-        /*
-         * `ubicacion` no existe en el esquema actual de la BD.
-         * La sección experience.php lo muestra de forma condicional
-         * (no renderiza el separador · si está vacío).
-         */
-        'ubicacion' => '',
+        'ubicacion' => $row['location'] ?? '',
         'periodo'   => _formatPeriod(
             $row['start_date'],
             $row['end_date'],
@@ -134,16 +140,16 @@ function _mapExperienceRow(array $row): array
 }
 
 /**
- * Formatea un rango de fechas en texto legible para el período del timeline.
+ * Formatea un par de fechas en texto legible para el período del timeline.
  *
  * Ejemplos:
  *   ('2025-12-01', '2026-05-01', false) → 'Dic 2025 – May 2026'
  *   ('2025-12-01', null,         true)  → 'Dic 2025 – Presente'
  *
- * @param string      $start     Fecha de inicio (YYYY-MM-DD)
- * @param string|null $end       Fecha de fin (YYYY-MM-DD) o null
- * @param bool        $isCurrent true si la posición está activa
- * @return string Período formateado
+ * @param string      $start     Fecha de inicio en formato YYYY-MM-DD
+ * @param string|null $end       Fecha de fin en formato YYYY-MM-DD, o null
+ * @param bool        $isCurrent true si la posición sigue activa
+ * @return string Período con mes abreviado en español y año
  */
 function _formatPeriod(string $start, ?string $end, bool $isCurrent): string
 {
@@ -169,9 +175,9 @@ function _formatPeriod(string $start, ?string $end, bool $isCurrent): string
 
 /* ══════════════════════════════════════════════════════════════════════
    EDUCACIÓN
-   La BD guarda los datos básicos (institución, título, campo, años).
-   Los campos categorias/gancho del portafolio antiguo no existen en la BD;
-   se devuelven como arrays/null vacíos para que el HTML los omita.
+   skills se guarda como texto con formato "Categoría: habilidad1, hab2"
+   (una categoría por línea). Se parsea a la estructura que espera
+   education.php: array de {nombre, items[]}.
 ══════════════════════════════════════════════════════════════════════ */
 
 /**
@@ -185,7 +191,9 @@ function getEducation(): array
     if ($pdo === null) return [];
 
     $stmt = $pdo->query(
-        'SELECT institution, degree, field, start_year, end_year, is_current
+        'SELECT institution, location, degree, field,
+                start_year, end_year, is_current,
+                description, skills, gancho
          FROM   education
          ORDER  BY sort_order ASC, id ASC'
     );
@@ -196,13 +204,22 @@ function getEducation(): array
 /**
  * Mapea una fila de `education` al formato que espera education.php.
  *
- * @internal Solo para uso de getEducation() vía array_map.
+ * Campos de la BD → campos del portafolio:
+ *   degree + field  → titulo  ("Técnico Superior en Análisis de Sistemas")
+ *   institution     → institucion
+ *   location        → ubicacion
+ *   start_year + end_year + is_current → periodo
+ *   description     → descripcion
+ *   skills (texto)  → categorias (array parseado por _parseSkills)
+ *   gancho          → gancho
+ *
+ * @internal Usado solo por getEducation() como callback de array_map.
  */
 function _mapEducationRow(array $row): array
 {
     $endLabel = $row['is_current'] ? 'Presente' : ($row['end_year'] ?? 'Presente');
 
-    /* Título: "Técnico Superior en Análisis de Sistemas" */
+    /* Construir título completo: "Técnico Superior en Análisis de Sistemas" */
     $titulo = $row['degree'];
     if (!empty($row['field'])) {
         $titulo .= ' en ' . $row['field'];
@@ -211,10 +228,64 @@ function _mapEducationRow(array $row): array
     return [
         'titulo'      => $titulo,
         'institucion' => $row['institution'],
-        'ubicacion'   => '',    /* No existe en el esquema actual */
+        'ubicacion'   => $row['location'] ?? '',
         'periodo'     => $row['start_year'] . ' – ' . $endLabel,
-        'descripcion' => null,  /* No existe en el esquema actual */
-        'categorias'  => [],    /* No existe en el esquema actual */
-        'gancho'      => null,  /* No existe en el esquema actual */
+        'descripcion' => $row['description'] ?: null,
+        'categorias'  => _parseSkills($row['skills'] ?? ''),
+        'gancho'      => $row['gancho']      ?: null,
     ];
+}
+
+/**
+ * Convierte el texto de skills en el array de categorías que espera education.php.
+ *
+ * Formato de entrada (una categoría por línea):
+ *   "Arquitectura & Software: Ciclo de vida del software, Análisis de Sistemas"
+ *   "Data & Lógica: Bases de Datos Relacionales, Lógica de Programación"
+ *
+ * Formato de salida:
+ *   [
+ *     ['nombre' => 'Arquitectura & Software', 'items' => ['Ciclo de vida del software', ...]],
+ *     ['nombre' => 'Data & Lógica',           'items' => ['Bases de Datos Relacionales', ...]],
+ *   ]
+ *
+ * Líneas vacías o sin separador ":" se ignoran silenciosamente.
+ *
+ * @param string $text Texto del campo `skills` de la BD
+ * @return array<int, array{nombre: string, items: string[]}> Categorías parseadas
+ */
+function _parseSkills(string $text): array
+{
+    if (trim($text) === '') return [];
+
+    $categories = [];
+
+    foreach (explode("\n", $text) as $line) {
+        $line = trim($line);
+
+        /* Ignorar líneas vacías o sin separador ":" */
+        if ($line === '' || !str_contains($line, ':')) {
+            continue;
+        }
+
+        /* Separar en nombre de categoría e items (limitamos a 2 partes por si
+           los items contienen ":" en su nombre, aunque es poco probable) */
+        [$nombre, $itemsStr] = explode(':', $line, 2);
+
+        $items = array_values(
+            array_filter(
+                array_map('trim', explode(',', $itemsStr)),
+                fn(string $item) => $item !== ''
+            )
+        );
+
+        if (!empty($items)) {
+            $categories[] = [
+                'nombre' => trim($nombre),
+                'items'  => $items,
+            ];
+        }
+    }
+
+    return $categories;
 }

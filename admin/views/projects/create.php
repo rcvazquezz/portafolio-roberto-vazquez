@@ -37,7 +37,7 @@
       <!-- Tags -->
       <div>
         <label for="tags" class="block text-xs font-medium text-gray-400 mb-1.5">
-          Tags <span class="text-gray-600">(separados por coma)</span>
+          Tecnologías / Tags <span class="text-gray-600">(separadas por coma)</span>
         </label>
         <input type="text" id="tags" name="tags"
                class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
@@ -61,6 +61,17 @@
                         placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
                  placeholder="https://github.com/usuario/repo">
         </div>
+      </div>
+
+      <!-- Insignia (badge opcional de contexto) -->
+      <div>
+        <label for="insignia" class="block text-xs font-medium text-gray-400 mb-1.5">
+          Insignia <span class="text-gray-600">(opcional — aparece como badge bajo el título)</span>
+        </label>
+        <input type="text" id="insignia" name="insignia" maxlength="100"
+               class="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2.5 text-sm text-white
+                      placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+               placeholder="Ej: Sistema institucional, Agencia de Desarrollo">
       </div>
 
       <!-- Estado y orden en dos columnas -->

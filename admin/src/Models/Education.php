@@ -57,17 +57,25 @@ class Education
         $isCurrent = (int) !empty($data['is_current']);
 
         $stmt = $this->pdo->prepare(
-            'INSERT INTO education (institution, degree, field, start_year, end_year, is_current, sort_order)
-             VALUES (:institution, :degree, :field, :start_year, :end_year, :is_current, :sort_order)'
+            'INSERT INTO education
+               (institution, location, degree, field, start_year, end_year, is_current,
+                description, skills, gancho, sort_order)
+             VALUES
+               (:institution, :location, :degree, :field, :start_year, :end_year, :is_current,
+                :description, :skills, :gancho, :sort_order)'
         );
 
         $stmt->execute([
             ':institution' => trim($data['institution']),
+            ':location'    => !empty($data['location'])    ? trim($data['location'])    : null,
             ':degree'      => trim($data['degree']),
-            ':field'       => $data['field'] ? trim($data['field']) : null,
+            ':field'       => !empty($data['field'])       ? trim($data['field'])       : null,
             ':start_year'  => (int) $data['start_year'],
             ':end_year'    => $isCurrent ? null : ($data['end_year'] ? (int) $data['end_year'] : null),
             ':is_current'  => $isCurrent,
+            ':description' => !empty($data['description']) ? trim($data['description']) : null,
+            ':skills'      => !empty($data['skills'])      ? trim($data['skills'])      : null,
+            ':gancho'      => !empty($data['gancho'])      ? trim($data['gancho'])      : null,
             ':sort_order'  => (int) ($data['sort_order'] ?? 0),
         ]);
 
@@ -84,22 +92,30 @@ class Education
         $stmt = $this->pdo->prepare(
             'UPDATE education
              SET institution = :institution,
+                 location    = :location,
                  degree      = :degree,
                  field       = :field,
                  start_year  = :start_year,
                  end_year    = :end_year,
                  is_current  = :is_current,
+                 description = :description,
+                 skills      = :skills,
+                 gancho      = :gancho,
                  sort_order  = :sort_order
              WHERE id = :id'
         );
 
         $stmt->execute([
             ':institution' => trim($data['institution']),
+            ':location'    => !empty($data['location'])    ? trim($data['location'])    : null,
             ':degree'      => trim($data['degree']),
-            ':field'       => $data['field'] ? trim($data['field']) : null,
+            ':field'       => !empty($data['field'])       ? trim($data['field'])       : null,
             ':start_year'  => (int) $data['start_year'],
             ':end_year'    => $isCurrent ? null : ($data['end_year'] ? (int) $data['end_year'] : null),
             ':is_current'  => $isCurrent,
+            ':description' => !empty($data['description']) ? trim($data['description']) : null,
+            ':skills'      => !empty($data['skills'])      ? trim($data['skills'])      : null,
+            ':gancho'      => !empty($data['gancho'])      ? trim($data['gancho'])      : null,
             ':sort_order'  => (int) ($data['sort_order'] ?? 0),
             ':id'          => $id,
         ]);
