@@ -20,6 +20,12 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# ── Credenciales de la base de datos del CMS ─────────────────────
+# Contiene host, usuario y contraseña de MySQL.
+# Cada entorno (local, staging, producción) usa valores distintos.
+# Copiar desde admin/config/database.example.php y completar localmente.
+admin/config/database.php
+
 # ── Configuración local de kits (puede contener API keys) ────────
 # .mcp.json almacena credenciales de n8n u otros servicios
 **/.mcp.json
