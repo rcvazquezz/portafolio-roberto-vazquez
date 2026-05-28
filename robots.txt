@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# El panel de administración es privado — no indexar
+Disallow: /admin/
+
+# Sitemap para indexación eficiente
+Sitemap: https://rcvazquez.com/sitemap.xml

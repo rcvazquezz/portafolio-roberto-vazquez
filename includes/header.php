@@ -15,9 +15,19 @@
 $config = [
     'nombre'      => 'Roberto Carlos Vázquez Antelo',
     'rol'         => 'Desarrollador Full Stack',
-    'descripcion' => 'Portafolio de Roberto Carlos Vázquez Antelo — '
-                   . 'Desarrollador Full Stack con experiencia en PHP, MySQL y JavaScript.',
+    /*
+     * Meta description: entre 140-160 caracteres, incluye keywords clave
+     * y diferenciadores (disponibilidad, tecnologías, especialidad).
+     */
+    'descripcion' => 'Desarrollador Full Stack (PHP, MySQL, JavaScript) con experiencia '
+                   . 'en aplicaciones web escalables y automatización de flujos. '
+                   . 'Disponible para incorporación inmediata.',
     'url'         => 'https://rcvazquez.com/',
+    /*
+     * og:image: imagen de 1200×630 px para preview en redes sociales.
+     * Crear el archivo en public/og-image.png antes de publicar.
+     */
+    'og_image'    => 'https://rcvazquez.com/public/og-image.png',
     'color_tema'  => '#0C0C0F',
     'google_analytics_id' => 'G-S29LYE3SYS',
 ];
@@ -45,11 +55,48 @@ $nav_items = [
   <meta name="author"      content="<?= htmlspecialchars($config['nombre']) ?>">
   <meta name="theme-color" content="<?= $config['color_tema'] ?>">
 
-  <!-- ── Open Graph ───────────────────────────────────────────── -->
+  <!-- Canonical: evita que Google indexe URLs duplicadas con parámetros -->
+  <link rel="canonical" href="<?= htmlspecialchars($config['url']) ?>">
+
+  <!-- ── Open Graph (Facebook, LinkedIn, WhatsApp, Discord…) ─── -->
   <meta property="og:type"        content="website">
+  <meta property="og:locale"      content="es_ES">
+  <meta property="og:site_name"   content="<?= htmlspecialchars($config['nombre']) ?>">
   <meta property="og:url"         content="<?= htmlspecialchars($config['url']) ?>">
-  <meta property="og:title"       content="<?= htmlspecialchars($config['nombre']) ?>">
+  <meta property="og:title"       content="<?= htmlspecialchars($config['nombre']) ?> — <?= htmlspecialchars($config['rol']) ?>">
   <meta property="og:description" content="<?= htmlspecialchars($config['descripcion']) ?>">
+  <meta property="og:image"       content="<?= htmlspecialchars($config['og_image']) ?>">
+  <meta property="og:image:width"  content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt"   content="Portafolio de <?= htmlspecialchars($config['nombre']) ?>">
+
+  <!-- ── Twitter / X Card ─────────────────────────────────────── -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="<?= htmlspecialchars($config['nombre']) ?> — <?= htmlspecialchars($config['rol']) ?>">
+  <meta name="twitter:description" content="<?= htmlspecialchars($config['descripcion']) ?>">
+  <meta name="twitter:image"       content="<?= htmlspecialchars($config['og_image']) ?>">
+  <meta name="twitter:image:alt"   content="Portafolio de <?= htmlspecialchars($config['nombre']) ?>">
+
+  <!-- ── JSON-LD: schema.org Person ───────────────────────────────
+       Permite a Google mostrar un Knowledge Panel con tu perfil
+       directamente en los resultados de búsqueda.
+  ─────────────────────────────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "<?= $config['nombre'] ?>",
+    "jobTitle": "<?= $config['rol'] ?>",
+    "description": "<?= $config['descripcion'] ?>",
+    "url": "<?= $config['url'] ?>",
+    "email": "mailto:rcvazquezantelo2006@gmail.com",
+    "knowsAbout": ["PHP", "JavaScript", "MySQL", "Tailwind CSS", "REST APIs", "Git", "Análisis de Sistemas"],
+    "sameAs": [
+      "https://github.com/rcvazquezz",
+      "https://www.linkedin.com/in/rcvazquezantelo/"
+    ]
+  }
+  </script>
 
   <!-- ── Google Fonts: precarga para evitar FOUT ──────────────── -->
   <link rel="preconnect" href="https://fonts.googleapis.com">

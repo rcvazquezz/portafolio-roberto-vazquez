@@ -37,6 +37,7 @@
               href="https://github.com/rcvazquezz"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Perfil de GitHub de Roberto Vázquez"
               class="text-muted text-sm transition-colors duration-150 hover:text-white"
             >
               GitHub
@@ -44,9 +45,21 @@
           </li>
           <li>
             <a
+              href="https://www.linkedin.com/in/rcvazquezantelo/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Perfil de LinkedIn de Roberto Vázquez"
+              class="text-muted text-sm transition-colors duration-150 hover:text-white"
+            >
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a
               href="https://devlink.nygaccesorios.com/"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="DevLink — proyecto de Roberto Vázquez"
               class="text-muted text-sm transition-colors duration-150 hover:text-white"
             >
               DevLink
@@ -55,6 +68,7 @@
           <li>
             <a
               href="mailto:rcvazquezantelo2006@gmail.com"
+              aria-label="Enviar email a Roberto Vázquez"
               class="text-muted text-sm transition-colors duration-150 hover:text-white"
             >
               Email
