@@ -406,33 +406,30 @@ document.addEventListener('alpine:init', () => {
 
 /* ════════════════════════════════════════════════════════════════
    2. SMOOTH SCROLL SIN HASH — Mantiene la URL limpia
-   Intercepta todos los links de ancla (#seccion), hace el scroll
-   manualmente y resetea la URL con replaceState para que nunca
-   aparezca el hash en la barra de direcciones.
+   Delegación en document: intercepta cualquier click en links #ancla,
+   hace el scroll manualmente y resetea la URL con replaceState.
 ════════════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('click', (e) => {
+  const link = e.target.closest('a[href^="#"]');
+  if (!link) return;
+
+  const targetId = link.getAttribute('href').slice(1);
+
+  if (!targetId) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.replaceState(null, '', location.pathname);
+    return;
+  }
+
+  const target = document.getElementById(targetId);
+  if (!target) return;
+
+  e.preventDefault();
   const navHeight = document.querySelector('nav')?.offsetHeight ?? 64;
-
-  document.querySelectorAll('a[href^="#"]').forEach((link) => {
-    link.addEventListener('click', (e) => {
-      const targetId = link.getAttribute('href').slice(1);
-
-      if (!targetId) {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        history.replaceState(null, '', location.pathname);
-        return;
-      }
-
-      const target = document.getElementById(targetId);
-      if (!target) return;
-
-      e.preventDefault();
-      const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
-      window.scrollTo({ top, behavior: 'smooth' });
-      history.replaceState(null, '', location.pathname);
-    });
-  });
+  const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
+  window.scrollTo({ top, behavior: 'smooth' });
+  history.replaceState(null, '', location.pathname);
 });
 
 
