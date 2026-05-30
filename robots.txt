@@ -5,4 +5,4 @@ Allow: /
 Disallow: /admin/
 
 # Sitemap para indexación eficiente
-Sitemap: https://rcvazquez.com/sitemap.xml
+Sitemap: https://rcvazquezz.com/sitemap.xml

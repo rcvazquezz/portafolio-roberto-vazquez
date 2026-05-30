@@ -29,7 +29,7 @@ define('APP_NAME', 'Portfolio CMS');
  */
 define('APP_URL', $_isLocal
     ? 'http://localhost/portafolio-roberto-vazquez/admin'
-    : 'https://rcvazquez.com/admin'
+    : 'https://rcvazquezz.com/admin'
 );
 
 unset($_host, $_isLocal); // limpiar variables temporales del scope global

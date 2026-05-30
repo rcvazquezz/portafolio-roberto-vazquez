@@ -22,12 +22,12 @@ $config = [
     'descripcion' => 'Desarrollador Full Stack (PHP, MySQL, JavaScript) con experiencia '
                    . 'en aplicaciones web escalables y automatización de flujos. '
                    . 'Disponible para incorporación inmediata.',
-    'url'         => 'https://rcvazquez.com/',
+    'url'         => 'https://rcvazquezz.com/',
     /*
      * og:image: imagen de 1200×630 px para preview en redes sociales.
      * Crear el archivo en public/og-image.png antes de publicar.
      */
-    'og_image'    => 'https://rcvazquez.com/public/og-image.png',
+    'og_image'    => 'https://rcvazquezz.com/public/og-image.png',
     'color_tema'  => '#0C0C0F',
     'google_analytics_id' => 'G-S29LYE3SYS',
 ];
