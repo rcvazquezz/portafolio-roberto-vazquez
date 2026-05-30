@@ -106,6 +106,11 @@ $nav_items = [
     rel="stylesheet"
   >
 
+  <!-- ── Favicon ─────────────────────────────────────────────── -->
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.svg" sizes="any">
+  <link rel="apple-touch-icon" href="/favicon.svg">
+
   <!-- ── Tailwind CSS compilado ───────────────────────────────── -->
   <link rel="stylesheet" href="src/css/output.css?v=4">
 </head>
