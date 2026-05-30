@@ -217,7 +217,7 @@
       <div style="border-top:1px solid rgba(255,255,255,.06); margin:0.75rem 0.25rem;"></div>
 
       <!-- Enlace al portafolio público (abre en pestaña nueva) -->
-      <a href="/portafolio-roberto-vazquez/"
+      <a href="<?= APP_ENV === 'production' ? 'https://rcvazquezz.com' : '/portafolio-roberto-vazquez/' ?>"
          target="_blank"
          rel="noopener noreferrer"
          class="nav-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-[.8125rem] font-medium
