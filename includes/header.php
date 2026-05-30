@@ -107,7 +107,7 @@ $nav_items = [
   >
 
   <!-- ── Tailwind CSS compilado ───────────────────────────────── -->
-  <link rel="stylesheet" href="src/css/output.css?v=3">
+  <link rel="stylesheet" href="src/css/output.css?v=4">
 </head>
 
 <body class="bg-cream text-ink font-body antialiased">
