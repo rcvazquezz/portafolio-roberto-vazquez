@@ -1,6 +1,7 @@
 <?php
 /**
  * generate-og-image.php — Generador de Open Graph image (1200×630 px)
+ * Paleta idéntica al portafolio: fondo cream, violeta #7C65F6, texto noir.
  *
  * Ejecutar una sola vez desde CLI:
  *   php generate-og-image.php
@@ -8,136 +9,166 @@
  * Salida: public/og-image.png
  */
 
-$W = 1200;
-$H = 630;
+$W   = 1200;
+$H   = 630;
 $out = __DIR__ . '/public/og-image.png';
 
 $img = imagecreatetruecolor($W, $H);
 imagesavealpha($img, true);
 
-/* ── Colores ──────────────────────────────────────────────────── */
-$noir        = imagecolorallocate($img, 12,  12,  15);
-$violet      = imagecolorallocate($img, 124, 101, 246);
-$violet_dim  = imagecolorallocate($img, 40,  30,  90);
-$violet_mid  = imagecolorallocate($img, 80,  60,  180);
+/* ── Paleta del portafolio ────────────────────────────────────── */
+$cream       = imagecolorallocate($img, 242, 241, 237);  // #F2F1ED
+$noir        = imagecolorallocate($img, 17,  17,  24);   // #111118
+$violet      = imagecolorallocate($img, 124, 101, 246);  // #7C65F6
+$violet_lt   = imagecolorallocate($img, 237, 233, 254);  // #EDE9FE
+$violet_dark = imagecolorallocate($img, 91,  69,  212);  // #5B45D4
+$muted       = imagecolorallocate($img, 107, 107, 120);  // #6B6B78
+$border      = imagecolorallocate($img, 228, 227, 223);  // #E4E3DF
 $white       = imagecolorallocate($img, 255, 255, 255);
-$white_dim   = imagecolorallocate($img, 180, 180, 190);
-$muted       = imagecolorallocate($img, 107, 107, 120);
-$graphite    = imagecolorallocate($img, 26,  26,  36);
+$graphite    = imagecolorallocate($img, 12,  12,  15);   // #0C0C0F
 
-/* ── Fondo noir ───────────────────────────────────────────────── */
-imagefilledrectangle($img, 0, 0, $W, $H, $noir);
+/* ── Fondo cream ──────────────────────────────────────────────── */
+imagefilledrectangle($img, 0, 0, $W, $H, $cream);
+
+/* ── Dots grid (igual que el hero del portafolio) ─────────────── */
+$dot = imagecolorallocate($img, 228, 227, 223); // #E4E3DF
+for ($x = 0; $x <= $W; $x += 32) {
+    for ($y = 0; $y <= $H; $y += 32) {
+        imagefilledellipse($img, $x, $y, 2, 2, $dot);
+    }
+}
 
 /* ── Blob violeta (esquina superior derecha) ──────────────────── */
-for ($r = 320; $r >= 0; $r -= 8) {
-    $alpha = (int) (127 - ($r / 320) * 100);
+for ($r = 340; $r >= 0; $r -= 6) {
+    $alpha = (int) (120 + ($r / 340) * 7 - ($r / 340) * 127);
+    $alpha = max(0, min(127, (int)(127 - ($r / 340) * 117)));
     $c = imagecolorallocatealpha($img, 124, 101, 246, $alpha);
-    imagefilledellipse($img, $W, 0, $r * 2, $r * 2, $c);
+    imagefilledellipse($img, $W + 20, -20, $r * 2, $r * 2, $c);
 }
 
-/* ── Blob violeta secundario (esquina inferior izquierda) ─────── */
-for ($r = 200; $r >= 0; $r -= 8) {
-    $alpha = (int) (127 - ($r / 200) * 115);
-    $c = imagecolorallocatealpha($img, 124, 101, 246, $alpha);
-    imagefilledellipse($img, 0, $H, $r * 2, $r * 2, $c);
-}
+/* ── Borde exterior sutil ─────────────────────────────────────── */
+imagerectangle($img, 0, 0, $W - 1, $H - 1, $border);
 
-/* ── Línea decorativa vertical izquierda ─────────────────────── */
-imagefilledrectangle($img, 80, 100, 84, 260, $violet);
+/* ── Línea decorativa vertical izquierda (violeta) ───────────── */
+imagefilledrectangle($img, 80, 90, 84, 230, $violet);
 
-/* ── Dot pulsante (disponibilidad) ───────────────────────────── */
-$dot_x = 104;
-$dot_y = 120;
-imagefilledellipse($img, $dot_x, $dot_y, 12, 12, $violet);
+/* ── Fuentes ──────────────────────────────────────────────────── */
+$font_dir   = __DIR__ . '/assets/fonts/';
+$font_syne  = $font_dir . 'Syne-ExtraBold.ttf';
+$font_inter = $font_dir . 'Inter-Regular.ttf';
 
-/* ── Badge "Disponible para incorporación inmediata" ──────────── */
-$badge_text  = ' Disponible para incorporacion inmediata ';
-$badge_x     = 120;
-$badge_y     = 112;
-$badge_w     = 340;
-$badge_h     = 28;
-// fondo del badge
-$badge_bg = imagecolorallocate($img, 25, 20, 55);
-imagefilledroundedrectangle_manual($img, $badge_x - 8, $badge_y, $badge_x + $badge_w, $badge_y + $badge_h, $badge_bg);
-imagestring($img, 3, $badge_x + 20, $badge_y + 7, 'Disponible para incorporacion inmediata', $violet);
+/* ── Badge "Disponible" ───────────────────────────────────────── */
+$badge_x = 104;
+$badge_y = 110;
+$badge_w = 350;
+$badge_h = 32;
 
-/* ── Nombre (líneas grandes) ──────────────────────────────────── */
-$font_paths = [
-    'C:/Windows/Fonts/arialbd.ttf',
-    'C:/Windows/Fonts/Arial Bold.ttf',
-    '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
-    '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
-    '/usr/share/fonts/dejavu/DejaVuSans-Bold.ttf',
-];
+// Fondo del badge (violet-lt #EDE9FE)
+imagefilledroundedrect($img, $badge_x, $badge_y, $badge_x + $badge_w, $badge_y + $badge_h, 16, $violet_lt);
+// Borde del badge
+imageroundedrect($img, $badge_x, $badge_y, $badge_x + $badge_w, $badge_y + $badge_h, 16, $violet);
 
-$font = null;
-foreach ($font_paths as $path) {
-    if (file_exists($path)) { $font = $path; break; }
-}
+// Dot dentro del badge
+imagefilledellipse($img, $badge_x + 18, $badge_y + 16, 10, 10, $violet);
 
-if ($font) {
-    /* Con TTF: texto de alta calidad */
-    imagettftext($img, 72, 0, 100, 265, $white,     $font, 'Roberto Carlos');
-    imagettftext($img, 72, 0, 100, 360, $violet,    $font, 'Vazquez Antelo');
-    imagettftext($img, 22, 0, 100, 415, $white_dim,  $font, 'Desarrollador Full Stack  ·  Analisis de Sistemas');
+// Texto del badge
+if (file_exists($font_inter)) {
+    imagettftext($img, 11, 0, $badge_x + 32, $badge_y + 22, $violet, $font_inter, 'Disponible para incorporacion inmediata');
 } else {
-    /* Fallback: fuente interna (más pixelada pero funcional) */
-    imagestring($img, 5, 100, 210, 'Roberto Carlos  Vazquez Antelo', $white);
-    imagestring($img, 4, 100, 250, 'Desarrollador Full Stack | Analisis de Sistemas', $white_dim);
+    imagestring($img, 3, $badge_x + 32, $badge_y + 9, 'Disponible para incorporacion inmediata', $violet);
+}
+
+/* ── Nombre principal ─────────────────────────────────────────── */
+if (file_exists($font_syne)) {
+    imagettftext($img, 78, 0, 98, 270, $noir,   $font_syne, 'Roberto Carlos');
+    imagettftext($img, 78, 0, 98, 372, $violet, $font_syne, 'Vazquez Antelo');
+} else {
+    imagestring($img, 5, 98, 200, 'Roberto Carlos Vazquez Antelo', $noir);
+}
+
+/* ── Rol / subtítulo ──────────────────────────────────────────── */
+$rol = 'Desarrollador Full Stack   ·   Analisis de Sistemas';
+if (file_exists($font_inter)) {
+    imagettftext($img, 20, 0, 100, 422, $muted, $font_inter, $rol);
+} else {
+    imagestring($img, 4, 100, 340, $rol, $muted);
 }
 
 /* ── Tech tags ────────────────────────────────────────────────── */
 $techs = ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS', 'REST APIs', 'Git'];
 $tx = 100;
-$ty = 460;
-foreach ($techs as $tech) {
-    $tw = strlen($tech) * 9 + 24;
-    // fondo del tag
-    imagefilledrectangle($img, $tx, $ty, $tx + $tw, $ty + 28, $violet_dim);
-    // borde del tag
-    imagerectangle($img, $tx, $ty, $tx + $tw, $ty + 28, $violet_mid);
+$ty = 462;
+$th = 32;
 
-    if ($font) {
-        imagettftext($img, 11, 0, $tx + 12, $ty + 20, $violet, $font, $tech);
+foreach ($techs as $tech) {
+    if (file_exists($font_inter)) {
+        $bbox = imagettfbbox(11, 0, $font_inter, $tech);
+        $tw = abs($bbox[2] - $bbox[0]) + 28;
     } else {
-        imagestring($img, 2, $tx + 8, $ty + 8, $tech, $violet);
+        $tw = strlen($tech) * 9 + 24;
+    }
+
+    // Fondo tag (violet-lt)
+    imagefilledroundedrect($img, $tx, $ty, $tx + $tw, $ty + $th, 8, $violet_lt);
+    // Borde tag
+    imageroundedrect($img, $tx, $ty, $tx + $tw, $ty + $th, 8, $violet);
+
+    if (file_exists($font_inter)) {
+        imagettftext($img, 11, 0, $tx + 14, $ty + 22, $violet, $font_inter, $tech);
+    } else {
+        imagestring($img, 2, $tx + 8, $ty + 10, $tech, $violet);
     }
     $tx += $tw + 10;
 }
 
-/* ── Monograma RV (esquina inferior derecha) ──────────────────── */
-$mx = $W - 120;
-$my = $H - 110;
-imagefilledrectangle($img, $mx, $my, $mx + 80, $my + 80, $graphite);
-imagerectangle($img, $mx, $my, $mx + 80, $my + 80, $violet_mid);
-if ($font) {
-    imagettftext($img, 26, 0, $mx + 14, $my + 52, $white, $font, 'RV');
-} else {
-    imagestring($img, 5, $mx + 20, $my + 28, 'RV', $white);
-}
+/* ── Separador horizontal ─────────────────────────────────────── */
+imagefilledrectangle($img, 100, $H - 95, $W - 80, $H - 94, $border);
 
 /* ── URL del sitio ────────────────────────────────────────────── */
-if ($font) {
-    imagettftext($img, 16, 0, 100, $H - 38, $muted, $font, 'rcvazquezz.com');
+if (file_exists($font_inter)) {
+    imagettftext($img, 15, 0, 100, $H - 55, $muted, $font_inter, 'rcvazquezz.com');
 } else {
-    imagestring($img, 3, 100, $H - 50, 'rcvazquezz.com', $muted);
+    imagestring($img, 3, 100, $H - 65, 'rcvazquezz.com', $muted);
 }
 
-/* ── Línea inferior decorativa ────────────────────────────────── */
+/* ── Monograma RV (esquina inferior derecha) ──────────────────── */
+$mx = $W - 130;
+$my = $H - 115;
+$ms = 84;
+imagefilledroundedrect($img, $mx, $my, $mx + $ms, $my + $ms, 12, $graphite);
+if (file_exists($font_syne)) {
+    imagettftext($img, 28, 0, $mx + 14, $my + 55, $white, $font_syne, 'RV');
+} else {
+    imagestring($img, 5, $mx + 22, $my + 30, 'RV', $white);
+}
+
+/* ── Línea inferior violeta ───────────────────────────────────── */
 imagefilledrectangle($img, 0, $H - 5, $W, $H, $violet);
 
 /* ── Guardar ──────────────────────────────────────────────────── */
-imagepng($img, $out, 8);
+imagepng($img, $out, 6);
 imagedestroy($img);
+echo "og-image generada: $out\n";
 
-echo "og-image generada en: $out\n";
-
-/* ── Helper: rectángulo redondeado ───────────────────────────── */
-function imagefilledroundedrectangle_manual($img, $x1, $y1, $x2, $y2, $color, $r = 6) {
-    imagefilledrectangle($img, $x1 + $r, $y1, $x2 - $r, $y2, $color);
-    imagefilledrectangle($img, $x1, $y1 + $r, $x2, $y2 - $r, $color);
+/* ══════════════════════════════════════════════════════════════
+   Helpers: rectángulo y borde redondeados
+══════════════════════════════════════════════════════════════ */
+function imagefilledroundedrect($img, $x1, $y1, $x2, $y2, $r, $color) {
+    imagefilledrectangle($img, $x1 + $r, $y1,      $x2 - $r, $y2,      $color);
+    imagefilledrectangle($img, $x1,      $y1 + $r, $x2,      $y2 - $r, $color);
     imagefilledellipse($img, $x1 + $r, $y1 + $r, $r * 2, $r * 2, $color);
     imagefilledellipse($img, $x2 - $r, $y1 + $r, $r * 2, $r * 2, $color);
     imagefilledellipse($img, $x1 + $r, $y2 - $r, $r * 2, $r * 2, $color);
     imagefilledellipse($img, $x2 - $r, $y2 - $r, $r * 2, $r * 2, $color);
+}
+
+function imageroundedrect($img, $x1, $y1, $x2, $y2, $r, $color) {
+    imageline($img, $x1 + $r, $y1,      $x2 - $r, $y1,      $color);
+    imageline($img, $x1 + $r, $y2,      $x2 - $r, $y2,      $color);
+    imageline($img, $x1,      $y1 + $r, $x1,      $y2 - $r, $color);
+    imageline($img, $x2,      $y1 + $r, $x2,      $y2 - $r, $color);
+    imagearc($img, $x1 + $r, $y1 + $r, $r * 2, $r * 2, 180, 270, $color);
+    imagearc($img, $x2 - $r, $y1 + $r, $r * 2, $r * 2, 270, 360, $color);
+    imagearc($img, $x1 + $r, $y2 - $r, $r * 2, $r * 2,  90, 180, $color);
+    imagearc($img, $x2 - $r, $y2 - $r, $r * 2, $r * 2,   0,  90, $color);
 }
