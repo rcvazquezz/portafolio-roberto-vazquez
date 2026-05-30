@@ -405,36 +405,7 @@ document.addEventListener('alpine:init', () => {
 
 
 /* ════════════════════════════════════════════════════════════════
-   2. SMOOTH SCROLL SIN HASH — Mantiene la URL limpia
-   Delegación en document: intercepta cualquier click en links #ancla,
-   hace el scroll manualmente y resetea la URL con replaceState.
-════════════════════════════════════════════════════════════════ */
-document.addEventListener('click', (e) => {
-  const link = e.target.closest('a[href^="#"]');
-  if (!link) return;
-
-  const targetId = link.getAttribute('href').slice(1);
-
-  if (!targetId) {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    history.replaceState(null, '', location.pathname);
-    return;
-  }
-
-  const target = document.getElementById(targetId);
-  if (!target) return;
-
-  e.preventDefault();
-  const navHeight = document.querySelector('nav')?.offsetHeight ?? 64;
-  const top = target.getBoundingClientRect().top + window.scrollY - navHeight;
-  window.scrollTo({ top, behavior: 'smooth' });
-  history.replaceState(null, '', location.pathname);
-});
-
-
-/* ════════════════════════════════════════════════════════════════
-   3. INTERSECTION OBSERVER — Animaciones de entrada al scroll
+   2. INTERSECTION OBSERVER — Animaciones de entrada al scroll
    Observa todos los .reveal y añade .visible cuando el elemento
    entra en el viewport, disparando la transición CSS de input.css.
 ════════════════════════════════════════════════════════════════ */

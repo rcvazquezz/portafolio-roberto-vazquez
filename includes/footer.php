@@ -105,6 +105,28 @@
        3. Alpine.js     — defer, dispara alpine:init, procesa x-data.
 ════════════════════════════════════════════════════════════════ -->
 
+<!-- Smooth scroll sin hash — inline para garantizar ejecución inmediata -->
+<script>
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    var targetId = link.getAttribute('href').slice(1);
+    if (!targetId) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      history.replaceState(null, '', location.pathname);
+      return;
+    }
+    var target = document.getElementById(targetId);
+    if (!target) return;
+    e.preventDefault();
+    var navEl = document.querySelector('nav');
+    var top = target.getBoundingClientRect().top + window.scrollY - (navEl ? navEl.offsetHeight : 64);
+    window.scrollTo({ top: top, behavior: 'smooth' });
+    history.replaceState(null, '', location.pathname);
+  });
+</script>
+
 <!-- Lucide Icons UMD — síncrono para evitar FOIC (Flash of Icon Content) -->
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
