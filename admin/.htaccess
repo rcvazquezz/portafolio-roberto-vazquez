@@ -18,10 +18,9 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Cambia esta línea según tu configuración de Laragon:
-    #   Carpeta en localhost:  /portafolio-roberto-vazquez/admin/
-    #   Virtual host propio:   /admin/
-    RewriteBase /portafolio-roberto-vazquez/admin/
+    # Producción (rcvazquezz.com): /admin/
+    # Local Laragon (subcarpeta): cambiar a /portafolio-roberto-vazquez/admin/
+    RewriteBase /admin/
 
     # Bloquear acceso HTTP directo a src/ y config/
     # <DirectoryMatch> no está permitido en .htaccess; se usa [F] aquí
