@@ -14,10 +14,10 @@
  */
 
 return [
-    'host'     => '127.0.0.1',
+    'host'     => 'localhost',
     'port'     => '3306',
-    'dbname'   => 'portfolio_cms',
+    'dbname'   => 'u123661417_rcvazquezz',
     'charset'  => 'utf8mb4',
-    'username' => 'root',
-    'password' => '',
+    'username' => 'u123661417_rcvazquezz',
+    'password' => 'RCArcez-77',
 ];
