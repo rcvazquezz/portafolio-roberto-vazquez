@@ -186,7 +186,7 @@ $kits = [
       correctas para cada problema, en lugar de reinventar la rueda.
       Esta es una competencia senior de alto valor en el mercado.
     -->
-    <p class="section-subheading reveal mb-16">
+    <p class="section-subheading reveal mb-8 md:mb-16">
       Soluciones técnicas seleccionadas, integradas y configuradas para
       flujos de trabajo de alto rendimiento. Cada kit combina las herramientas
       más adecuadas para un problema concreto con una arquitectura de flujo
@@ -316,7 +316,7 @@ $kits = [
       del reclutador, pero visible para quien quiera más contexto.
       El tono es informativo, no defensivo.
     -->
-    <p class="mt-12 text-xs text-muted text-center reveal">
+    <p class="mt-6 md:mt-12 text-xs text-muted text-center reveal">
       Integración, arquitectura de flujo y configuración:
       <span class="font-medium text-ink">Roberto Carlos Vázquez Antelo</span>
       &nbsp;·&nbsp;

@@ -79,7 +79,7 @@ function icono_contacto(string $tipo): string {
   <div class="section-container">
 
     <!-- ── Encabezado sobre fondo oscuro ──────────────────────── -->
-    <div class="reveal text-center mb-16">
+    <div class="reveal text-center mb-8 md:mb-16">
       <span class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase text-violet mb-4">
         <span class="block w-6 h-px bg-violet" aria-hidden="true"></span>
         Trabajemos juntos
@@ -144,7 +144,7 @@ function icono_contacto(string $tipo): string {
   <div class="mt-20 reveal" data-delay="400">
 
     <!-- Encabezado de subsección -->
-    <div class="text-center mb-12">
+    <div class="text-center mb-6 md:mb-12">
       <h3
         class="font-display font-bold text-white"
         style="font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.03em;"

@@ -30,7 +30,7 @@ $certificaciones = [];
   <div class="section-container">
 
     <!-- ── Encabezado ──────────────────────────────────────────── -->
-    <div class="reveal mb-16">
+    <div class="reveal mb-8 md:mb-16">
       <span class="section-label">Base académica</span>
       <h2 class="section-heading">Formación</h2>
       <div class="section-divider"></div>
@@ -110,7 +110,7 @@ $certificaciones = [];
 
     <!-- ── Certificaciones (se renderiza solo si hay datos) ──── -->
     <?php if (!empty($certificaciones)) : ?>
-      <div class="mt-16 max-w-2xl">
+      <div class="mt-8 md:mt-16 max-w-2xl">
         <h3 class="font-display font-semibold text-noir text-lg mb-8 reveal">
           Certificaciones
         </h3>

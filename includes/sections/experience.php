@@ -22,7 +22,7 @@
   <div class="section-container">
 
     <!-- ── Encabezado ────────────────────────────────────────── -->
-    <div class="reveal mb-16">
+    <div class="reveal mb-8 md:mb-16">
       <span class="section-label">Trayectoria</span>
       <h2 class="section-heading">Experiencia</h2>
       <div class="section-divider"></div>

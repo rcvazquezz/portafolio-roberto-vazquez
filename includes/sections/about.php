@@ -28,7 +28,7 @@ $idiomas = [
   <div class="section-container">
 
     <!-- ── Encabezado ──────────────────────────────────────────── -->
-    <div class="reveal mb-16">
+    <div class="reveal mb-8 md:mb-16">
       <span class="section-label">Conóceme</span>
       <h2 class="section-heading">Sobre mí</h2>
       <div class="section-divider"></div>
