@@ -46,6 +46,6 @@ Options -Indexes
     # Activa el filtro XSS en navegadores antiguos
     Header always set X-XSS-Protection "1; mode=block"
 
-    # Descomenta en producción cuando tengas HTTPS activo:
-    # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # Fuerza HTTPS durante 1 año (requiere SSL activo en el servidor)
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
