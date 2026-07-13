@@ -8,15 +8,16 @@
 
 /* Tecnologías del CV (sidebar "Tecnologías") */
 $tecnologias = [
-    'PHP', 'JavaScript', 'MySQL', 'HTML5', 'CSS3',
-    'Tailwind CSS', 'GitHub', 'Git', 'REST APIs',
-    'Análisis de Sistemas', 'BD Relacionales',
+    'PHP', 'JavaScript (ES6+)', 'Vue.js', 'HTML5', 'CSS3', 'SQL',
+    'MySQL', 'Tailwind CSS', 'REST APIs', 'MVC', 'RBAC',
+    'CodeIgniter', 'Git', 'GitHub', 'phpMyAdmin', 'VS Code',
+    'Postman', 'Linux', 'WCAG',
 ];
 
 /* Idiomas del CV */
 $idiomas = [
     ['nombre' => 'Español', 'nivel' => 'Nativo'],
-    ['nombre' => 'Inglés',  'nivel' => 'Básico'],
+    ['nombre' => 'Inglés',  'nivel' => 'Lectura técnica (A2)'],
 ];
 ?>
 
