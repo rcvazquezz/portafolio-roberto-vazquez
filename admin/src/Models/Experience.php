@@ -67,8 +67,8 @@ class Experience
             ':location'    => !empty($data['location']) ? trim($data['location']) : null,
             ':role'        => trim($data['role']),
             ':description' => trim($data['description'] ?? ''),
-            ':start_date'  => $data['start_date'],
-            ':end_date'    => $isCurrent ? null : ($data['end_date'] ?: null),
+            ':start_date'  => self::normalizeMonthDate($data['start_date']),
+            ':end_date'    => $isCurrent ? null : self::normalizeMonthDate($data['end_date'] ?? null),
             ':is_current'  => $isCurrent,
             ':sort_order'  => (int) ($data['sort_order'] ?? 0),
         ]);
@@ -101,12 +101,29 @@ class Experience
             ':location'    => !empty($data['location']) ? trim($data['location']) : null,
             ':role'        => trim($data['role']),
             ':description' => trim($data['description'] ?? ''),
-            ':start_date'  => $data['start_date'],
-            ':end_date'    => $isCurrent ? null : ($data['end_date'] ?: null),
+            ':start_date'  => self::normalizeMonthDate($data['start_date']),
+            ':end_date'    => $isCurrent ? null : self::normalizeMonthDate($data['end_date'] ?? null),
             ':is_current'  => $isCurrent,
             ':sort_order'  => (int) ($data['sort_order'] ?? 0),
             ':id'          => $id,
         ]);
+    }
+
+    /**
+     * Convierte el valor de <input type="month"> ("YYYY-MM") en una fecha
+     * completa ("YYYY-MM-01") apta para una columna DATE.
+     *
+     * Sin esta normalización, MySQL en modo no estricto acepta el valor
+     * incompleto y lo trunca silenciosamente a '0000-00-00', lo que rompe
+     * el formateo de fechas en el panel y en el portafolio público.
+     */
+    private static function normalizeMonthDate(?string $value): ?string
+    {
+        if (empty($value)) {
+            return null;
+        }
+
+        return preg_match('/^\d{4}-\d{2}$/', $value) ? "{$value}-01" : $value;
     }
 
     /**
