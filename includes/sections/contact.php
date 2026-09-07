@@ -41,6 +41,13 @@ $canales = [
         'cta'   => 'Ver plataforma →',
     ],
     [
+        'icono' => 'globe',
+        'label' => 'Zamurove',
+        'valor' => 'zamurove.com',
+        'url'   => 'https://zamurove.com/',
+        'cta'   => 'Ver plataforma →',
+    ],
+    [
         'icono' => 'github',
         'label' => 'GitHub',
         'valor' => 'rcvazquezz',
@@ -98,7 +105,7 @@ function icono_contacto(string $tipo): string {
     </div>
 
     <!-- ── Cards de canales de contacto ──────────────────────── -->
-    <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4 max-w-5xl mx-auto">
+    <div class="grid sm:grid-cols-2 xl:grid-cols-5 gap-4 max-w-6xl mx-auto">
       <?php foreach ($canales as $i => $canal) :
         $es_externo = str_starts_with($canal['url'], 'http');
       ?>
