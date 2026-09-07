@@ -97,12 +97,12 @@ $idiomas = [
                     d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/>
             </svg>
             <a
-              href="https://devlink.nygaccesorios.com/"
+              href="https://rcvazquezz.com/"
               target="_blank"
               rel="noopener noreferrer"
               class="hover:text-violet transition-colors duration-150"
             >
-              devlink.nygaccesorios.com
+              rcvazquezz.com
             </a>
           </li>
 
