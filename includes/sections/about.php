@@ -8,9 +8,9 @@
 
 /* Tecnologías del CV (sidebar "Tecnologías") */
 $tecnologias = [
-    'PHP', 'JavaScript (ES6+)', 'Vue.js', 'HTML5', 'CSS3', 'SQL',
-    'MySQL', 'Tailwind CSS', 'REST APIs', 'MVC', 'RBAC',
-    'CodeIgniter', 'Git', 'GitHub', 'phpMyAdmin', 'VS Code',
+    'PHP', 'JavaScript (ES6+)', 'TypeScript', 'Vue.js', 'Next.js', 'HTML5', 'CSS3', 'SQL',
+    'MySQL', 'PostgreSQL', 'Prisma', 'Tailwind CSS', 'REST APIs', 'NextAuth', 'MVC', 'RBAC',
+    'CodeIgniter', 'Git', 'GitHub', 'GitHub Actions', 'phpMyAdmin', 'VS Code',
     'Postman', 'Linux', 'WCAG',
 ];
 
