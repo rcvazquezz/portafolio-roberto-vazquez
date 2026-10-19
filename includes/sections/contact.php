@@ -35,6 +35,13 @@ $canales = [
     ],
     [
         'icono' => 'globe',
+        'label' => 'Cuánto Es',
+        'valor' => 'micuantoes.com',
+        'url'   => 'https://micuantoes.com/',
+        'cta'   => 'Ver plataforma →',
+    ],
+    [
+        'icono' => 'globe',
         'label' => 'DevLink',
         'valor' => 'devlink.nygaccesorios.com',
         'url'   => 'https://devlink.nygaccesorios.com/',
@@ -105,7 +112,7 @@ function icono_contacto(string $tipo): string {
     </div>
 
     <!-- ── Cards de canales de contacto ──────────────────────── -->
-    <div class="grid sm:grid-cols-2 xl:grid-cols-5 gap-4 max-w-6xl mx-auto">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
       <?php foreach ($canales as $i => $canal) :
         $es_externo = str_starts_with($canal['url'], 'http');
       ?>
