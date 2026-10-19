@@ -8,16 +8,20 @@
 
 /* Tecnologías del CV (sidebar "Tecnologías") */
 $tecnologias = [
-    'PHP', 'JavaScript (ES6+)', 'TypeScript', 'Vue.js', 'Next.js', 'HTML5', 'CSS3', 'SQL',
-    'MySQL', 'PostgreSQL', 'Prisma', 'Tailwind CSS', 'REST APIs', 'NextAuth', 'MVC', 'RBAC',
-    'CodeIgniter', 'Git', 'GitHub', 'GitHub Actions', 'phpMyAdmin', 'VS Code',
-    'Postman', 'Linux', 'WCAG',
+    'PHP', 'JavaScript (ES6+)', 'SQL', 'HTML5', 'CSS3', 'TypeScript (básico)',
+    'CodeIgniter 4', 'Vue.js 3', 'Vite', 'Tailwind CSS', 'Vuetify', 'Next.js (básico)',
+    'MySQL', 'MariaDB', 'PostgreSQL', 'Prisma',
+    'API REST', 'MVC', 'RBAC', 'PWA', 'Cron',
+    'Git', 'GitHub', 'GitHub Actions', 'Linux', 'Postman', 'n8n', 'WhatsApp Cloud API',
 ];
+
+/* Línea de IA del CV */
+$ia = 'Desarrollo asistido por IA (Claude, Claude Code), agentes de IA en producción, automatizaciones con n8n';
 
 /* Idiomas del CV */
 $idiomas = [
     ['nombre' => 'Español', 'nivel' => 'Nativo'],
-    ['nombre' => 'Inglés',  'nivel' => 'Lectura técnica (A2)'],
+    ['nombre' => 'Inglés',  'nivel' => 'Básico (A2), lectura de documentación técnica'],
 ];
 ?>
 
@@ -42,16 +46,16 @@ $idiomas = [
       <div class="space-y-6 reveal">
 
         <p class="text-muted leading-relaxed" style="font-size: 1.0625rem;">
-          Técnico Superior Universitario en Análisis de Sistemas, con experiencia real en
-          desarrollo web full stack y soporte técnico institucional. Me especializo en
-          construir aplicaciones escalables con PHP, MySQL y JavaScript, con foco en la
-          optimización de flujos de trabajo internos.
+          Soy desarrollador Full Stack con experiencia en PHP (CodeIgniter), JavaScript, Vue.js
+          y MySQL. He diseñado, desarrollado y desplegado yo solo Cuánto Es, una aplicación en
+          producción para comercios de Venezuela: backend, API REST, base de datos, frontend PWA
+          y apps para Android y Windows.
         </p>
 
         <p class="text-muted leading-relaxed" style="font-size: 1rem;">
-          Tengo alta capacidad de aprendizaje, orientación al trabajo en equipo y experiencia
-          en entornos institucionales exigentes. Actualmente disponible para incorporación
-          inmediata, presencial o remota.
+          Tengo experiencia previa en el sector público y como freelance, y uso la IA a diario
+          para desarrollar y automatizar. Busco incorporarme a un equipo de desarrollo en remoto,
+          híbrido o presencial.
         </p>
 
         <!-- Separador -->
@@ -66,7 +70,7 @@ $idiomas = [
                     d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
-            <span>Caldebarcos, A Coruña, Galicia</span>
+            <span>A Coruña, Galicia, España · Nacionalidad española</span>
           </li>
 
           <li class="flex items-center gap-3 text-sm text-muted">
@@ -136,6 +140,12 @@ $idiomas = [
           <?php endforeach; ?>
         </div>
 
+        <!-- Inteligencia artificial -->
+        <p class="text-xs font-semibold tracking-widest uppercase text-muted mt-10 mb-4">
+          Inteligencia artificial
+        </p>
+        <p class="text-muted text-sm leading-relaxed"><?= htmlspecialchars($ia) ?></p>
+
         <!-- Card de disponibilidad -->
         <div class="card mt-10 p-6" aria-label="Estado de disponibilidad">
           <div class="flex items-start gap-4">
@@ -145,10 +155,9 @@ $idiomas = [
               </svg>
             </div>
             <div>
-              <p class="font-semibold text-noir text-sm">Disponible ahora</p>
+              <p class="font-semibold text-noir text-sm">Disponibilidad</p>
               <p class="text-muted text-sm mt-1 leading-relaxed">
-                Incorporación inmediata. Abierto a reubicación en cualquier localización.
-                Modalidad presencial o remota.
+                Dispuesto a trasladarme. Modalidad remota, híbrida o presencial.
               </p>
             </div>
           </div>

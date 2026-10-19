@@ -99,8 +99,8 @@ function icono_contacto(string $tipo): string {
         ¿Tienes un proyecto en mente?
       </h2>
       <p class="text-muted mt-4 max-w-lg mx-auto" style="font-size: 1.0625rem; line-height: 1.75;">
-        Estoy disponible para incorporación inmediata. Si buscas un desarrollador
-        Full Stack comprometido con la calidad, hablemos.
+        Busco incorporarme a un equipo de desarrollo en remoto, híbrido o presencial.
+        Si buscas un desarrollador Full Stack, hablemos.
       </p>
     </div>
 
@@ -159,7 +159,7 @@ function icono_contacto(string $tipo): string {
         O cuéntame tu proyecto
       </h3>
       <p class="text-muted mt-3 max-w-lg mx-auto" style="font-size: 0.95rem;">
-        Si prefieres un formulario, rellenalo con los detalles de tu proyecto.
+        Si prefieres un formulario, rellénalo con los detalles de tu proyecto.
       </p>
     </div>
 

@@ -11,8 +11,7 @@
  *   3. Experiencia  — Historial laboral en formato timeline
  *   4. Proyectos    — Proyectos destacados en producción
  *   5. Educación    — Formación académica
- *   6. Toolkit      — Kits y automatizaciones propias
- *   7. Contacto     — Canales de comunicación (fondo oscuro)
+ *   6. Contacto     — Canales de comunicación (fondo oscuro)
  */
 define('APP_ROOT', __DIR__);
 
@@ -36,7 +35,6 @@ $formacion    = getEducation();
   <?php require_once APP_ROOT . '/includes/sections/experience.php'; ?>
   <?php require_once APP_ROOT . '/includes/sections/projects.php'; ?>
   <?php require_once APP_ROOT . '/includes/sections/education.php'; ?>
-  <?php require_once APP_ROOT . '/includes/sections/toolkit.php'; ?>
   <?php require_once APP_ROOT . '/includes/sections/contact.php'; ?>
 </main>
 

@@ -144,7 +144,9 @@ function _mapExperienceRow(array $row): array
  *
  * Ejemplos:
  *   ('2025-12-01', '2026-05-01', false) → 'Dic 2025 – May 2026'
- *   ('2025-12-01', null,         true)  → 'Dic 2025 – Presente'
+ *   ('2026-01-01', null,         true)  → '2026 – Actualidad'
+ *
+ * Las posiciones activas muestran solo el año de inicio, igual que el CV.
  *
  * @param string      $start     Fecha de inicio en formato YYYY-MM-DD
  * @param string|null $end       Fecha de fin en formato YYYY-MM-DD, o null
@@ -160,11 +162,12 @@ function _formatPeriod(string $start, ?string $end, bool $isCurrent): string
     ];
 
     [$startYear, $startMonth] = array_pad(explode('-', $start), 3, '01');
-    $startLabel = ($meses[$startMonth] ?? '') . ' ' . $startYear;
 
     if ($isCurrent || $end === null) {
-        return "{$startLabel} – Presente";
+        return "{$startYear} – Actualidad";
     }
+
+    $startLabel = ($meses[$startMonth] ?? '') . ' ' . $startYear;
 
     [$endYear, $endMonth] = array_pad(explode('-', $end), 3, '01');
     $endLabel = ($meses[$endMonth] ?? '') . ' ' . $endYear;

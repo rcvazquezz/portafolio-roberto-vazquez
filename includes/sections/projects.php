@@ -14,6 +14,10 @@
  *   github        ?string   URL del repositorio (null si es privado)
  *   github_label  ?string   Etiqueta del enlace GitHub
  *   insignia      ?string   Badge de origen/contexto del proyecto
+ *
+ * El primer proyecto (sort_order más bajo) es el principal: ocupa las dos
+ * columnas y lleva el borde violeta. En la descripción, la primera línea es
+ * el párrafo y cada línea siguiente se muestra como un bullet "→".
  */
 
 /* Colores por estado — mapeados a clases Tailwind */
@@ -38,8 +42,8 @@ $estado_clases = [
       <h2 class="section-heading">Proyectos Destacados</h2>
       <div class="section-divider"></div>
       <p class="section-subheading">
-        Aplicaciones reales en producción, construidas con foco en escalabilidad,
-        rendimiento y experiencia de usuario.
+        Aplicaciones reales que he diseñado y desarrollado, desde el backend hasta la
+        interfaz.
       </p>
     </div>
 
@@ -47,11 +51,17 @@ $estado_clases = [
     <div class="grid sm:grid-cols-2 gap-6">
 
       <?php foreach ($proyectos as $i => $proyecto) :
-        $clases = $estado_clases[$proyecto['estado']] ?? $estado_clases['Archivado'];
+        $clases     = $estado_clases[$proyecto['estado']] ?? $estado_clases['Archivado'];
+        $principal  = $i === 0;
+        $lineas     = array_values(array_filter(
+            array_map('trim', explode("\n", $proyecto['descripcion'])),
+            fn(string $linea) => $linea !== ''
+        ));
+        $resumen    = array_shift($lineas) ?? '';
       ?>
 
         <article
-          class="project-card reveal"
+          class="project-card reveal<?= $principal ? ' sm:col-span-2 border-violet' : '' ?>"
           data-delay="<?= $i * 100 ?>"
           aria-label="Proyecto: <?= htmlspecialchars($proyecto['nombre']) ?>"
         >
@@ -60,7 +70,7 @@ $estado_clases = [
           <div class="flex items-start justify-between gap-4">
             <h3
               class="font-display font-bold text-noir leading-snug"
-              style="font-size: 1rem; letter-spacing: -0.02em;"
+              style="font-size: <?= $principal ? '1.25rem' : '1rem' ?>; letter-spacing: -0.02em;"
             >
               <?= htmlspecialchars($proyecto['nombre']) ?>
             </h3>
@@ -81,9 +91,21 @@ $estado_clases = [
           <?php endif; ?>
 
           <!-- Descripción -->
-          <p class="text-muted text-sm leading-relaxed flex-1">
-            <?= htmlspecialchars($proyecto['descripcion']) ?>
+          <p class="text-muted text-sm leading-relaxed<?= $lineas ? '' : ' flex-1' ?>">
+            <?= htmlspecialchars($resumen) ?>
           </p>
+
+          <!-- Funcionalidades (líneas 2+ de la descripción) -->
+          <?php if ($lineas) : ?>
+            <ul class="space-y-2 flex-1" role="list">
+              <?php foreach ($lineas as $linea) : ?>
+                <li class="flex gap-3 text-sm text-muted leading-relaxed">
+                  <span class="text-violet flex-shrink-0 font-semibold mt-px" aria-hidden="true">→</span>
+                  <?= htmlspecialchars($linea) ?>
+                </li>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
 
           <!-- Tags de tecnología -->
           <div class="card-tag-bar">
@@ -93,6 +115,7 @@ $estado_clases = [
           </div>
 
           <!-- Links de acción -->
+          <?php if (!empty($proyecto['url']) || !empty($proyecto['github'])) : ?>
           <div class="flex items-center gap-5 pt-4 border-t border-ui-border">
 
             <?php if (!empty($proyecto['url'])) : ?>
@@ -127,6 +150,7 @@ $estado_clases = [
             <?php endif; ?>
 
           </div>
+          <?php endif; ?>
         </article>
 
       <?php endforeach; ?>

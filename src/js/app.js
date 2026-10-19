@@ -54,7 +54,7 @@ document.addEventListener('alpine:init', () => {
     updateActiveSection() {
       const secciones = [
         'inicio', 'sobre-mi', 'experiencia',
-        'proyectos', 'educacion', 'toolkit', 'contacto',
+        'proyectos', 'educacion', 'contacto',
       ];
 
       for (let i = secciones.length - 1; i >= 0; i--) {

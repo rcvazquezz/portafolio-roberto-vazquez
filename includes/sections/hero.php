@@ -15,7 +15,7 @@
  */
 
 /* Stack principal para mostrar en el hero (extraído del CV) */
-$stack_hero = ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS', 'REST APIs', 'Git'];
+$stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API REST'];
 ?>
 
 <section
@@ -80,9 +80,9 @@ $stack_hero = ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS', 'REST APIs', 'Git']
         class="text-muted font-body mt-6 max-w-xl leading-relaxed animate-fade-up animation-delay-400"
         style="font-size: 1.0625rem;"
       >
-        Técnico Superior en Análisis de Sistemas con experiencia en desarrollo web full stack
-        usando PHP, JavaScript y MySQL. Especializado en construir aplicaciones escalables y
-        optimizar flujos de trabajo internos.
+        Desarrollo aplicaciones web con PHP (CodeIgniter), JavaScript, Vue.js y MySQL.
+        He creado yo solo Cuánto Es, una app de gestión para comercios que ya está en
+        producción.
       </p>
 
       <!-- Stack tecnológico -->
@@ -108,7 +108,7 @@ $stack_hero = ['PHP', 'JavaScript', 'MySQL', 'Tailwind CSS', 'REST APIs', 'Git']
           </svg>
         </a>
         <a
-          href="/public/cv-roberto-vazquez.pdf"
+          href="/data/cv-roberto-vazquez.pdf"
           download="CV_Roberto_Vazquez.pdf"
           class="btn-outline group"
           aria-label="Descargar CV en PDF"

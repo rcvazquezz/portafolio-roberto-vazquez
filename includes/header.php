@@ -19,9 +19,9 @@ $config = [
      * Meta description: entre 140-160 caracteres, incluye keywords clave
      * y diferenciadores (disponibilidad, tecnologías, especialidad).
      */
-    'descripcion' => 'Desarrollador Full Stack (PHP, MySQL, JavaScript) con experiencia '
-                   . 'en aplicaciones web escalables y automatización de flujos. '
-                   . 'Disponible para incorporación inmediata.',
+    'descripcion' => 'Desarrollador Full Stack (PHP, CodeIgniter, JavaScript, Vue.js, MySQL). '
+                   . 'Creador de Cuánto Es, app de gestión para comercios en producción. '
+                   . 'A Coruña, España.',
     'url'         => 'https://rcvazquezz.com/',
     /*
      * og:image: imagen de 1200×630 px para preview en redes sociales.
@@ -39,7 +39,6 @@ $nav_items = [
     'Experiencia' => '#experiencia',
     'Proyectos'   => '#proyectos',
     'Formación'   => '#educacion',
-    'Toolkit'     => '#toolkit',
     'Contacto'    => '#contacto',
 ];
 ?>
@@ -90,7 +89,7 @@ $nav_items = [
     "description": "<?= $config['descripcion'] ?>",
     "url": "<?= $config['url'] ?>",
     "email": "mailto:rcvazquezantelo2006@gmail.com",
-    "knowsAbout": ["PHP", "JavaScript", "MySQL", "Tailwind CSS", "REST APIs", "Git", "Análisis de Sistemas"],
+    "knowsAbout": ["PHP", "CodeIgniter", "JavaScript", "Vue.js", "MySQL", "MariaDB", "API REST", "PWA", "n8n", "Análisis de Sistemas"],
     "sameAs": [
       "https://github.com/rcvazquezz",
       "https://www.linkedin.com/in/rcvazquezantelo/"
@@ -112,7 +111,7 @@ $nav_items = [
   <link rel="apple-touch-icon" href="/favicon.svg">
 
   <!-- ── Tailwind CSS compilado ───────────────────────────────── -->
-  <link rel="stylesheet" href="src/css/output.css?v=4">
+  <link rel="stylesheet" href="src/css/output.css?v=5">
 </head>
 
 <body class="bg-cream text-ink font-body antialiased">
@@ -166,7 +165,7 @@ $nav_items = [
 
       <!-- ── CTA de escritorio ─────────────────────────────────── -->
       <div class="hidden md:flex items-center">
-        <a href="/public/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-outline text-xs py-2 px-4">
+        <a href="/data/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-outline text-xs py-2 px-4">
           <i data-lucide="download" class="w-3 h-3" aria-hidden="true"></i>
           Descargar CV
         </a>
@@ -224,7 +223,7 @@ $nav_items = [
         </li>
       <?php endforeach; ?>
       <li class="pt-3 mt-2 border-t border-ui-border" role="none">
-        <a href="/public/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-primary w-full justify-center">
+        <a href="/data/cv-roberto-vazquez.pdf" download="CV_Roberto_Vazquez.pdf" class="btn-primary w-full justify-center">
           <i data-lucide="download" class="w-4 h-4" aria-hidden="true"></i>
           Descargar CV
         </a>

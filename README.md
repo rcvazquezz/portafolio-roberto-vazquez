@@ -55,13 +55,12 @@ portafolio-roberto-vazquez/
 │   │   ├── experience.php              # Historial laboral (timeline) — datos desde BD
 │   │   ├── projects.php                # Proyectos destacados (cards) — datos desde BD
 │   │   ├── education.php               # Formación académica — datos desde BD
-│   │   ├── toolkit.php                 # Kits y automatizaciones propias
 │   │   └── contact.php                 # Canales de contacto (fondo oscuro)
 │   ├── header.php                      # Nav + meta SEO + JSON-LD + Google Fonts
 │   └── footer.php                      # Footer + Google Analytics + Alpine.js
 │
 ├── public/
-│   └── cv-roberto-vazquez.pdf          # CV en PDF para descarga
+│   └── cv-roberto-vazquez.pdf          # Copia antigua del CV (el botón usa data/)
 │
 ├── src/
 │   ├── css/
