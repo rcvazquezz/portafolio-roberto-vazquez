@@ -46,10 +46,10 @@ document.addEventListener('alpine:init', () => {
     },
 
     /**
-     * Detecta qué sección ocupa el tercio superior del viewport
-     * y actualiza activeSection para resaltar el nav-link correcto.
-     * Se recorre en orden inverso: la última sección que supera el
-     * umbral "gana" (comportamiento natural top-to-bottom).
+     * Marca como activa la última sección cuyo inicio ya pasó por debajo
+     * de la nav fija (+ un margen de 1/3 del viewport). Así solo hay una
+     * sección activa a la vez. Al llegar al final de la página se marca
+     * la última, aunque sea corta y nunca alcance el umbral.
      */
     updateActiveSection() {
       const secciones = [
@@ -57,16 +57,24 @@ document.addEventListener('alpine:init', () => {
         'proyectos', 'educacion', 'contacto',
       ];
 
-      for (let i = secciones.length - 1; i >= 0; i--) {
-        const el = document.getElementById(secciones[i]);
-        if (!el) continue;
+      const alturaNav = document.querySelector('nav')?.offsetHeight ?? 64;
+      const umbral    = alturaNav + window.innerHeight / 3;
+      const alFinal   = window.innerHeight + window.scrollY >=
+                        document.documentElement.scrollHeight - 2;
 
-        const { top } = el.getBoundingClientRect();
-        if (top <= window.innerHeight * 0.4) {
-          this.activeSection = secciones[i];
-          break;
+      if (alFinal) {
+        this.activeSection = secciones[secciones.length - 1];
+        return;
+      }
+
+      let activa = secciones[0];
+      for (const id of secciones) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= umbral) {
+          activa = id;
         }
       }
+      this.activeSection = activa;
     },
   }));
 

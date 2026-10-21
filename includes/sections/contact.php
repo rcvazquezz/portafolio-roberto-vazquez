@@ -106,11 +106,11 @@ function icono_contacto(string $tipo): string {
         class="font-display font-bold text-white mt-4"
         style="font-size: clamp(2rem, 4vw, 2.75rem); letter-spacing: -0.03em;"
       >
-        ¿Tienes un proyecto en mente?
+        ¿Buscas desarrollador? Hablemos
       </h2>
       <p class="text-muted mt-4 max-w-lg mx-auto" style="font-size: 1.0625rem; line-height: 1.75;">
         Busco incorporarme a un equipo de desarrollo en remoto, híbrido o presencial.
-        Si buscas un desarrollador Full Stack, hablemos.
+        Escríbeme por email, teléfono, LinkedIn o WhatsApp.
       </p>
     </div>
 
@@ -166,10 +166,10 @@ function icono_contacto(string $tipo): string {
         class="font-display font-bold text-white"
         style="font-size: clamp(1.5rem, 3vw, 2rem); letter-spacing: -0.03em;"
       >
-        O cuéntame tu proyecto
+        O escríbeme un mensaje
       </h3>
       <p class="text-muted mt-3 max-w-lg mx-auto" style="font-size: 0.95rem;">
-        Si prefieres un formulario, rellénalo con los detalles de tu proyecto.
+        Si prefieres un formulario, rellénalo y te respondo lo antes posible.
       </p>
     </div>
 

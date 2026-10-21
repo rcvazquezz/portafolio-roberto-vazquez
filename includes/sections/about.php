@@ -6,13 +6,20 @@
  * Layout: dos columnas (texto + habilidades) en desktop, apiladas en móvil.
  */
 
-/* Tecnologías del CV (sidebar "Tecnologías") */
+/* Tecnologías del CV agrupadas por nivel de uso real */
 $tecnologias = [
-    'PHP', 'JavaScript (ES6+)', 'SQL', 'HTML5', 'CSS3', 'TypeScript (básico)',
-    'CodeIgniter 4', 'Vue.js 3', 'Vite', 'Tailwind CSS', 'Vuetify', 'Next.js (básico)',
-    'MySQL', 'MariaDB', 'PostgreSQL', 'Prisma',
-    'API REST', 'MVC', 'RBAC', 'PWA', 'Cron',
-    'Git', 'GitHub', 'GitHub Actions', 'Linux', 'Postman', 'n8n', 'WhatsApp Cloud API',
+    'Uso a diario' => [
+        'PHP', 'CodeIgniter 4', 'JavaScript (ES6+)', 'Vue.js 3', 'Vite',
+        'HTML5', 'CSS3', 'Tailwind CSS', 'SQL', 'MySQL', 'MariaDB',
+        'API REST', 'PWA', 'Git', 'GitHub', 'Linux', 'n8n',
+    ],
+    'He trabajado con' => [
+        'PostgreSQL', 'Prisma', 'Vuetify', 'NextAuth', 'GitHub Actions',
+        'WhatsApp Cloud API', 'Postman', 'MVC', 'RBAC', 'Cron',
+    ],
+    'Básico' => [
+        'TypeScript', 'Next.js',
+    ],
 ];
 
 /* Línea de IA del CV */
@@ -134,9 +141,16 @@ $idiomas = [
           Stack & Tecnologías
         </p>
 
-        <div class="flex flex-wrap gap-3" role="list" aria-label="Stack tecnológico">
-          <?php foreach ($tecnologias as $tech) : ?>
-            <span class="skill-tag" role="listitem"><?= htmlspecialchars($tech) ?></span>
+        <div class="space-y-6">
+          <?php foreach ($tecnologias as $grupo => $techs) : ?>
+            <div>
+              <p class="text-sm font-semibold text-noir mb-3"><?= htmlspecialchars($grupo) ?></p>
+              <div class="flex flex-wrap gap-3" role="list" aria-label="<?= htmlspecialchars($grupo) ?>">
+                <?php foreach ($techs as $tech) : ?>
+                  <span class="skill-tag" role="listitem"><?= htmlspecialchars($tech) ?></span>
+                <?php endforeach; ?>
+              </div>
+            </div>
           <?php endforeach; ?>
         </div>
 

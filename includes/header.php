@@ -48,6 +48,10 @@ $nav_items = [
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Marca que hay JS antes de pintar: las animaciones .reveal solo se
+       aplican bajo .js, así el contenido es visible si JS no carga -->
+  <script>document.documentElement.classList.add('js');</script>
+
   <!-- ── SEO básico ───────────────────────────────────────────── -->
   <title><?= htmlspecialchars($config['nombre']) ?> — <?= htmlspecialchars($config['rol']) ?></title>
   <meta name="description" content="<?= htmlspecialchars($config['descripcion']) ?>">
@@ -111,7 +115,7 @@ $nav_items = [
   <link rel="apple-touch-icon" href="/favicon.svg">
 
   <!-- ── Tailwind CSS compilado ───────────────────────────────── -->
-  <link rel="stylesheet" href="src/css/output.css?v=6">
+  <link rel="stylesheet" href="src/css/output.css?v=7">
 </head>
 
 <body class="bg-cream text-ink font-body antialiased">
@@ -155,6 +159,7 @@ $nav_items = [
             <a
               href="<?= $anchor ?>"
               :class="activeSection === '<?= ltrim($anchor, '#') ?>' ? 'active' : ''"
+              :aria-current="activeSection === '<?= ltrim($anchor, '#') ?>' ? 'location' : null"
               class="nav-link px-3 py-2 block"
             >
               <?= htmlspecialchars($label) ?>

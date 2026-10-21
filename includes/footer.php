@@ -31,7 +31,7 @@
 
       <!-- ── Links externos ────────────────────────────────────── -->
       <nav aria-label="Links del footer">
-        <ul class="flex items-center gap-6" role="list">
+        <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2" role="list">
           <li>
             <a
               href="https://github.com/rcvazquezz"
@@ -74,6 +74,15 @@
               Email
             </a>
           </li>
+          <li>
+            <button
+              type="button"
+              onclick="window.mostrarAvisoCookies && window.mostrarAvisoCookies()"
+              class="text-muted text-sm transition-colors duration-150 hover:text-white"
+            >
+              Cookies
+            </button>
+          </li>
         </ul>
       </nav>
 
@@ -89,6 +98,7 @@
 <!-- ════════════════════════════════════════════════════════════
      COMPONENTES GLOBALES
 ════════════════════════════════════════════════════════════════ -->
+<?php require_once APP_ROOT . '/includes/components/cookie-banner.php'; ?>
 <?php require_once APP_ROOT . '/includes/components/contact-toast.php'; ?>
 
 <!-- ════════════════════════════════════════════════════════════
@@ -120,15 +130,16 @@
     var target = document.getElementById(targetId);
     if (!target) return;
     e.preventDefault();
-    var navEl = document.querySelector('nav');
-    var top = target.getBoundingClientRect().top + window.scrollY - (navEl ? navEl.offsetHeight : 64);
-    window.scrollTo({ top: top, behavior: 'smooth' });
+    // scrollIntoView respeta el scroll-margin-top de las secciones (input.css)
+    var reducir = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({ behavior: reducir ? 'auto' : 'smooth', block: 'start' });
     history.replaceState(null, '', location.pathname);
   });
 </script>
 
-<!-- Lucide Icons UMD — síncrono para evitar FOIC (Flash of Icon Content) -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<!-- Lucide Icons UMD — síncrono para evitar FOIC (Flash of Icon Content).
+     Versión fijada: @latest podría cambiar o romper iconos sin aviso. -->
+<script src="https://unpkg.com/lucide@1.61.0/dist/umd/lucide.min.js"></script>
 <script>
   // El DOM ya está disponible aquí (script al final del body).
   // createIcons() sustituye cada <i data-lucide="nombre"> por su SVG.
@@ -137,36 +148,8 @@
   }
 </script>
 
-<!-- ──────────────────────────────────────────────────────────────
-     GOOGLE ANALYTICS 4 (gtag.js)
-
-     Tracking automático de:
-       • Pageviews: cada carga de página
-       • Scroll depth: hasta qué punto scrolleó el usuario
-       • Eventos personalizados: clicks en CTAs, descargas, etc.
-
-     Configuración:
-       • ID desde includes/header.php $config['google_analytics_id']
-       • Privacidad: NO rastrea datos personales
-       • Compatible: todos los navegadores modernos
-
-     Documentación: https://developers.google.com/analytics/devguides/collection/gtagjs
-────────────────────────────────────────────────────────────────── -->
-<?php if (!empty($config['google_analytics_id']) && $config['google_analytics_id'] !== 'G-PLACEHOLDER'): ?>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=<?= htmlspecialchars($config['google_analytics_id']) ?>"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    // Configuración de Google Analytics 4
-    gtag('config', '<?= htmlspecialchars($config['google_analytics_id']) ?>', {
-      'anonymize_ip': true,  // No guardar IP completa (privacidad)
-      'allow_google_signals': false,  // Respetar DNT (Do Not Track)
-      'allow_ad_personalization_signals': false,  // Sin personalización ads
-    });
-  </script>
-<?php endif; ?>
+<!-- Google Analytics 4: se carga desde components/cookie-banner.php
+     solo si el visitante acepta el aviso de cookies. -->
 
 <!-- app.js — componentes Alpine + IntersectionObserver
      DEBE ir antes de Alpine para que alpine:init esté escuchando

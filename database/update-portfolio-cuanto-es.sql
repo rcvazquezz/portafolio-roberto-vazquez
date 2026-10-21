@@ -17,7 +17,7 @@ START TRANSACTION;
 -- 1) Cuánto Es — proyecto principal
 INSERT INTO `projects` (`name`, `description`, `tags`, `status`, `url`, `github_url`, `sort_order`, `insignia`)
 SELECT
-  'Cuánto Es',
+  'Cuánto Es — App de gestión para bodegas y pequeños comercios de Venezuela',
   'App de gestión para bodegas y pequeños comercios de Venezuela que he diseñado, desarrollado y desplegado yo solo, de principio a fin. Está en producción y los primeros negocios ya la usan.
 Precios en dólares, bolívares y pesos colombianos con la tasa oficial del BCV actualizada cada día.
 Ventas con cobros mixtos y vuelto, fiados, inventario, cierre de caja, proveedores y reportes de ganancia.
@@ -31,7 +31,17 @@ Automatizaciones con n8n y WhatsApp Cloud API: verificación de cuentas, recorda
   0,
   'Proyecto propio'
 FROM DUAL
-WHERE NOT EXISTS (SELECT 1 FROM `projects` WHERE `name` = 'Cuánto Es');
+WHERE NOT EXISTS (SELECT 1 FROM `projects` WHERE `name` LIKE 'Cuánto Es%');
+
+-- Si ya existía (p. ej. creado desde el panel), normalizar título y orden.
+-- Título sin punto final y con raya, como el resto de proyectos.
+UPDATE `projects`
+SET    `name`       = 'Cuánto Es — App de gestión para bodegas y pequeños comercios de Venezuela',
+       `url`        = 'https://micuantoes.com',
+       `status`     = 'En producción',
+       `insignia`   = 'Proyecto propio',
+       `sort_order` = 0
+WHERE  `name` LIKE 'Cuánto Es%';
 
 -- 2) Zamurove — corregir el tag de base de datos
 UPDATE `projects`
@@ -62,7 +72,7 @@ WHERE  `name` = 'Puyo Code';
 -- ══════════════════════════════════════════════════════════════════════
 -- EXPERIENCIA (orden: más reciente primero)
 -- Una línea de description = un bullet del timeline.
--- Las posiciones activas (is_current = 1) muestran solo el año: "2026 – Actualidad".
+-- Las posiciones activas (is_current = 1) se muestran como "Oct 2026 – Actualidad".
 -- ══════════════════════════════════════════════════════════════════════
 
 DELETE FROM `experiences`;
@@ -72,18 +82,18 @@ INSERT INTO `experiences`
   (`company`, `location`, `role`, `description`, `start_date`, `end_date`, `is_current`, `sort_order`)
 VALUES
 
--- 1) Cuánto Es — 2026 – Actualidad
+-- 1) Cuánto Es — Oct 2026 – Actualidad
 (
   'Cuánto Es (proyecto propio)',
-  'Remoto desde A Coruña',
-  'Fundador y desarrollador',
+  'Remoto',
+  'Fundador y Desarrollador Full Stack',
   'Desarrollé desde cero una aplicación SaaS de gestión para bodegas y pequeños comercios, con más de 20 módulos: ventas, cobros mixtos con vuelto, fiados, inventario, cierre de caja, proveedores y reportes de ganancia.
 Construí el backend con PHP y CodeIgniter 4 (arquitectura MVC, API REST, MariaDB) y un control de acceso por roles para dueños y cajeros con permisos limitados.
 Implementé una PWA con Vue 3 y Vite que funciona sin conexión y sincroniza las ventas al recuperar la señal sin duplicados, usando un identificador único (UUID) por operación.
 Integré la tasa oficial del BCV con actualización diaria y precios en 3 monedas (USD, VES y COP), eliminando el cálculo manual de precios en bolívares.
 Automaticé procesos con n8n y WhatsApp Cloud API: verificación de cuentas por código, recordatorios de cobro y resumen diario de ventas.
 Publiqué la app en web, Android y Windows; gestiono el despliegue en servidor Linux, la monitorización de errores y el soporte a usuarios.',
-  '2026-01-01', NULL, 1, 0
+  '2026-10-01', NULL, 1, 0
 ),
 
 -- 2) Consejo Nacional Electoral (CNE) — Dic 2025 – May 2026
@@ -91,11 +101,12 @@ Publiqué la app en web, Android y Windows; gestiono el despliegue en servidor L
   'Consejo Nacional Electoral (CNE)',
   'Guanare, Venezuela',
   'Analista y Desarrollador de Sistemas',
-  'Desarrollé una aplicación web interna con PHP, MySQL, JavaScript y Tailwind CSS para gestionar trámites: solicitudes, expedientes, notificaciones y reportes.
-Diseñé la base de datos relacional en MySQL, con más de 10 tablas normalizadas.
+  'Desarrollé una aplicación web interna de gestión de trámites con PHP, MySQL, JavaScript y Tailwind CSS.
+Diseñé la base de datos relacional, con más de 10 tablas normalizadas.
 Implementé control de acceso con 5 roles: atención al ciudadano, funcionario, coordinador, director y administrador.
 Añadí un registro de auditoría de cada operación.
-Automaticé las copias de seguridad de la base de datos con envío programado por correo electrónico.',
+Automaticé las copias de seguridad de la base de datos con envío programado por correo electrónico.
+Di soporte técnico de nivel 1 y 2 a los usuarios de la institución.',
   '2025-12-01', '2026-05-01', 0, 1
 ),
 

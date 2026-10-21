@@ -16,8 +16,13 @@
  *   insignia      ?string   Badge de origen/contexto del proyecto
  *
  * El primer proyecto (sort_order más bajo) es el principal: ocupa las dos
- * columnas y lleva el borde violeta. En la descripción, la primera línea es
- * el párrafo y cada línea siguiente se muestra como un bullet "→".
+ * columnas, lleva el borde violeta y el botón "Ver la app". En la descripción,
+ * la primera línea es el párrafo y cada línea siguiente se muestra como un
+ * bullet "→".
+ *
+ * Capturas: se muestran solo si existe /public/img/<slug>.webp, donde <slug>
+ * es el nombre antes de " — " / " - ", sin tildes, espacios ni símbolos
+ * (ej. "Cuánto Es — App…" → cuantoes.webp, "Puyo Code" → puyocode.webp).
  */
 
 /* Colores por estado — mapeados a clases Tailwind */
@@ -27,6 +32,25 @@ $estado_clases = [
     'Finalizado'    => ['bg' => 'bg-indigo-50',  'text' => 'text-indigo-700',  'dot' => 'bg-indigo-500'],
     'Archivado'     => ['bg' => 'bg-zinc-100',   'text' => 'text-zinc-600',    'dot' => 'bg-zinc-400'],
 ];
+
+/**
+ * Devuelve src, ancho y alto de la captura del proyecto, o null si no existe.
+ *
+ * @return array{src: string, width: int, height: int}|null
+ */
+function imagen_proyecto(string $nombre): ?array
+{
+    $base = preg_split('/\s+[—-]\s+/u', $nombre)[0];
+    $slug = strtr(mb_strtolower($base), ['á' => 'a', 'é' => 'e', 'í' => 'i', 'ó' => 'o', 'ú' => 'u', 'ü' => 'u', 'ñ' => 'n']);
+    $slug = preg_replace('/[^a-z0-9]/', '', $slug);
+
+    $ruta = APP_ROOT . "/public/img/{$slug}.webp";
+    if ($slug === '' || !is_file($ruta)) return null;
+
+    [$ancho, $alto] = getimagesize($ruta) ?: [1200, 750];
+
+    return ['src' => "/public/img/{$slug}.webp", 'width' => $ancho, 'height' => $alto];
+}
 ?>
 
 <section
@@ -53,6 +77,7 @@ $estado_clases = [
       <?php foreach ($proyectos as $i => $proyecto) :
         $clases     = $estado_clases[$proyecto['estado']] ?? $estado_clases['Archivado'];
         $principal  = $i === 0;
+        $imagen     = imagen_proyecto($proyecto['nombre']);
         $lineas     = array_values(array_filter(
             array_map('trim', explode("\n", $proyecto['descripcion'])),
             fn(string $linea) => $linea !== ''
@@ -65,6 +90,22 @@ $estado_clases = [
           data-delay="<?= $i * 100 ?>"
           aria-label="Proyecto: <?= htmlspecialchars($proyecto['nombre']) ?>"
         >
+        <div class="<?= $principal && $imagen ? 'grid lg:grid-cols-2 gap-8 items-center' : 'contents' ?>">
+
+          <!-- Captura (solo si existe el archivo) — arriba en las tarjetas normales -->
+          <?php if ($imagen && !$principal) : ?>
+            <img
+              src="<?= htmlspecialchars($imagen['src']) ?>"
+              width="<?= $imagen['width'] ?>"
+              height="<?= $imagen['height'] ?>"
+              loading="lazy"
+              decoding="async"
+              alt="Captura de <?= htmlspecialchars($proyecto['nombre']) ?>"
+              class="w-full h-auto rounded-lg border border-ui-border"
+            >
+          <?php endif; ?>
+
+          <div class="flex flex-col gap-4 flex-1">
 
           <!-- Nombre + badge de estado -->
           <div class="flex items-start justify-between gap-4">
@@ -118,7 +159,21 @@ $estado_clases = [
           <?php if (!empty($proyecto['url']) || !empty($proyecto['github'])) : ?>
           <div class="flex items-center gap-5 pt-4 border-t border-ui-border">
 
-            <?php if (!empty($proyecto['url'])) : ?>
+            <?php if (!empty($proyecto['url']) && $principal) : ?>
+              <a
+                href="<?= htmlspecialchars($proyecto['url']) ?>"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-primary"
+                aria-label="Ver la app <?= htmlspecialchars($proyecto['nombre']) ?>"
+              >
+                Ver la app
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+              </a>
+            <?php elseif (!empty($proyecto['url'])) : ?>
               <a
                 href="<?= htmlspecialchars($proyecto['url']) ?>"
                 target="_blank"
@@ -151,6 +206,23 @@ $estado_clases = [
 
           </div>
           <?php endif; ?>
+
+          </div>
+
+          <!-- Captura del proyecto principal — a la derecha en escritorio -->
+          <?php if ($imagen && $principal) : ?>
+            <img
+              src="<?= htmlspecialchars($imagen['src']) ?>"
+              width="<?= $imagen['width'] ?>"
+              height="<?= $imagen['height'] ?>"
+              loading="lazy"
+              decoding="async"
+              alt="Captura de <?= htmlspecialchars($proyecto['nombre']) ?>"
+              class="w-full h-auto rounded-lg border border-ui-border"
+            >
+          <?php endif; ?>
+
+        </div>
         </article>
 
       <?php endforeach; ?>

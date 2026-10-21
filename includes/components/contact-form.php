@@ -145,13 +145,13 @@
   <!-- ── Campo: Mensaje ───────────────────────────────────────── -->
   <div class="form-group">
     <label for="contact-message" class="form-label text-white">
-      Cuéntame tu proyecto
+      Mensaje
       <span class="text-violet" aria-label="requerido">*</span>
     </label>
     <textarea
       id="contact-message"
       name="message"
-      placeholder="Describe brevemente tu proyecto, necesidades, o preguntas..."
+      placeholder="Cuéntame sobre la vacante o el equipo, o déjame tu pregunta..."
       required
       minlength="10"
       maxlength="1000"

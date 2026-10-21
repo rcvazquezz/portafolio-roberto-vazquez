@@ -3,15 +3,15 @@
  * includes/sections/hero.php — Sección Hero
  *
  * Primera impresión del visitante. Contiene:
- *   - Badge de disponibilidad con dot pulsante
+ *   - Badge de disponibilidad
  *   - Nombre en Syne 800 con gradiente violeta
  *   - Rol y descripción breve (del CV)
  *   - Stack tecnológico como skill-tags
  *   - CTAs: "Ver proyectos" (primario) y email (outline)
  *   - Decoración: blob de gradiente + grid punteado de fondo
  *
- * Animaciones: fade-up escalonado con animation-delay (CSS puro,
- * no requiere JS — funciona aunque el observer aún no haya cargado).
+ * Sin animaciones: el hero es lo primero que se ve y debe estar visible
+ * desde el primer frame, con o sin JS.
  */
 
 /* Stack principal para mostrar en el hero (extraído del CV) */
@@ -48,8 +48,8 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
   <div class="section-container w-full py-20 lg:py-32 relative z-10">
     <div class="max-w-3xl">
 
-      <!-- Badge de disponibilidad (dot pulsante) -->
-      <div class="animate-fade-up animation-delay-100">
+      <!-- Badge de disponibilidad -->
+      <div>
         <span class="availability-badge">
           <span class="dot" aria-hidden="true"></span>
           Disponible para incorporación inmediata
@@ -58,7 +58,7 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
 
       <!-- Nombre principal: Syne 800, escala fluida con clamp -->
       <h1
-        class="font-display font-extrabold text-noir mt-8 animate-fade-up animation-delay-200"
+        class="font-display font-extrabold text-noir mt-8"
         style="font-size: clamp(2.75rem, 7vw, 5.5rem); line-height: 1.05; letter-spacing: -0.04em;"
       >
         Roberto Carlos<br>
@@ -67,7 +67,7 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
 
       <!-- Rol / Subtítulo -->
       <p
-        class="font-display font-semibold text-muted mt-5 animate-fade-up animation-delay-300"
+        class="font-display font-semibold text-muted mt-5"
         style="font-size: clamp(1.1rem, 2.5vw, 1.4rem); letter-spacing: -0.01em;"
       >
         Desarrollador Full Stack
@@ -77,7 +77,7 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
 
       <!-- Descripción (del CV) -->
       <p
-        class="text-muted font-body mt-6 max-w-xl leading-relaxed animate-fade-up animation-delay-400"
+        class="text-muted font-body mt-6 max-w-xl leading-relaxed"
         style="font-size: 1.0625rem;"
       >
         Desarrollo aplicaciones web con PHP (CodeIgniter), JavaScript, Vue.js y MySQL.
@@ -87,7 +87,7 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
 
       <!-- Stack tecnológico -->
       <div
-        class="flex flex-wrap gap-2 mt-8 animate-fade-up animation-delay-500"
+        class="flex flex-wrap gap-2 mt-8"
         role="list"
         aria-label="Tecnologías principales"
       >
@@ -97,7 +97,7 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
       </div>
 
       <!-- CTAs -->
-      <div class="flex flex-col sm:flex-row items-start gap-4 mt-10 animate-fade-up animation-delay-600">
+      <div class="flex flex-col sm:flex-row items-start gap-4 mt-10">
         <a href="#proyectos" class="btn-primary group">
           Ver proyectos
           <svg
@@ -127,12 +127,12 @@ $stack_hero = ['PHP', 'CodeIgniter 4', 'JavaScript', 'Vue.js', 'MySQL', 'API RES
 
       <!-- Indicador de scroll hacia abajo -->
       <div
-        class="mt-16 hidden md:flex items-center gap-3 animate-fade-in animation-delay-700"
+        class="mt-16 hidden md:flex items-center gap-3"
         aria-hidden="true"
       >
         <div class="flex flex-col gap-1">
           <div class="w-px h-8 bg-ui-border mx-auto"></div>
-          <div class="w-1 h-1 rounded-full bg-violet mx-auto animate-float"></div>
+          <div class="w-1 h-1 rounded-full bg-violet mx-auto"></div>
         </div>
         <span class="text-xs font-semibold text-muted tracking-widest uppercase">Scroll</span>
       </div>
