@@ -45,7 +45,7 @@
           </li>
           <li>
             <a
-              href="https://www.linkedin.com/in/rcvazquezantelo/"
+              href="https://www.linkedin.com/in/roberto-v%C3%A1zquez-8a6273392/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Perfil de LinkedIn de Roberto Vázquez"

@@ -92,7 +92,7 @@ $nav_items = [
     "knowsAbout": ["PHP", "CodeIgniter", "JavaScript", "Vue.js", "MySQL", "MariaDB", "API REST", "PWA", "n8n", "Análisis de Sistemas"],
     "sameAs": [
       "https://github.com/rcvazquezz",
-      "https://www.linkedin.com/in/rcvazquezantelo/"
+      "https://www.linkedin.com/in/roberto-v%C3%A1zquez-8a6273392/"
     ]
   }
   </script>
